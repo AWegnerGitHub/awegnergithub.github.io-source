@@ -67,6 +67,11 @@ PROJECTS = [
         'description': 'IRVING is a system built to integrate directly with end user systems. Users know their data and they know the conditions that are abnormal and worth monitoring. IRVING allows users to set up a customized dashboard to monitor their important data points through multiple systems.'
     },
     {
+        'name': 'AndrewWegner.com',
+        'url': 'https://github.com/AWegnerGitHub/awegnergithub.github.io-source',
+        'description': 'The source for this blog'
+    },
+    {
         'name': 'Team Vipers Game Server Plugins',
         'url': 'https://github.com/AWegnerGitHub/Vipers-Server-Plugins',
         'description': 'Custom SourceMod plugins built for the Team Vipers community'
