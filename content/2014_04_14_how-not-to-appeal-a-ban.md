@@ -119,4 +119,4 @@ changed, why don't you demonstrate some of that change while requesting the ban 
  [3]: {attach}images/vipers-speech-appeal-1.png
  [4]: {attach}images/vipers-abuse-appeal-1.png
  [5]: {attach}images/vipers-rant-appeal-1.png
- [5]: {attach}images/vipers-ddos-appeal-1.png
+ [6]: {attach}images/vipers-ddos-appeal-1.png
