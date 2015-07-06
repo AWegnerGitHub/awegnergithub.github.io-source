@@ -101,7 +101,7 @@ Finally, this chart shows the number of comments that the system wanted to act o
 
 ---
 
-### Comments that were flagged but declined
+### Flagged but declined
 
 As shown above, I've had comments flags declined. Some of these obviously should have been and required a retraining or threshold adjustment on my part. Others, in my opinion, should have been removed as noise. Below is a small sampling of both types of comments.
 

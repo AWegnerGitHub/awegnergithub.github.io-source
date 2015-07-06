@@ -17,7 +17,7 @@ In recent months, though, we've been coming up short more frequently. This has m
 team to find ways to cover costs). Now we have one.
 
 
-## Welcome to the new raffle bot in the community
+## Welcome to the new raffle bot
 
 I've built a Raffle bot based on [SteamBot][1], which is the base of [scrap.tf][2]. Entries to raffles will be one entry 
 per refined metal. You can have an unlimited number of entries. I will convert the refined metal to various prizes 
@@ -34,7 +34,7 @@ Items that are received that are of high value or any additional keys we can get
 various TF2 trading markets. The profits from these trades will be used to cover some community costs.
 
 
-## Can we keep some of the high value items for future raffles?
+## Keep high value items for future raffles?
 
 *This question was added based on feed back from the community. It was added on March 20, 2013*
 

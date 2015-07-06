@@ -74,13 +74,13 @@ fresh install of PHPBB would be a good thing, but you'll have all of the data an
 into the database. If you go with something else, you'll have the database and can attempt to use that software's 
 conversion script. Results will vary on how that works.
 
-### Does this community make enough money on donations?
+### Does we make money on donations?
 No. Since July of [2014 to November 2014], the community has donated $20. Total. It has been 14 months since we reached our monthly 
 goal. In the last year, we have broken $50 only 4 times. To prevent someone from misconstruing this as a plea for 
 money, I've disabled donations. I don't want someone to start a misguided "Save the Vipers" campaign that you believe 
 can succeed with donations. The way to "save the vipers" is to come together as a team and discuss your options.
 
-### What happens if no one steps up to take over?
+### What happens if no one steps up?
 Someone in the community may step up, but if no one steps up by January, then Vipers has one last New Years hoo-rah 
 and fades to the internet. If someone does step up, I am still available to help with initial set up. I'm still available 
 to play games and to talk to. I'm not dropping off the face of the earth and I'm not rage quitting. This is very 

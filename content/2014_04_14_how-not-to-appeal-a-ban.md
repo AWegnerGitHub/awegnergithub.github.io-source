@@ -33,7 +33,7 @@ to spew your filth. If you can't meet our simple rules, you can leave. If you wa
 forth offense, you have to come to us and ask. You should think about how you get someone to do what you want in "the
  real world". 
  
-### Appeal method 1: Freedom of Speech
+### Method 1: Freedom of Speech
 
 I think this one is my favorite. Last I checked, I'm not the government of the United States. I'm a private citizen providing
 a private server for others to play on. My server, my rules (technically, the community's rules, but you understand...) 
@@ -53,7 +53,7 @@ Let's break down some of the flaws:
 Not seen in this image is the response when this was pointed out and the appeal denied. The response managed to hit all
 of the trigger words we ban for on the servers. Just in case we were reconsidering the denial, at this point we're not.
 
-### Appeal method 2: Admin Abuse
+### Method 2: Admin Abuse
 
  > Admins are evil and are holding a grudge! They hate me and ban for inappropriate language. Honest, I never said anything bad.
 
@@ -71,7 +71,7 @@ Let's break down this one too:
  - Chat logs show this is the 4th automated ban. In each ban, the user has managed to slip in multiple offensive phrases
  befor being automatically kicked
  
-### Appeal method 3: Ranting
+### Method 3: Ranting
 
 A rant isn't helpful to anyone. It doesn't endear the poster to the community. The administrators don't want to read through
 a rambling, unformated, exposition. 
@@ -87,7 +87,7 @@ Our break down:
  in a later post that they'd like to be unbanned)
  - Chat logs clearly indicate the player was fond of certain slurs. This is the reason for the bans
  
-### Appeal method 4: Threats against the server
+### Method 4: Threats to the server
 
 Threats to attack the server in some way are not going to get you unbanned. There are only two possible outcomes to this
 appeal type. Either you are successful and the server is off line (now how are you going to play even if unbanned) or we
