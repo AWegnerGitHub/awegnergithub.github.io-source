@@ -24,6 +24,7 @@ Of these 5.6M posts, 2.3M contained links and 1.5M of these were unique links. I
 
 ## Results<sup>2</sup>
 
+### By status code
 Good news/Bad News: A majority of the links returned a valid response, but there are still roughly 10% that failed.
 
 [![PIE CHART IMAGE][status_image]][status_image]
@@ -31,6 +32,7 @@ Good news/Bad News: A majority of the links returned a valid response, but there
 
 The three largest slices of the pie are the status 200s (site working!), status 404 (page not found, but server responded saying the page isn't found) and Connection Errors. Connection errors are sites that had no proper server response. The request to access the page timed out. I was generous in the time out and allowed a request to live for 20 seconds before failing a link with this status. The `4xx` and `5xx` errors are status codes that fall in the 400 and 500 range of HTTP responses. These are client and server error ranges, thus counted as a failure. `2xx` errors (of which was are in the low triple) are pages that responded with a success message in the 200 range, but it wasn't a `200` code. Finally, there were just over a hundred sites that hit a redirect loop that didn't seem to end. These are the `3xx` errors. I failed a site with this range if it redirected more than 30 times. There are a negligible number of sites that returned status codes in the 600 and [700][10] range<sup>4</sup>
 
+### By most common
 There are, expectedly, many URLs that failed that appeared frequently in the sample set. Below is a list of the top 50<sup>3</sup> URLs that are in posts most often, but failed three times over the course of three weeks.
 
 	http://docs.jquery.com/Plugins/validation
@@ -83,6 +85,63 @@ There are, expectedly, many URLs that failed that appeared frequently in the sam
 	http://fluentnhibernate.org/
 	http://net.tutsplus.com/tutorials/javascript-ajax/5-ways-to-make-ajax-calls-with-jquery/
 	http://dev.iceburg.net/jquery/jqModal/
+
+
+### By post score
+
+Count of posts by score (top 10)  (Covers 94% of all broken links):
+
+    | Score | Percentage of Total Broken |
+	|-------|----------------------------|
+	| 0     | 36.4087%                   |
+	| 1     | 25.1674%                   |
+	| 2     | 13.4089%                   |
+	| 3     | 7.2806%                    | 
+	| 4     | 4.2971%                    |
+	| 5     | 2.7065%                    |
+	| 6     | 1.8068%                    |
+	| 7     | 1.2854%                    |
+	| -1    | 1.1935%                    |
+    | 8	    | 0.9415%                    |
+	
+### By number of views
+
+*Note, this is number of views at the time the data dump was created, not as of today*
+
+Count of posts by number of views (top 10):
+
+    | Views        | Total Views |
+	|--------------|-------------|
+	| (0, 200]     | 24.4709%    |
+	| (200, 400]   | 14.2186%    |
+	| (400, 600]   | 9.5045%     |
+	| (600, 800]   | 6.9793%     | 
+	| (800, 1000]  | 5.2574%     |
+	| (1000, 1200] | 4.1864%     |
+	| (1200, 1400] | 3.3699%     |
+	| (1400, 1600] | 2.7766%     |
+	| (1600, 1800] | 2.3477%     |
+    | (1800, 2000] | 1.9550%     |
+	
+	
+### By days since post created
+
+*Note: This is number of days since creation at the time the data dump was created, not from today*
+
+Count of posts by days since creation (top 10) (Covers 64% of broken links):
+	
+	| Days since Creation | Percentage of Total Broken |
+	|---------------------|----------------------------|
+	| (1110, 1140]        | 7.2938%                    |
+	| (1140, 1170]        | 6.7648%                    |
+	| (1470, 1500]        | 6.6579%                    |
+	| (1080, 1110]        | 6.6535%                    | 
+	| (750, 780]          | 6.5535%                    |
+	| (720, 750]          | 6.5516%                    |
+	| (1500, 1530]        | 6.3978%                    |
+	| (390, 420]          | 5.8508%                    |
+	| (360, 390]          | 5.8258%                    |
+    | (780, 810]          | 5.5175%                    |
 
 
 ---
