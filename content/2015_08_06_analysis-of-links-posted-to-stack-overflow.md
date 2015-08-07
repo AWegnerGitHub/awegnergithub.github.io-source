@@ -5,8 +5,13 @@ Category: Side Activities
 Slug: analysis-of-links-posted-to-stack-overflow
 Summary: Approximately 10% of 1.5M randomly selected unique links in the Stack Overflow March 2015 data dump are unavailable. This is an analysis of how that was determined and a request for discussion on how to improve it
 Status: published
+modified: August 7, 2015
 
 [TOC]
+
+This post was [published][a] by [me][b] on Meta Stack Overflow on August 6th, 2015. I've republished it here
+so that I can easily update information related to recent developments. If you have questions or comments, I highly
+encourage you to visit the [question][a] on Meta Stack Overflow and post there. 
 
 TL;DR: Approximately 10% of 1.5M randomly selected unique links in the March 2015 [data dump][1] are unavailable. To be more precise, that is approximately 150K dead links.
 
@@ -195,6 +200,10 @@ It looks like there have been a few previous discussions:
 4. There where 7 total URLs that returned status codes in the `600` and [`700`][10] range. One such site was [code.org][11] with a status code of 752. Sadly, this is not even defined the joke RFC. 
 
 
+## Follow up
+
+I [posted][12] a proposal on how I think this could be fixed.
+
  [1]: https://archive.org/details/stackexchange
  [2]: http://meta.stackoverflow.com/a/262040/189134
  [3]: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods
@@ -207,3 +216,6 @@ It looks like there have been a few previous discussions:
  [10]: https://github.com/joho/7XX-rfc
  [11]: http://learn.code.org/hoc/1
  [status_image]: {attach}images/status_codes.svg
+ [12]: |filename|2015_08_07_a-proposal-to-fix-broken-links-on-stack-overflow.md
+ [a]: http://meta.stackoverflow.com/q/300916/189134
+ [b]: http://meta.stackoverflow.com/users/189134/andy?tab=profile
