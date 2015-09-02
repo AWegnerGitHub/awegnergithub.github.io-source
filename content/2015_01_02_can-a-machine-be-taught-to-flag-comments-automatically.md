@@ -176,7 +176,7 @@ This is, by far, the largest number of declined flags the process has generated 
 
 The process will no longer flag comments newer than 48 hours old. This provides users with a two day window to see a comment before the system will flag it. This single change has provided a huge improvement in terms of flag acceptance.
 
-### Updated Results
+### May 2015 (11 Months)
 
 After nearly a year of running, these are my flagging statistics:
 
@@ -195,6 +195,18 @@ Here is an updated chart showing the rolling 10 day average for number of declin
 This is a busy chart, so I've narrowed it down to show just the last 90 days. From here you can see that in the past 90 days there have been only 10 declined flags.
 
 ![Flags per day with rolling 10 day average - 90 day window][21]
+
+### Sept 2015 (15 Months)
+
+It has been almost 15 months since the process started. In that time, the model has gotten more accurate. Since the last update in May, I've had only 3 declined comment flags:
+
+    52351	comments flagged
+    52069	deemed helpful
+    282	    declined
+
+This provides a helpful rate of 99.46%. Here is an updated chart showing the rolling 10 day average for number of declined flags. The 90 day window is not even worth showing. It has three days where a single flag was declined.
+
+![Flags per day with rolling 10 day average - 15 Months of data training][22]
 
 
 
@@ -221,3 +233,4 @@ This is a busy chart, so I've narrowed it down to show just the last 90 days. Fr
   [19]: http://meta.stackoverflow.com/q/283030/189134
   [20]: {attach}images/latest_flags_per_day_rolling_average.png
   [21]: {attach}images/latest_flags_per_day_rolling_average_90day_window.png
+  [22]: {attach}images/declined_per_day_15_months.png
