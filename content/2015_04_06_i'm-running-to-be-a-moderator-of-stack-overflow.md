@@ -32,7 +32,7 @@ idea of community moderation shows that it scales well.
 
 The election cycle begins with the nomination phase. Users nominate themselves for the position. In 1200 characters or less, you lay out your platform. In this phase, nearly anyone can nominate themselves. However, there are only 30 positions available. If more than 30 people
 nominate themselves, then the users with the lowest reputation get bumped. With only 11K reputation, I am at the lower end of the spectrum of other nominees, but I am well above the lowest. I have the 8th lowest reputation. I've looked at previous election cycles. It seems unlikely
-that there will be 39 or more nominees. I think that I am safe.
+that there will be 30 or more nominees. I think that I am safe.
 
 ### My Platform
 
