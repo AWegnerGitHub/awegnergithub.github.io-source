@@ -4,7 +4,7 @@ Tags: Stack Exchange, moderation
 Category: Side Activities
 Slug: i'm-running-for-moderator-on-stack-overflow-again
 Summary: Stack Overflow is having a second election this year. I'm throwing my hat in the ring again. This entry follows the process.
-modified: Nov 18, 2015
+modified: Nov 21, 2015
 Status: published
 
 [TOC]
@@ -38,7 +38,7 @@ With this, I received my "candidate score". It was 33/40. Not the highest, but b
 
 ## Primary Phase
 
-*Updated November 18, 2015*
+*Updated November 21, 2015*
 
 The primary phase is in the third day. In day 1, I was hovering around 9th/10th place. Overnight, between days 1 and 2 though, I dropped down to 11th. I've been sitting here consistantly for a full day now and, while still gaining votes, I'm not gaining as fast as 10th position. It appears I may not make the cutoff by Friday's deadline. While disappointing, there are a few things that I came away with that I'm very happy about.
 
@@ -87,9 +87,18 @@ My response to this question:
 > 
 > For the community, this would be more [involvement](http://meta.stackexchange.com/questions/252844/make-comment-flags-less-stupid) with the moderation aspect. Users would be able to more quickly clean up a comment thread. Flag it and it appears in the review queue. From here, the moderators don't need to be involved. The downside of this is that it adds another queue for users to be involved with. 
 
+
+### Primary Results
+
+With the primaries over, I ended with **2483** positive votes. This put me in 11th place. Sadly, this was not enough to get into the election. I was 185 votes shy of over taking 10th. Good luck to the candidates that made it.
+
+![Live Vote Counter at the end of the Primary][7]
+
+One of the tools that came out of this election was a way to [visualize][8] various data points to compare candidates. I provided a [couple notes about outliers][9] various candidates show regarding aspects on the site. I found it interesting to see what each user had "specialized" in. 
+
 ### Election
 
-*Coming Soon!*
+Currently on going. Stay tuned!
 
   [1]: |filename|2015_04_06_i'm-running-to-be-a-moderator-of-stack-overflow.md
   [2]: http://stackoverflow.com/election/6
@@ -97,5 +106,6 @@ My response to this question:
   [4]: http://communitybuilding.stackexchange.com
   [5]: {attach}images/november_2015_candidate_score.png
   [6]: http://meta.stackoverflow.com/a/310357/189134
-  
-  
+  [7]: {attach}images/2015-11-21 22_43_25-SO_2015_Election_Vote_Monitor.png
+  [8]: http://meta.stackoverflow.com/q/310694/189134
+  [9]: http://meta.stackoverflow.com/a/310736/189134
