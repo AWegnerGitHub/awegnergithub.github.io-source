@@ -87,7 +87,6 @@ My response to this question:
 > 
 > For the community, this would be more [involvement](http://meta.stackexchange.com/questions/252844/make-comment-flags-less-stupid) with the moderation aspect. Users would be able to more quickly clean up a comment thread. Flag it and it appears in the review queue. From here, the moderators don't need to be involved. The downside of this is that it adds another queue for users to be involved with. 
 
-
 ### Primary Results
 
 With the primaries over, I ended with **2483** positive votes. This put me in 11th place. Sadly, this was not enough to get into the election. I was 185 votes shy of over taking 10th. Good luck to the candidates that made it.
@@ -96,7 +95,7 @@ With the primaries over, I ended with **2483** positive votes. This put me in 11
 
 One of the tools that came out of this election was a way to [visualize][8] various data points to compare candidates. I provided a [couple notes about outliers][9] various candidates show regarding aspects on the site. I found it interesting to see what each user had "specialized" in. 
 
-### Election
+## Election
 
 Currently on going. Stay tuned!
 
