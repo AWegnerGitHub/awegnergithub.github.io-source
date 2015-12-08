@@ -4,7 +4,7 @@ Tags: Stack Exchange, moderation
 Category: Side Activities
 Slug: i'm-running-for-moderator-on-stack-overflow-again
 Summary: Stack Overflow is having a second election this year. I'm throwing my hat in the ring again. This entry follows the process.
-modified: Nov 21, 2015
+modified: Dec 8, 2015
 Status: published
 
 [TOC]
