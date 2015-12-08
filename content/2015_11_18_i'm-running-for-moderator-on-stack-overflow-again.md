@@ -97,7 +97,13 @@ One of the tools that came out of this election was a way to [visualize][8] vari
 
 ## Election
 
-Currently on going. Stay tuned!
+*Updated December 8, 2015*
+
+The election is over and the new moderators have settled in. We've had our first bout of public drama over one of these moderators actually moderating a chat room too. *gasp*
+
+## Final thoughts
+
+I was closer to the top 10 this time, but still missed it. Even more surprising was that the user that ended up in 3rd in the primaries didn't even come close to getting elected. He was eliminated in the 5th round of final STV votes. I still think I'd make a great moderator for Stack Overflow, but I need to figure out the best way to promote myself in the next election.
 
   [1]: |filename|2015_04_06_i'm-running-to-be-a-moderator-of-stack-overflow.md
   [2]: http://stackoverflow.com/election/6
