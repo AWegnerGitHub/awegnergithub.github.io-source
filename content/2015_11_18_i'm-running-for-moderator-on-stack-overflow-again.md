@@ -111,6 +111,6 @@ I was closer to the top 10 this time, but still missed it. Even more surprising 
   [4]: http://communitybuilding.stackexchange.com
   [5]: {attach}images/november_2015_candidate_score.png
   [6]: http://meta.stackoverflow.com/a/310357/189134
-  [7]: {attach}images/2015-11-21 22_43_25-SO_2015_Election_Vote_Monitor.png
+  [7]: {attach}images/2015-11-21_22_43_25-SO_2015_Election_Vote_Monitor.png
   [8]: http://meta.stackoverflow.com/q/310694/189134
   [9]: http://meta.stackoverflow.com/a/310736/189134
