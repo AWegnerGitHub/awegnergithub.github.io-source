@@ -4,13 +4,14 @@ Tags: technical
 Category: Technical Solutions
 Slug: how-i-set-up-openshift-travisci-and-flask
 Summary: A walkthrough on how I set up a Flask application on OpenShift and used TravisCI to deploy it
+modified: Dec 12, 2015
 Status: published
 
 [TOC]
 
 ## Motivation
 
-Since I [shut down][1] Vipers early this year, I've been itching to do *something* web related. Web technologies aren't my best technical skill, but I like trying out new things and learning something in the process. I use Python at work. I like Python a lot. With Christmas and New Years coming up, I want to have a project during my down time. My goal is to get a [Flask][2] application built and then deployed to [OpenShift][3]. Part of this deployment is to utilize [TravisCI][4]. I'm planning on using [pytest][14] and [hypothesis][15] for my test suite.
+Since I [shut down][1] Vipers early this year, I've been itching to do *something* web related. Web technologies aren't my best technical skill, but I like trying out new things and learning something in the process. I use Python at work. I like Python a lot. With Christmas and New Years coming up, I want to have a project during my down time. My goal is to get a [Flask][2] application built and then deployed to [OpenShift][3]. Part of this deployment is to utilize [TravisCI][4]. I'm planning on using [pytest][14] and [hypothesis][15] for my test suite. Finally, I want to use my own (sub)domain, instead of the provided `rhcloud` one.
 
 Of these three technologies, I've used only Flask before. The [comment flagging bot][5] I built has a dashboard built in Flask. I've never used OpenShift or TravisCI. I selected OpenShift because it has a couple [features][6] I want that Heroku doesn't. The biggest one, according to the previous link, was that OpenShift has support for MySQL and Heroku doesn't (surprisingly). I want to use TravisCI and automated testing, because one of my goals for next year at work is to introduce automated tested to our development. (I work with Engineers, not coders...that's my excuse and it's a bad excuse, so I'm going to try and fix it.) To get ready for that goal, I want to test out a system that does continuous integration/automated testing. Both OpenShift and Travis CI provide me with free services. Hypothesis and py.test provide me with a way to generate comprehensive test conditions. 
 
@@ -226,9 +227,21 @@ After a successful run through Travis, you'll see something like this:
 	=========================== 1 passed in 0.26 seconds ===========================
 	The command "py.test" exited with 0.
 	
+## Custom Domain
+
+I have my own domain name. I want to utilize OpenShift with one of those domains, instead of the default one provided. Since I've using the free tier, that will rule out using the SSL certificate that is wildcarded to the whole `rhcloud.com` domain. I can live with this. If I need SSL on my domain, I'll upgrade.
+
+To set up OpenShift to use your domain, log into the web console. Go to the gear you are configuring. At the top, where the full domain is displayed, is the option to "Change". Select that option. Input the full domain (and subdomain) you want to utilize and click "Save". After a few seconds, you'll get a notification that the alias was created.
+
+The next step is to configure the DNS records. I [utilize][17] CloudFlare for my domains, so the instructs will be specific to that, but should apply to any DNS system. Login to your management system and go to the area where you can specify DNS records.
+
+For my test, I set up a subdomain of one of my domains as the alias I wanted to use. In your DNS system, set up a CNAME that points to the original hostname on OpenShift. The CNAME should be the subdomain you told OpenShift about. Save the record. 
+
+CloudFlare recognized this immediately and redirected me to my Flask application. Hooray!
+	
 ## Conclusion
 
-With this, the set up is complete. You have a Flask application, connected to MySQL, that is integrated with a CI system which automatically deploys to OpenShift when all tests pass. 
+With this, the set up is complete. You have a Flask application, connected to MySQL, that is integrated with a CI system which automatically deploys to OpenShift when all tests pass and uses CloudFlare (because I already was doing so), to provide a CDN. 
 
 On to building something!
 
@@ -249,3 +262,4 @@ On to building something!
  [14]: http://pytest.org/latest/
  [15]: https://hypothesis.readthedocs.org/en/latest/
  [16]: https://hypothesis.readthedocs.org/en/latest/quickstart.html#writing-tests
+ [17]: |filename|2015_07_09_how-i-set-up-this-site-with-github-pages-and-cloudflare.md
