@@ -57,6 +57,11 @@ LANDING_PAGE_ABOUT = {'title': """Can that be automated?""",
 
 PROJECTS = [
     {
+        'name': 'StackAPI',
+        'url': 'https://github.com/AWegnerGitHub/stackapi',
+        'description': 'A Python wrapper for the Stack Exchange API.'
+    },
+    {
         'name': 'Zephyr - Vote Request Bot',
         'url': 'https://github.com/AWegnerGitHub/SE_Zephyr_VoteRequest_bot',
         'description': 'Zephyr is a headless chatbot that monitors chat rooms on the Stack Exchange network for vote requests from other users and posts them to a specified room.'
