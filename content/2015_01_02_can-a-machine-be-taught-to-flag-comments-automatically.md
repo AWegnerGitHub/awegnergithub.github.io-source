@@ -5,7 +5,7 @@ Category: Programming Projects
 Slug: can-a-machine-be-taught-to-flag-comments-automatically
 Summary: Description of how I automatically flag comments on Stack Overflow
 Status: published
-modified: May 3, 2015
+modified: January 9, 2016
 
 [TOC]
 
@@ -208,6 +208,17 @@ This provides a helpful rate of 99.46%. Here is an updated chart showing the rol
 
 ![Flags per day with rolling 10 day average - 15 Months of data training][22]
 
+### Summary of 2015
+
+I processed comments 359 days out of the year. I missed three in January due to stopping it after a mass decline of flags (more later), I can't account for a missed day in July and August. I don't recall stopping it, but I missed July 3rd and August 19. I also missed December 28th due to a power issue. I flagged 35,960 comments. Of that, 111 were declined.
+
+By month, this is the break down of rejected flags.
+
+![2015 Flag Summary][23]
+
+The blip at the end of November is due to new moderators being elected and adjusting to what other moderators consider "good" versus "bad" comments. I didn't see the spike in the April election which is interesting, but after a couple days in November it's back to normal. The January spike I mentioned above. 
+
+Interesting note: The longest stretch in the year with no declined flags was from August 13th through November 24th.
 
 
   [1]: http://data.stackexchange.com/
@@ -234,3 +245,4 @@ This provides a helpful rate of 99.46%. Here is an updated chart showing the rol
   [20]: {attach}images/latest_flags_per_day_rolling_average.png
   [21]: {attach}images/latest_flags_per_day_rolling_average_90day_window.png
   [22]: {attach}images/declined_per_day_15_months.png
+  [23]: {attach}images/2015-flag-summary.png
