@@ -1,4 +1,4 @@
 pelican==3.5.0
 markdown==2.6.2
 Fabric==1.10.1
-pyembed-markdown
+mdx-video==0.1.8

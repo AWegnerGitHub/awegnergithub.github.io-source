@@ -28,4 +28,4 @@ can each be picked on for a while until there is no health left. The bots must h
 
 Congratulations to the winners!
 
-[!embed?max_width=1080](https://www.youtube.com/watch?v=PIpd2SInvYM)
+https://www.youtube.com/watch?v=PIpd2SInvYM

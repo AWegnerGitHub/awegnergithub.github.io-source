@@ -10,7 +10,7 @@ THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
 PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb']
 STATIC_PATHS = ['images', 'extra/CNAME']
-MD_EXTENSIONS = ['codehilite(css_class=codehilite code)', 'toc(permalink=true)', PyEmbedMarkdown()]
+MD_EXTENSIONS = ['codehilite(css_class=codehilite code)', 'toc(permalink=true)', 'mdx_video']
 EXTRA_PATH_METADATA = {'extra\CNAME': {'path': 'CNAME'},}
 
 PATH = 'content'
@@ -35,7 +35,7 @@ AUTHOR_FEED_RSS = None
 # Social widget
 SOCIAL = (('Stack Overflow', 'http://stackoverflow.com/users/189134/andy'),
           ('Steam', 'http://steamcommunity.com/id/InsaneMosquito/'),
-          ('Stack Overflow Careers', 'http://careers.stackoverflow.com/andrewwegner'))
+          ('Stack Overflow Jobs', 'http://stackoverflow.com/cv/andrewwegner'))
 
 DEFAULT_PAGINATION = 10
 
