@@ -131,16 +131,18 @@ Before we perform this step automatically, we need to test that the PyPI account
 
  - Create a `.pypirc` file in your home directory - not your project directory. This won't be required once Travis CI is set up and configured, so having the passwords in this, temporarily, wasn't an issue because I eventually deleted the file.
  
+ The file looks like this:
+ 
     [distutils]
 	index-servers =
 	  pypi
 	  pypitest
-
-	[pypi]
-	repository=https://pypi.python.org/pypi
+  
+    [pypi]
+    repository=https://pypi.python.org/pypi
 	username=your_username
 	password=your_password
-
+  
 	[pypitest]
 	repository=https://testpypi.python.org/pypi
 	username=your_username
