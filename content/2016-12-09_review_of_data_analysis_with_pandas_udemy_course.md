@@ -122,12 +122,16 @@ very easy.
 I've now spent 19 hours (re)learning pandas and I feel that I've still just scratched the surface. I've learned a lot 
 that I'll be taking back to my code, but throughout the course I still got the impression there is much more to pandas.
 
+## Notebooks
+
+The notebooks that I created during this course are all available on [GitHub][2]
+
 ![Completion Award][6]
 
 
 
  [1]: https://www.udemy.com/data-analysis-with-pandas/learn/v4/overview
- [2]: http://jupyter.org/
+ [2]: https://github.com/AWegnerGitHub/Data-Analysis-with-Pandas---Udemy-Course
  [3]: https://www.continuum.io/downloads
  [4]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html
  [5]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html
