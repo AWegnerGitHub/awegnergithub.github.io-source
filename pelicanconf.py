@@ -10,7 +10,12 @@ THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
 PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb']
 STATIC_PATHS = ['images', 'extra/CNAME']
-MD_EXTENSIONS = ['codehilite(css_class=codehilite code)', 'toc(permalink=true)', 'mdx_video']
+MARKDOWN = { 'extension_configs': {
+                'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
+                'markdown.extensions.toc': {'permalink': 'true' },
+                'mdx_video': {}
+                }
+}
 EXTRA_PATH_METADATA = {'extra\CNAME': {'path': 'CNAME'},}
 
 PATH = 'content'
