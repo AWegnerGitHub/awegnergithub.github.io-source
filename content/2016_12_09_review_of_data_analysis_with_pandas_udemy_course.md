@@ -126,7 +126,7 @@ that I'll be taking back to my code, but throughout the course I still got the i
 
 The notebooks that I created during this course are all available on [GitHub][2]
 
-![Completion Award][6]
+[![Completion Award][6]][7]
 
 
 
@@ -136,3 +136,4 @@ The notebooks that I created during this course are all available on [GitHub][2]
  [4]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html
  [5]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html
  [6]: {attach}images/udemy-data-analysis-pandas-completion.jpg
+ [7]: https://ude.my/UC-FB6LLMB5

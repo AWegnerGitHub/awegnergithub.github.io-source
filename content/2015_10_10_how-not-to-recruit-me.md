@@ -10,7 +10,7 @@ Status: published
 
 ## Introduction
 
-A few days ago, on Meta.StackOverflow, a product manager [asked][1] for feedback on how they could make first contact between employeers and potential employees more valuable to the potential employee. I provided my [feedback][2]. I've reposted it below, with some minor changes to further explain my ideals. 
+A few days ago, on Meta.StackOverflow, a product manager [asked][1] for feedback on how they could make first contact between employers and potential employees more valuable to the potential employee. I provided my [feedback][2]. I've reposted it below, with some minor changes to further explain my ideals. 
 
 The summary of this entire post is: If I have to spend time to make my resume jump out and catch *your* attention, I expect you to spend just a little bit of time telling me about your company and the position you are recruiting for. I don't think a few sentences with these details is that much ask.
 
@@ -30,7 +30,7 @@ This is the start of a good message:
 
 It has the following good elements:
 
- - Who the recruiter is are
+ - Who the recruiter is
  - Position they are recruiting for 
  - A company name
  
