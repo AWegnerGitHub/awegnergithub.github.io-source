@@ -1,4 +1,4 @@
-Title: Can a machine be taught to flag comments automatically
+Title: Can a machine be taught to flag spam automatically
 Date: 2017-2-19 22:51
 Tags: Stack Exchange, machine learning, automation, programming
 Category: Programming Projects
