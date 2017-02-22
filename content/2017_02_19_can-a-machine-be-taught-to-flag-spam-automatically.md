@@ -15,6 +15,10 @@ This post was originally [published][a] on Meta Stack Exchange on February 20, 2
 so that I can easily update information related to recent developments. If you have questions or comments, I highly
 encourage you to visit the [question][a] on Meta Stack Exchange and post there.
 
+At one point, the post was featured across the entire Stack Exchange network:
+
+[![Featured Announcement][27]][27]
+
 ---
 
 TL;DR: [We][1] did it, so... yes.
@@ -33,6 +37,19 @@ bot has become very accurate.
 
 Now we are leveraging the years of data and accuracy to automatically cast spam flags. With approximately 58,000 posts 
 to draw from and over 46,000 true positives, we have a vast trove of data to utilize.
+
+## What problem does this address?
+
+To put it simply, **spam**. Stack Exchange is one of the most popular networks of websites on the Internet, and *all* 
+of it gets spammed at some point. Our statistics show that we see about 100 spam posts per day, on average over the 
+last three months. 
+
+A decent chunk of this isn't the type you'd want to see at work (or at all). The faster we can get this off the home 
+page, the better for all involved. Unfortunately, it's not unheard of for spam to last several hours, even on the 
+larger sites such as Graphic Design.
+
+Over the past three years, efforts with Smokey have significantly cut the time it takes for spam to be deleted. This 
+project is an extension of that, and it's now well within reach to delete spam within seconds of it being posted.
 
 ## What are we doing?
 
@@ -83,7 +100,8 @@ user or declined by a moderator.
 [![Weights and Accuracy][22]][22]
 
 The above graph plots the weight of the reasons against its overall volume of reports and accuracy. As minimum weight 
-increases, accuracy (yellow line and rightmost Y-axis) and total reports (blue line) on the left-hand scale increase.
+increases, accuracy (yellow line and rightmost Y-axis) and total reports (blue line) on the left-hand scale increase. 
+The green line represents the number of true positives, which are verified by SmokeDetector user feedback.
 
 [![Automatic Flags per day][23]][23]
 
@@ -158,4 +176,5 @@ around and answering your questions. Alternatively, feel free to drop into [Char
   [24]: https://metasmoke.erwaysoftware.com/flagging
   [25]: {attach}images/spam-spam-hours.png
   [26]: {attach}images/spam-average-time-to-delete.png
+  [27]: {attach}images/spam-featured-announcement.png
   [a]: http://meta.stackexchange.com/q/291301/186281
