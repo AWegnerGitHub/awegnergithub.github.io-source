@@ -15,7 +15,8 @@ This post was originally [published][a] on Meta Stack Exchange on February 20, 2
 so that I can easily update information related to recent developments. If you have questions or comments, I highly
 encourage you to visit the [question][a] on Meta Stack Exchange and post there.
 
-At one point, the post was featured across the entire Stack Exchange network:
+The post was featured across the entire Stack Exchange network for a week, too. This drove a huge amount of traffic
+to the question and resulted in some valuable feedback:
 
 [![Featured Announcement][27]][27]
 
