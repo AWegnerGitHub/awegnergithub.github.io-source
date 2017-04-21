@@ -131,7 +131,7 @@ The notebooks that I created during this course are all available on [GitHub][2]
 
 
  [1]: https://www.udemy.com/data-analysis-with-pandas/learn/v4/overview
- [2]: https://github.com/AWegnerGitHub/Data-Analysis-with-Pandas---Udemy-Course
+ [2]: https://github.com/AWegnerGitHub/Data-Analysis-with-Pandas
  [3]: https://www.continuum.io/downloads
  [4]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html
  [5]: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html
