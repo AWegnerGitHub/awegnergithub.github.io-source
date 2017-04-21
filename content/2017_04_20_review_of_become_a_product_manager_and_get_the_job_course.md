@@ -43,7 +43,7 @@ lack of interaction makes this course less stellar.
 Overall, I'd consider this a middle of the road course. The presentation is what drags down this information packed course. 
 
 
-[![Completion Award][2]][3]
+[![Completion Award][4]][5]
 
 
 
