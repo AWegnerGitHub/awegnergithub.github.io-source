@@ -44,6 +44,10 @@ This is an introduction course to the bigger ["Deep Learning" courses][8] that L
 confidence in the instructor. My last couple courses haven't been great and I'm happy that this quick two hour course was available. I'm looking 
 forward to taking some more of these courses.
 
+One thing I will need to consider as I go through this course: whether or not to either set up a Linux machine or a virtual machine. Windows doesn'taking
+seem to play well with all the libraries I'll be needing. It may make my life easier too. So far, everyone seems to be using a Mac or Linux machine to
+teach these courses and offer only basic "It may work on Windows" advice.
+
 [![Completion Award][9]][10]
 
 
