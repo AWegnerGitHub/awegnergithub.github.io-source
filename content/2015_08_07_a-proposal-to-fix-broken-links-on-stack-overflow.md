@@ -5,6 +5,7 @@ Category: Side Activities
 Slug: a-proposal-to-fix-broken-links-on-stack-overflow
 Summary: My proposal to decrease the number of broken links on Stack Overflow
 Status: published
+Series: Stack Overflow Link Analysis
 
 [TOC]
 

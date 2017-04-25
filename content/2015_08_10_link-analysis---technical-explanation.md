@@ -5,6 +5,7 @@ Category: Side Activities
 Slug: link-analysis---technical-explanation
 Summary: In my last two posts, I've discussed the number of rotten links on Stack Overflow and a proposal to fix said links. In this post, I'm going to discuss how I performed this analysis. 
 Status: published
+Series: Stack Overflow Link Analysis
 
 [TOC]
 
