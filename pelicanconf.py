@@ -8,7 +8,7 @@ SITENAME = u'Ponderings of an Andy'
 SITEURL = 'http://andrewwegner.com'
 THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
-PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb']
+PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb', 'series']
 STATIC_PATHS = ['images', 'extra/CNAME']
 MARKDOWN = { 'extension_configs': {
                 'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
