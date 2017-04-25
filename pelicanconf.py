@@ -9,20 +9,24 @@ SITEURL = 'http://andrewwegner.com'
 THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
 PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb', 'series']
-STATIC_PATHS = ['images', 'extra/CNAME']
-MARKDOWN = { 'extension_configs': {
-                'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
-                'markdown.extensions.toc': {'permalink': 'true' },
-                'mdx_video': {}
-                }
+MARKDOWN = {'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
+        'markdown.extensions.toc': {'permalink': 'true'},
+        'mdx_video': {}
+    }
 }
-EXTRA_PATH_METADATA = {'extra\CNAME': {'path': 'CNAME'},}
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt"]
+EXTRA_PATH_METADATA = {r'extra/CNAME': {'path': 'CNAME'},
+                       r'extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
+                       r'extra/robots.txt': {'path': 'robots.txt'},
+                       }
 
 PATH = 'content'
 
 TIMEZONE = 'America/Chicago'
 
 DEFAULT_LANG = u'en'
+READERS = {'html': None}
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -86,7 +90,5 @@ PROJECTS = [
         'url': 'https://github.com/AWegnerGitHub/Vipers-Server-Plugins',
         'description': 'Custom SourceMod plugins built for the Team Vipers community'
     },
-
-
 
 ]
