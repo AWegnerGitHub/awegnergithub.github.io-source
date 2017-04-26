@@ -42,4 +42,4 @@ in the first place. If it's difficult to understand what is being said, it's ver
 
 
 
- [1]: |filename|2014_04_14_how-not-to-appeal-a-ban.md
+ [1]: {filename}2014_04_14_how-not-to-appeal-a-ban.md

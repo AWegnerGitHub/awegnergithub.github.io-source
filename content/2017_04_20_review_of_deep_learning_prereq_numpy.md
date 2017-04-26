@@ -53,10 +53,10 @@ teach these courses and offer only basic "It may work on Windows" advice.
 
 
  [1]: https://www.udemy.com/user/lazy-programmer/
- [2]: |filename|2015_01_02_can-a-machine-be-taught-to-flag-comments-automatically.md
- [3]: |filename|2015_03_12_zephyr-the-bot-that-watches-for-low-quality-vote-requests.md
- [4]: |filename|2017_02_19_can-a-machine-be-taught-to-flag-spam-automatically.md
- [5]: |filename|2016_12_09_review_of_data_analysis_with_pandas_udemy_course.md
+ [2]: {filename}2015_01_02_can-a-machine-be-taught-to-flag-comments-automatically.md
+ [3]: {filename}2015_03_12_zephyr-the-bot-that-watches-for-low-quality-vote-requests.md
+ [4]: {filename}2017_02_19_can-a-machine-be-taught-to-flag-spam-automatically.md
+ [5]: {filename}2016_12_09_review_of_data_analysis_with_pandas_udemy_course.md
  [6]: https://www.udemy.com/deep-learning-prerequisites-the-numpy-stack-in-python/learn/v4/overview
  [7]: https://github.com/AWegnerGitHub/Deep-Learning-Prerequisites-The-Numpy-Stack-in-Python
  [8]: https://lazyprogrammer.me/data-science-courses/

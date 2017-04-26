@@ -217,6 +217,6 @@ I [posted][12] a proposal on how I think this could be fixed.
  [10]: https://github.com/joho/7XX-rfc
  [11]: http://learn.code.org/hoc/1
  [status_image]: {attach}images/status_codes.svg
- [12]: |filename|2015_08_07_a-proposal-to-fix-broken-links-on-stack-overflow.md
+ [12]: {filename}2015_08_07_a-proposal-to-fix-broken-links-on-stack-overflow.md
  [a]: http://meta.stackoverflow.com/q/300916/189134
  [b]: http://meta.stackoverflow.com/users/189134/andy?tab=profile

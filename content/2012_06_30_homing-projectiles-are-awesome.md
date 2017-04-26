@@ -46,4 +46,4 @@ The repository is: [https://github.com/AWegnerGitHub/Vipers-Server-Plugins][1]
 
 
  [1]: https://github.com/AWegnerGitHub/Vipers-Server-Plugins
- [s]: |filename|2015_01_08_thanks-for-all-the-fish.md
+ [s]: {filename}2015_01_08_thanks-for-all-the-fish.md

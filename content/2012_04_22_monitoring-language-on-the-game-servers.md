@@ -95,4 +95,4 @@ attitude. I consider that a success. I believe Viper community members did too.
 
  [1]: http://www.hlsw.org/
  [2]: {attach}images/vipers-chat-monitor.png
- [s]: |filename|2015_01_08_thanks-for-all-the-fish.md
+ [s]: {filename}2015_01_08_thanks-for-all-the-fish.md

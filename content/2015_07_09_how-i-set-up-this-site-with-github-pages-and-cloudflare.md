@@ -70,7 +70,7 @@ enjoy your new GitHub Pages / CloudFlare web page for free.
 
 
 
- [1]: |filename|2015_05_03_why-i-moved-from-wordpress-to-pelican.md
+ [1]: {filename}2015_05_03_why-i-moved-from-wordpress-to-pelican.md
  [2]: https://www.cloudflare.com/
  [3]: https://pages.github.com/
  [4]: https://github.com/AWegnerGitHub/awegnergithub.github.io
@@ -80,4 +80,4 @@ enjoy your new GitHub Pages / CloudFlare web page for free.
  [8]: https://github.com/AWegnerGitHub/awegnergithub.github.io-source/blob/master/content/extra/CNAME
  [9]: https://github.com/AWegnerGitHub/awegnergithub.github.io-source/blob/master/pelicanconf.py
  [10]: http://stackoverflow.com/a/30512242/189134
- [s]: |filename|2015_01_08_thanks-for-all-the-fish.md
+ [s]: {filename}2015_01_08_thanks-for-all-the-fish.md

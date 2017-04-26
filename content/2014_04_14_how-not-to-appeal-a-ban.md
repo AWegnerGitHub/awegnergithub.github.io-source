@@ -115,7 +115,7 @@ changed, why don't you demonstrate some of that change while requesting the ban 
 
 
  [1]: {attach}images/vipers-rules.png
- [2]: |filename|2012_04_22_monitoring-language-on-the-game-servers.md
+ [2]: {filename}2012_04_22_monitoring-language-on-the-game-servers.md
  [3]: {attach}images/vipers-speech-appeal-1.png
  [4]: {attach}images/vipers-abuse-appeal-1.png
  [5]: {attach}images/vipers-rant-appeal-1.png

@@ -246,11 +246,11 @@ With this, the set up is complete. You have a Flask application, connected to My
 On to building something!
 
 
- [1]: |filename|2015_01_08_thanks-for-all-the-fish.md
+ [1]: {filename}2015_01_08_thanks-for-all-the-fish.md
  [2]: http://flask.pocoo.org/
  [3]: https://www.openshift.com/
  [4]: https://travis-ci.org/
- [5]: |filename|2015_01_02_can-a-machine-be-taught-to-flag-comments-automatically.md
+ [5]: {filename}2015_01_02_can-a-machine-be-taught-to-flag-comments-automatically.md
  [6]: http://www.paasify.it/compare/heroku-vs-openshift%20online
  [7]: https://developers.openshift.com/en/managing-client-tools.html
  [8]: http://rubyinstaller.org/downloads/
@@ -262,4 +262,4 @@ On to building something!
  [14]: http://pytest.org/latest/
  [15]: https://hypothesis.readthedocs.org/en/latest/
  [16]: https://hypothesis.readthedocs.org/en/latest/quickstart.html#writing-tests
- [17]: |filename|2015_07_09_how-i-set-up-this-site-with-github-pages-and-cloudflare.md
+ [17]: {filename}2015_07_09_how-i-set-up-this-site-with-github-pages-and-cloudflare.md

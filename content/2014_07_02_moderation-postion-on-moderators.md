@@ -83,7 +83,7 @@ but with a much more relevant name.
  [2]: http://moderators.stackexchange.com
  [3]: http://blog.stackoverflow.com/2009/05/a-theory-of-moderation/
  [4]: http://meta.communitybuilding.stackexchange.com/a/80/78
- [5]: |filename|2012_04_22_monitoring-language-on-the-game-servers.md
+ [5]: {filename}2012_04_22_monitoring-language-on-the-game-servers.md
  [6]: http://meta.communitybuilding.stackexchange.com/q/138/78
  [7]: http://meta.communitybuilding.stackexchange.com/q/140/78
  [8]: http://meta.communitybuilding.stackexchange.com/q/175/78

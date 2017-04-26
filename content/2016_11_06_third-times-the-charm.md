@@ -187,8 +187,8 @@ it'll be a while. I'll consider running again then.
 
 
 
- [1]: |filename|2015_04_06_i'm-running-to-be-a-moderator-of-stack-overflow.md
- [2]: |filename|2015_11_18_i'm-running-for-moderator-on-stack-overflow-again.md
+ [1]: {filename}2015_04_06_i'm-running-to-be-a-moderator-of-stack-overflow.md
+ [2]: {filename}2015_11_18_i'm-running-for-moderator-on-stack-overflow-again.md
  [3]: http://meta.stackoverflow.com/q/337191/189134
  [4]: http://meta.stackoverflow.com/a/337238/189134
  [5]: http://stackoverflow.com/election/8?tab=nomination#post-40473869

@@ -128,6 +128,6 @@ looking forward to some other project.
  [2]: https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_2
  [3]: https://wiki.teamfortress.com/wiki/Mann-Conomy_Update
  [4]: https://wiki.teamfortress.com/wiki/Tour_of_Duty_Ticket
- [5]: |filename|2013_02_25_give-some-refined-win-some-prizes.md
+ [5]: {filename}2013_02_25_give-some-refined-win-some-prizes.md
  [6]: http://www.sandboxie.com/
  [7]: http://scrapbank.me/

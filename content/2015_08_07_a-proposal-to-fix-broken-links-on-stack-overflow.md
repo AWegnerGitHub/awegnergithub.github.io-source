@@ -71,7 +71,7 @@ The automated link checking will likely run into several of the problems I did. 
  
 With the broken link queue, I feel the first two would be acceptable. Much like posts in the Low Quality queue appear because of a heuristic, despite not being low quality, links will be the same way. The system will flag them as broken and the queue will determine if that is true (if an archived version of the site can't be found by the automated process). The bullet about throttling requests is an implementation detail that I'm sure the developers would be able to figure out.
 
- [1]: |filename|2015_08_06_analysis-of-links-posted-to-stack-overflow.md
+ [1]: {filename}2015_08_06_analysis-of-links-posted-to-stack-overflow.md
  [a]: http://meta.stackoverflow.com/q/300916/189134
  [b]: http://meta.stackoverflow.com/users/189134/andy?tab=profile
  [6]: http://meta.stackexchange.com/questions/224895/what-happened-to-the-broken-link-review-queue
