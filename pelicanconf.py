@@ -8,7 +8,7 @@ SITENAME = u'Ponderings of an Andy'
 SITEURL = 'http://andrewwegner.com'
 THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
-PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb', 'series']
+PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb', 'series', 'post_stats']
 MARKDOWN = {'extension_configs': {
         'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
         'markdown.extensions.toc': {'permalink': 'true'},
@@ -42,9 +42,9 @@ AUTHOR_FEED_RSS = None
 #          ('You can modify those links in your config file', '#'),)
 
 # Social widget
-SOCIAL = (('Stack Overflow', 'http://stackoverflow.com/users/189134/andy'),
-          ('Steam', 'http://steamcommunity.com/id/InsaneMosquito/'),
-          ('Stack Overflow Jobs', 'http://stackoverflow.com/cv/andrewwegner'))
+SOCIAL = (('Stack Overflow', 'http://stackoverflow.com/users/189134/andy', 'stack-overflow'),
+          ('Steam', 'http://steamcommunity.com/id/InsaneMosquito/', 'steam-square'),
+          ('Stack Overflow Jobs', 'http://stackoverflow.com/cv/andrewwegner', 'stack-overflow'))
 
 DEFAULT_PAGINATION = 10
 
@@ -92,3 +92,5 @@ PROJECTS = [
     },
 
 ]
+
+FONT_AWESOME_EMBED_CODE = 'e4a49a2d36'
