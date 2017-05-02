@@ -15,10 +15,11 @@ MARKDOWN = {'extension_configs': {
         'mdx_video': {}
     }
 }
-STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt"]
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt", "extra/keybase.txt"]
 EXTRA_PATH_METADATA = {r'extra/CNAME': {'path': 'CNAME'},
                        r'extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
                        r'extra/robots.txt': {'path': 'robots.txt'},
+					   r'extra/keybase.txt': {'path': 'keybase.txt'},
                        }
 
 PATH = 'content'
