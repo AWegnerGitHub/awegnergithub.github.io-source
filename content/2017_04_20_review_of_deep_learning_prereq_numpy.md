@@ -44,7 +44,7 @@ This is an introduction course to the bigger ["Deep Learning" courses][8] that L
 confidence in the instructor. My last couple courses haven't been great and I'm happy that this quick two hour course was available. I'm looking 
 forward to taking some more of these courses.
 
-One thing I will need to consider as I go through this course: whether or not to either set up a Linux machine or a virtual machine. Windows doesn'taking
+One thing I will need to consider as I go through this course: whether or not to either set up a Linux machine or a virtual machine. Windows doesn't
 seem to play well with all the libraries I'll be needing. It may make my life easier too. So far, everyone seems to be using a Mac or Linux machine to
 teach these courses and offer only basic "It may work on Windows" advice.
 
@@ -58,7 +58,7 @@ teach these courses and offer only basic "It may work on Windows" advice.
  [4]: {filename}2017_02_19_can-a-machine-be-taught-to-flag-spam-automatically.md
  [5]: {filename}2016_12_09_review_of_data_analysis_with_pandas_udemy_course.md
  [6]: https://www.udemy.com/deep-learning-prerequisites-the-numpy-stack-in-python/learn/v4/overview
- [7]: https://github.com/AWegnerGitHub/Deep-Learning-Prerequisites-The-Numpy-Stack-in-Python
+ [7]: https://github.com/AWegnerGitHub/Deep-Learning-Prerequisites
  [8]: https://lazyprogrammer.me/data-science-courses/
  [9]: {attach}images/udemy-deep-learning-prereq-numpy.jpg
  [10]: https://ude.my/UC-9CGD0JX8
