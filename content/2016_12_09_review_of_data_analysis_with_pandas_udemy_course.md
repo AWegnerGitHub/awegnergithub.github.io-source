@@ -5,6 +5,7 @@ Category: Review
 Slug: data-analysis-with-pandas-review
 Summary: My review of "Data Analysis with Pandas" on Udemy.  
 Status: published
+Series: Course Reviews
 
 [TOC]
 

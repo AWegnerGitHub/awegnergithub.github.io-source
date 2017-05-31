@@ -6,6 +6,7 @@ Slug: loony-corn-machine-learning-review
 Summary: My review of "From 0 to 1: Machine Learning, NLP and Python - Cut to the Chase" on Udemy.  
 Status: published
 modified: April 24, 2017
+Series: Course Reviews
 
 [TOC]
 

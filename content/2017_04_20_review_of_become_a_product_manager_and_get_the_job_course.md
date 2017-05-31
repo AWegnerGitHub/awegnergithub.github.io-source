@@ -5,6 +5,7 @@ Category: Review
 Slug: become-a-product-manager-review
 Summary: My review of "Become a Product Manager  | Learn the Skills & Get the job" on Udemy.  
 Status: published
+Series: Course Reviews
 
 [TOC]
 

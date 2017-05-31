@@ -5,6 +5,7 @@ Category: Review
 Slug: deep-learning-prereq-linear-logistic-regression
 Summary: My review of the Deep Learning Prerequisites - Linear and Logistic Regression courses on Udemy.  
 Status: published
+Series: Course Reviews
 
 [TOC]
 

@@ -5,6 +5,7 @@ Category: Review
 Slug: deep-learning-prereq-numpy
 Summary: My review of "Deep Learning Prerequisites: The Numpy Stack in Python" on Udemy.  
 Status: published
+Series: Course Reviews
 
 [TOC]
 
