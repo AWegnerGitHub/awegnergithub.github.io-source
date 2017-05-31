@@ -95,3 +95,15 @@ PROJECTS = [
 ]
 
 FONT_AWESOME_EMBED_CODE = 'e4a49a2d36'
+AUTHORS = {
+    u'Andy Wegner': {
+        u'image': 'wegner_headshot.png',
+        u'blurb': """ is a father, an engineer and a computer scientist. He is interested in online 
+            community building, tinkering with new code and building new applications. 
+            He writes about his experiences with each of these.""",
+        u'friendly_name': "Andy Wegner",
+        u'url': 'http://andrewwegner.com/'
+
+    }
+
+}
