@@ -8,18 +8,19 @@ SITENAME = u'Ponderings of an Andy'
 SITEURL = 'http://andrewwegner.com'
 THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
-PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'sitemap', 'keyboard.kb', 'series', 'post_stats']
+# https://pypi.python.org/pypi/pelican-extended-sitemap
+PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'extended_sitemap', 'keyboard.kb', 'series', 'post_stats']
 MARKDOWN = {'extension_configs': {
-        'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
-        'markdown.extensions.toc': {'permalink': 'true'},
-        'mdx_video': {}
-    }
+    'markdown.extensions.codehilite': {'css_class': 'codehilight code'},
+    'markdown.extensions.toc': {'permalink': 'true'},
+    'mdx_video': {}
+}
 }
 STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt", "extra/keybase.txt"]
 EXTRA_PATH_METADATA = {r'extra/CNAME': {'path': 'CNAME'},
                        r'extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
                        r'extra/robots.txt': {'path': 'robots.txt'},
-					   r'extra/keybase.txt': {'path': 'keybase.txt'},
+                       r'extra/keybase.txt': {'path': 'keybase.txt'},
                        }
 
 PATH = 'content'
@@ -93,6 +94,21 @@ PROJECTS = [
     },
 
 ]
+
+EXTENDED_SITEMAP_PLUGIN = {
+    'priorities': {
+        'index': 1.0,
+        'articles': 0.8,
+        'pages': 0.5,
+        'others': 0.4
+    },
+    'changefrequencies': {
+        'index': 'daily',
+        'articles': 'weekly',
+        'pages': 'weekly',
+        'others': 'monthly',
+    }
+}
 
 FONT_AWESOME_EMBED_CODE = 'e4a49a2d36'
 AUTHORS = {
