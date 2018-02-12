@@ -89,6 +89,6 @@ before Christmas. However, all of my data was recovered, so it's a pretty minor 
 It's been a little over a month since I've transfered my data to a the new drive in my desktop. I've manually run my back up process two or three times. I'm pretty much where
 I was at the beginning of October. Crossing my fingers that when I get on the computer in the morning, all my data will be there. That's not acceptable any more. 
 
-I'm finally building the backup solution. I'll be a huge (for a family) NAS. The goal is to be able to back up from Windows, Ubuntu and a couple Android phones automatically. 
+I'm finally building the backup solution. It'll be a huge (for a family) NAS. The goal is to be able to back up from Windows, Ubuntu and a couple Android phones automatically. 
 
 The next entry will cover the device itself and my choices for certain hardware. I'll follow that up with an article on the software set up to get the entire thing working.
