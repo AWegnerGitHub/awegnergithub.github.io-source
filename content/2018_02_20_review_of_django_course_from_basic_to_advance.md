@@ -76,4 +76,4 @@ I still want to find a quick refresher. I'll have to go hunting for that later.
  [3]: https://www.udemy.com/django-course-from-basics-to-advance/
  [4]: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
  [5]: https://www.youtube.com/watch?v=qgGIqRFvFFk&list=PL6gx4Cwl9DGBlmzzFcLgDhKTTfNLfX1IK
- [6]: {attach}images/django-course-basics-to-advance-review-screenshot.jpg
+ [6]: {attach}images/django-course-basics-to-advance-review-screenshot.png
