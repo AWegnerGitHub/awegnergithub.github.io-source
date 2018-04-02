@@ -1,9 +1,9 @@
-Title: Setting up a ZFS pool on Ubuntu 16.04
+Title: Installing NextCloud
 Date: 2018-03-27 23:30
 Tags: technical
 Category: Technical Solutions
-Slug: Installing NextCloud
-Summary: The ZFS pool is set up. It's time to use all that storage space.
+Slug: installing-nextcloud
+Summary: The ZFS pool is set up. It's time to use all that storage space and install NextCloud.
 Status: published
 Series: Recovering from data loss
 
