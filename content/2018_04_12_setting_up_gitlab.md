@@ -94,8 +94,8 @@ This will go in `/etc/apache2/sites-available/` and a symlink in `/etc/apache2/s
 ### Use SSL to access GitLab
 
 The example virtual host provided by GitLab uses HTTP only. I want to set up my instance to use HTTPS. I'll be 
-doing this with [Let's Encrypt][7], like I did when I set up NextCloud in the previous post. I'll cover the exact 
-steps for Let's Encrypt in a future post. The keys referenced in the virtual host configuration file below created 
+doing this with [Let's Encrypt][7], like I did when I set up NextCloud in the previous post. I cover the exact 
+[steps for Let's Encrypt][ssl] in another post. The keys referenced in the virtual host configuration file below created 
 by that process. 
 
 The first change to make is to redirect the HTTP version of your domain to HTTPS. The goal is that all traffic to
@@ -119,9 +119,9 @@ At the top of this block, we need to reference the Let's Encrypt keys:
 	SSLCipherSuite "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS"
 	Header add Strict-Transport-Security: "max-age=15768000;includeSubdomains"
 	SSLCompression Off
-	SSLCertificateFile /opt/repos/dehydrated/certs/gitlab.example.com/cert.pem
-	SSLCertificateKeyFile /opt/repos/dehydrated/certs/gitlab.example.com/privkey.pem
-	SSLCertificateChainFile /opt/repos/dehydrated/certs/gitlab.example.com/chain.pem
+	SSLCertificateFile /path/to/dehydrated/certs/gitlab.example.com/cert.pem
+	SSLCertificateKeyFile /path/to/dehydrated/certs/gitlab.example.com/privkey.pem
+	SSLCertificateChainFile /path/to/dehydrated/certs/gitlab.example.com/chain.pem
 	
 Save and restart Apache. You should be automatically redirected over HTTPS when you visit your GitLab URL.
 
@@ -172,3 +172,4 @@ knowledge that I can expand what I do with GitLab.
  [8]: {filename}2018_03_27_installing_nextcloud.md
  [9]: https://gitlab.com/gitlab-org/gitlab-ce/issues/32585
  [10]: https://docs.gitlab.com/omnibus/settings/smtp.html#smtp-settings
+ [ssl]: {filename}2018_04_25_setup_cloudflare_letsencrypt.md

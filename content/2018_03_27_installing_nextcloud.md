@@ -66,7 +66,7 @@ different user or group, adjust this command accordingly.
 ### Create the Virtual Host
 
 I'll be exposing this to the internet and I'll be accessing it via the internet. That means I really don't want to send data unencrypted to or from NextCloud. I'll be setting
-up the standard port 80 web server traffic to redirect to the secure port of 443. I'll cover generating SSL certificates in a future post. I use [Let's Encrypt][5]. The keys 
+up the standard port 80 web server traffic to redirect to the secure port of 443. I cover [generating SSL certificates][ssl] in another post. I use [Let's Encrypt][5]. The keys 
 referenced in the virtual host configuration file below created by that process.
 
 Create a new virtual host.
@@ -103,9 +103,9 @@ Paste the following:
 		RewriteCond %{THE_REQUEST} ^.*/index\.php
 		RewriteRule ^(.*)index.php$ /$1 [R=301,L]
 		SSLEngine on
-		SSLCertificateFile /opt/repos/dehydrated/certs/nas.example.com/cert.pem
-		SSLCertificateKeyFile /opt/repos/dehydrated/certs/nas.example.com/privkey.pem
-		SSLCertificateChainFile /opt/repos/dehydrated/certs/nas.example.com/chain.pem
+		SSLCertificateFile /path/to/dehydrated/certs/nas.example.com/cert.pem
+		SSLCertificateKeyFile /path/to/dehydrated/certs/nas.example.com/privkey.pem
+		SSLCertificateChainFile /path/to/dehydrated/certs/nas.example.com/chain.pem
 		<IfModule mod_headers.c>
 			Header always set Strict-Transport-Security "max-age=15552000; includeSubDomains"
 		</IfModule>
@@ -175,4 +175,4 @@ minutes of me getting home.
  [3]: https://nextcloud.com/
  [4]: https://nextcloud.com/install/
  [5]: https://letsencrypt.org/
- 
+ [ssl]: {filename}2018_04_25_setup_cloudflare_letsencrypt.md
