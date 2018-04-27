@@ -14,7 +14,7 @@ Stack Overflow launched in 2008. As it nears it's 9th year of operation, I am af
 
 In that time, I've gone from lurker to participant to moderator candidate (several times). I know Stack Overflow and Meta Stack Overflow. I am a moderator on another Stack Exchange site and have a good understanding of how the network operates. I also am one of the [most prolific reviewers][40] in the Stack Overflow [Low Quality Posts review queue][39] and have built several applications that work with the Stack Exchange API. I am a power user and know the network and the community.
 
-With those credentials out of the way, I want you to understand that I am active on the network. I am in good standing on Stack Overflow and am not a disgrunted user. I am a concerned user. I am getting more and more concerned that Stack Overflow - the company - is losing it's way. 
+With those credentials out of the way, I want you to understand that I am active on the network. I am in good standing on Stack Overflow and am not a disgruntled user. I am a concerned user. I am getting more and more concerned that Stack Overflow - the company - is losing it's way. 
 
 This post isn't another "Stack Overflow sucks" post (Google if you're curious). I'm going to present a few areas that I'm concerned about and hopefully provide either my suggestions for improvement or acknowledge that I don't know the solution but want the team to be aware of in the future. I still believe Stack Overflow is an incredible resource. I'd just like it to fix some of the perceived missteps that have occurred over the past two years.
 
@@ -28,7 +28,7 @@ Let's work through each of these items.
 
 ### Teams
 
-Teams was [announced] in October 2015 and [clarified][3] a week later. It was then [shut down][4] after nine months. The [page][5] it used to go to now has the following blurb (emphasis is mine):
+Teams was [announced][2] in October 2015 and [clarified][3] a week later. It was then [shut down][4] after nine months. The [page][5] it used to go to now has the following blurb (emphasis is mine):
 
 > Teams was in private beta for almost a year with 295 teams created and while we believe in its potential value, after a lot of consideration we’ve decided to un-ship the idea for the time being. We’ve realized that making a successful version of the Team page, as we originally proposed would ultimately take more time and resources than we want to devote to it. **Our resources are currently allocated on projects to enhance and improve quality on Q&A, Documentation, and Jobs on Stack Overflow, as a result we don’t have the dedicated developers to get Teams to its fullest potential.** The intention was to add more features to Teams, but we never expanded it to anything beyond a team description.
 
@@ -78,7 +78,7 @@ This project has years worth of feedback from the community that has been ignore
 
 For many users, the lack of true social features on Stack Overflow and across the Stack Exchange network has been a good thing. You can't easily follow a single user, you can't send private messages to a user, and you can't really do anything on the site that isn't public to everyone. The focus is on content, not opinions or social interactions.
 
-This breaks down once and a while though when a big political thing occurs. The two most frequently mentioned instances are the [response][25] to the [Obergefell v. Hodges] Supreme Court decision[26] and the response to President Trump's [initial immigration executive order][27].
+This breaks down once and a while though when a big political thing occurs. The two most frequently mentioned instances are the [response][25] to the [Obergefell v. Hodges][26] Supreme Court decision and the response to President Trump's [initial immigration executive order][27].
 
 Both of these caused huge uproars within the community when the company took a stand. These stands caused problems due to users holding opposite political views, users not wanting politics on their programming site, users not wanting to deal with the drama caused by the vocal members of the other groups. This led to an [apology][28]. The community wasn't pleased with this apology. Users mentioned in multiple answers to this apology that they don't want the company to post such political agendas on the site. It's out of place for a programmer community. Both of these instances are still brought up on Meta when the community feels that the company is imposing on them.
 
@@ -95,13 +95,13 @@ This was brought up during all of the projects listed above by long time users. 
 
 Above I've pointed out several issues that I've seen over the past two years. These issues are part of a bigger problem though. It seems that Stack Overflow doesn't know to how handle it's community size any longer. It's in the top 300 sites visited in the US and receives [half a billion views globally per month][30]. Couple this with the fact that they [don't have a sustainable business model yet][31] and have a [sizable team][32] with good benefits and they are getting concerned.
 
-Q&A is what built Stack Overflow, but it isn't enough to sustain them. Thus, the other projects are being created. Unfortunately, in this process, the company is forgetting it's existing user base at the expense of expanding to new users. Existing users are getting frustrated with the lack of quality improvements, being ignored and not having changes that benefit their use cases. 
+Q&A is what built Stack Overflow, but it isn't enough to sustain them. Thus, the other projects are being created. Unfortunately, in this process, it seems the company is forgetting it's existing user base at the expense of expanding to new users. Existing users are getting frustrated with the lack of quality improvements, being ignored and not having changes that benefit their use cases. 
 
 Documentation has taken up a giant chunk of time and developer effort and it's all been wasted. The [announcement][33] that it is being redone has been met with "thanks" from the community, along with warnings to consider that "quality" problem. We'll see how it plays out, or if that quality issue is ignored like their own Quality Project.
 
 Which brings us to the final point I want to make. I think the feeling of Q&A being "done" is the biggest problem I've had with Stack Overflow over the last year. New features aren't being built in that space. Instead of focusing on some of the "hard" problems, the company is throwing stuff at the wall and hoping something will stick. Unfortunately, the four biggest projects in the last year have either failed completely (Teams, Documentation, Mobile App...perhaps) or have significant unintended consequences that isn't helping the quality issue users have been reporting for years.
 
-Power users, the underlying community that has put time and effort into growing Stack Overflow to that it is today, is feeling ignored. It is only after month or year long experiments fail that community opinions are finally validated or considered. Users have expressed concerns in each of the above projects repeatedly. Yet, those opinions were not addressed. The silos that the developers have built around themselves are causing the company to lose touch with it's community. This is being done at the expense of alienating the users that care and the cost of developer time.
+Power users, the underlying community that has put time and effort into growing Stack Overflow to that it is today, is feeling ignored. It is only after months or years long experiments fail that community opinions are finally validated or considered. Users have expressed concerns in each of the above projects repeatedly. Yet, those opinions were not addressed. The silos that the developers have built around themselves are causing the company to lose touch with it's community. This is being done at the expense of alienating the users that care and the cost of developer time.
 
 Users want a high quality site with answers to their questions. Even new or potentially new users want this. Stack Overflow continues to avoid dealing with that problem because "it's hard". The unfortunate thing is, this is costing the site [users that return to provide more than one answer][35]. 
 
@@ -121,7 +121,7 @@ Thus began a slow spiral downward. Not all is lost though, because there are the
 
 I continue to invest my time and effort into the community, but even as an active user who really wants the company and community to succeed, it's getting harder and harder to ignore that those of us that have been around for years are not being listened to any more. We're being treated as the grumpy old person that grumbles about the way things used to be. Our experiences on the site are brushed aside as being unhelpful to new users. That completely ignores that fact that we are still trying to reach the goal on which Stack Overflow was created: ["With your help, we're working together to build a library of detailed answers to every question about programming."][34] To do this, we need high quality questions and answers so that we can actually provide help to all users. I think *this* is the biggest challenge that Stack Overflow is going to face in the next 18 months. 
 
-I want Stack Overflow to continue to grow. I also want Stack Overflow to have high quality content. I think my experience and the experience of others can help build the features to accomplish this. We just need Stack Overflow to refocus on the Q&A portion of their network again..
+I want Stack Overflow to continue to grow. I also want Stack Overflow to have high quality content. I think my experience and the experience of others can help build the features to accomplish this. We just need Stack Overflow to refocus on the Q&A portion of their network again.
 
 
  [1]: https://stackoverflow.com/users/189134/andy?tab=profile
@@ -165,3 +165,4 @@ I want Stack Overflow to continue to grow. I also want Stack Overflow to have hi
  [39]: https://stackoverflow.com/review/low-quality-posts/stats
  [40]: {attach}images/top_lqp_queue.png
  [41]: {attach}images/stackoverflow_active_reviewers_per_week.png
+ [42]: https://blog.codinghorror.com/listen-to-your-community-but-dont-let-them-tell-you-what-to-do/
