@@ -5,7 +5,7 @@ from pyembed.markdown import PyEmbedMarkdown
 
 AUTHOR = u'Andy Wegner'
 SITENAME = u'Ponderings of an Andy'
-SITEURL = 'http://andrewwegner.com'
+SITEURL = 'https://andrewwegner.com'
 THEME = '../pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
 # https://pypi.python.org/pypi/pelican-extended-sitemap
@@ -44,9 +44,9 @@ AUTHOR_FEED_RSS = None
 #          ('You can modify those links in your config file', '#'),)
 
 # Social widget
-SOCIAL = (('Stack Overflow', 'http://stackoverflow.com/users/189134/andy', 'stack-overflow'),
+SOCIAL = (('Stack Overflow', 'https://stackoverflow.com/users/189134/andy', 'stack-overflow'),
           ('Steam', 'http://steamcommunity.com/id/InsaneMosquito/', 'steam-square'),
-          ('Stack Overflow Jobs', 'http://stackoverflow.com/cv/andrewwegner', 'stack-overflow'))
+          ('Stack Overflow Jobs', 'https://stackoverflow.com/cv/andrewwegner', 'stack-overflow'))
 
 DEFAULT_PAGINATION = 10
 
@@ -54,16 +54,16 @@ DEFAULT_PAGINATION = 10
 RELATIVE_URLS = True
 
 LANDING_PAGE_ABOUT = {'title': """Can that be automated?""",
-                      'details': """<div itemscope itemtype="http://schema.org/Person"><p>My name
+                      'details': """<div itemscope itemtype="https://schema.org/Person"><p>My name
         is <span itemprop="name">Andy Wegner</span>. </p><p>I am a Product Reliability Engineer at a small company.
 		I've worked at a large manuafacturing company building software that  covers pretty much every aspect of a product's life 
 		cycle: initial conception, design, manufacturing, transportation, field operations, warranty returns, repair and remanufacturing.</p>
         <p>I was the community owner of Team Vipers for 5 years. Vipers was a gaming community, focused mainly around
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
         built a lot of software to help me in managing the community. </p>
-        <p>I am active on <a href="http://stackoverflow.com/users/189134/andy">Stack Overflow</a> and the rest of the
-        Stack Exchange network. I moderate <a href="http://communitybuilding.stackexchange.com/">Community Building</a> and
-		<a href="http://hardwarerecs.stackexchange.com/">Hardware Recommendations</a>. I've also
+        <p>I am active on <a href="https://stackoverflow.com/users/189134/andy">Stack Overflow</a> and the rest of the
+        Stack Exchange network. I moderate <a href="https://communitybuilding.stackexchange.com/">Community Building</a> and
+		<a href="https://hardwarerecs.stackexchange.com/">Hardware Recommendations</a>. I've also
         built a few tools to help keep the low quality content off the Stack Exchange network.</p></div>"""
                       }
 
@@ -119,7 +119,7 @@ AUTHORS = {
             community building, tinkering with new code and building new applications. 
             He writes about his experiences with each of these.""",
         u'friendly_name': "Andy Wegner",
-        u'url': 'http://andrewwegner.com/'
+        u'url': 'https://andrewwegner.com/'
 
     }
 
