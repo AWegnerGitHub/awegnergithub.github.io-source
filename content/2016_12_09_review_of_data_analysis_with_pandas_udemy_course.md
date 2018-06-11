@@ -1,4 +1,4 @@
-Title: Review of Udemy's "Data Analysis with Pandas" course
+Title: Review of Udemy's 'Data Analysis with Pandas' course
 Date: 2016-12-09 22:54
 Tags: review, technical, learning
 Category: Review

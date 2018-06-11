@@ -1,4 +1,4 @@
-Title: Review of Udemy's "Become a Product Manager  | Learn the Skills & Get the job" course
+Title: Review of Udemy's 'Become a Product Manager  | Learn the Skills & Get the job' course
 Date: 2017-04-20 7:40
 Tags: review, technical, learning
 Category: Review

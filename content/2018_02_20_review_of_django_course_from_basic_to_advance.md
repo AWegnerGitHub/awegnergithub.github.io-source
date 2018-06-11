@@ -8,7 +8,7 @@ Status: published
 Series: Course Reviews
 template: review
 revieweditem: Django Course from Basics to Advance
-score: 0
+score: 0.5
 
 [TOC]
 

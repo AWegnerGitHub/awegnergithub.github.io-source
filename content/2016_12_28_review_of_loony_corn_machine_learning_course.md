@@ -1,4 +1,4 @@
-Title: Review of Udemy's "From 0 to 1: Machine Learning, NLP and Python - Cut to the Chase" course
+Title: Review of Udemy's 'From 0 to 1: Machine Learning, NLP and Python - Cut to the Chase' course
 Date: 2016-12-28 20:10
 Tags: review, technical, learning
 Category: Review
