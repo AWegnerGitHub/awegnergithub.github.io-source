@@ -7,25 +7,28 @@ Summary: My review of "From 0 to 1: Machine Learning, NLP and Python - Cut to th
 Status: published
 modified: April 24, 2017
 Series: Course Reviews
+template: review
+revieweditem: From 0 to 1: Machine Learning, NLP and Python - Cut to the Chase
+score: 2.5
 
 [TOC]
 
 ## Course
 
-I decided to squeeze one more course in before 2016 ended. This time I chose 
+I decided to squeeze one more course in before 2016 ended. This time I chose
 ["From 0 to 1: Machine Learning, NLP and Python - Cut to the Chase"][1] by the LoonyCorn team on Udemy. This course was
 a 20 hour overview of machine learning techniques. I've been interested in taking some more formal training on various
-machine learning algorithms and this course sounded like it would be useful. 
+machine learning algorithms and this course sounded like it would be useful.
 
-## Thoughts on the lessons 
+## Thoughts on the lessons
 
-I was very disappointed in this course. The lessons had large portions of time that overlapped one another, the 
+I was very disappointed in this course. The lessons had large portions of time that overlapped one another, the
 background music was distracting, the instructor's speaking volume isn't consistent, the "coding" portions weren't
 done in a way that allowed me to follow along, code was presented with bugs and the instructor glossed over
 these with a simple "we'll fix those later". The theories were presented fairly well but really should have been
 condensed into a handful of lessons instead of spread out so broadly.
- 
-It took me a few lessons to realize it, but the course notes - effectively power point slides that are hand written 
+
+It took me a few lessons to realize it, but the course notes - effectively power point slides that are hand written
 during the lecture - and the instructor's voice were recorded at different times. Multiple times through the lessons,
 the *exact* same portion is used repeatedly. Lecture notes are "rewritten" or explained again. This repetition is used
 ineffectively, as the instructor's voice isn't consistent within a single lecture. The repeated parts are either much
