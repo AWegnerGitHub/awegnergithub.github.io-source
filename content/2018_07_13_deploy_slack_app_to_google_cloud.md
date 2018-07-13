@@ -6,7 +6,7 @@ Slug: slack-app-google-cloud
 Summary: Setup a Slack app using Flask and deploy it to Google's Cloud
 Status: published
 
----
+[TOC]
 
 ## Background and goals
 
