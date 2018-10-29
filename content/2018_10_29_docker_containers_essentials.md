@@ -32,8 +32,6 @@ This is a course that is several years old. It is not well put together, with mu
 
 I don't know how long the author is spending on updating their courses, but there is a lot that needs to be done in just this one hour course.
 
-The completion award below reflects the name of the course before it was renamed. 
-
 [![Completion Award][3]][4]
 
 
