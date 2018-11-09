@@ -102,3 +102,4 @@ community and better support.
  [10]: https://www.sqlalchemy.org/
  [11]: https://www.reddit.com/r/Python/comments/4tnqai/choosing_a_python_ormpeewee_vs_sqlalchemy/d5jyuug/
  [12]: https://gist.github.com/AWegnerGitHub/201dbaf09740f9ecd797c32ebfc15872
+ [13]: {filename}peewee-vs-sqlalcheme-results.png
