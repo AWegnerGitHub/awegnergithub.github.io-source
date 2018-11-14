@@ -4,10 +4,8 @@
 GH_USERNAME=AWegnerGithub
 
 #advanced settings
-BRANCH=master
 GITHUB_OUTPUT_FOLDER=built_website
 PELICAN_OUTPUT_FOLDER=output
-SHOW_CHANGES=true
 TARGET_REPO=$GH_USERNAME/$GH_USERNAME.github.io.git
 
 
@@ -18,9 +16,9 @@ if [ "$TRAVIS" == "true" ]; then
 		exit 0
 	fi
 
-    echo "Deploying site to $BRANCH branch of $TARGET_REPO."
+    echo "Deploying site to $TARGET_REPO."
     git config --global user.email "travis@travis-ci.org"
-	git config --global user.name "Travis CI"	
+    git config --global user.name "Travis CI"
 fi
 
 
@@ -42,6 +40,5 @@ echo -e "\n"
 
 detailedMessage="Commit $commitHash pushed to GitHub by Travis build $TRAVIS_BUILD_NUMBER"
 git commit -m "$commitMessage" -m "$detailedMessage"
-#git push -fq origin $BRANCH > /dev/null || exit $?
 git push -fq https://$GH_USERNAME:$GITHUB_API_KEY@github.com/$TARGET_REPO &>/dev/null || exit $?
 echo -e "Deploy completed\n"
