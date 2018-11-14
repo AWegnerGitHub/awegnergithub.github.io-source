@@ -6,7 +6,7 @@ from pyembed.markdown import PyEmbedMarkdown
 AUTHOR = u'Andy Wegner'
 SITENAME = u'Ponderings of an Andy'
 SITEURL = 'https://andrewwegner.com'
-THEME = '../pelican-themes/elegant'
+THEME = 'pelican-themes/elegant'
 PLUGIN_PATHS = ['../pelican-plugins', 'plugins']
 # https://pypi.python.org/pypi/pelican-extended-sitemap
 PLUGINS = ['neighbors', 'extract_toc', 'tipue_search', 'extended_sitemap', 'keyboard.kb', 'series', 'post_stats']
