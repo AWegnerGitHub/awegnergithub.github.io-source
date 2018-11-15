@@ -23,11 +23,11 @@ fi
 
 
 # Get the most recent commit message of most recent commit
-p_dir = $(pwd)
+p_dir=$(pwd)
 cd ..
 commitHash=$(git rev-parse HEAD)
 commitMessage=$(git log -1 --pretty=%B)
-cd p_dir
+cd $p_dir
 
 # Get current site
 git clone https://github.com/$TARGET_REPO $GITHUB_OUTPUT_FOLDER
