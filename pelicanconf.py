@@ -120,9 +120,7 @@ AUTHORS = {
             He writes about his experiences with each of these.""",
         u'friendly_name': "Andy Wegner",
         u'url': 'https://andrewwegner.com/'
-
     }
-
 }
 
 HEAP_ANALYTICS = 653100411
