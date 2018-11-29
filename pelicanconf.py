@@ -56,14 +56,14 @@ RELATIVE_URLS = True
 LANDING_PAGE_ABOUT = {'title': """Can that be automated?""",
                       'details': """<div itemscope itemtype="https://schema.org/Person"><p>My name
         is <span itemprop="name">Andy Wegner</span>. </p><p>I am a Product Reliability Engineer at a small company.
-		I've worked at a large manuafacturing company building software that  covers pretty much every aspect of a product's life 
-		cycle: initial conception, design, manufacturing, transportation, field operations, warranty returns, repair and remanufacturing.</p>
+        I've worked at a large manuafacturing company building software that  covers pretty much every aspect of a product's life
+        cycle: initial conception, design, manufacturing, transportation, field operations, warranty returns, repair and remanufacturing.</p>
         <p>I was the community owner of Team Vipers for 5 years. Vipers was a gaming community, focused mainly around
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
         built a lot of software to help me in managing the community. </p>
         <p>I am active on <a href="https://stackoverflow.com/users/189134/andy">Stack Overflow</a> and the rest of the
         Stack Exchange network. I moderate <a href="https://communitybuilding.stackexchange.com/">Community Building</a> and
-		<a href="https://hardwarerecs.stackexchange.com/">Hardware Recommendations</a>. I've also
+        <a href="https://hardwarerecs.stackexchange.com/">Hardware Recommendations</a>. I've also
         built a few tools to help keep the low quality content off the Stack Exchange network.</p></div>"""
                       }
 
@@ -115,8 +115,8 @@ FONT_AWESOME_EMBED_CODE = 'e4a49a2d36'
 AUTHORS = {
     u'Andy Wegner': {
         u'image': 'wegner_headshot.png',
-        u'blurb': """ is a father, an engineer and a computer scientist. He is interested in online 
-            community building, tinkering with new code and building new applications. 
+        u'blurb': """ is a father, an engineer and a computer scientist. He is interested in online
+            community building, tinkering with new code and building new applications.
             He writes about his experiences with each of these.""",
         u'friendly_name': "Andy Wegner",
         u'url': 'https://andrewwegner.com/'
@@ -124,3 +124,5 @@ AUTHORS = {
     }
 
 }
+
+HEAP_ANALYTICS = 653100411
