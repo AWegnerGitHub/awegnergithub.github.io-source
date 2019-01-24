@@ -46,6 +46,6 @@ git commit -m "$commitMessage" -m "$detailedMessage"
 git push -fq https://$GH_USERNAME:$GITHUB_API_KEY@github.com/$TARGET_REPO &>/dev/null || exit $?
 echo -e "Deploy completed\n"
 
-curl https://www.google.com/ping?sitemap=https://andrewwegner.com/sitemap.xml
-curl https://www.bing.com/ping?sitemap=https://andrewwegner.com/sitemap.xml
+curl https://www.google.com/ping?sitemap=https://andrewwegner.com/sitemap.xml &>/dev/null
+curl https://www.bing.com/ping?sitemap=https://andrewwegner.com/sitemap.xml &>/dev/null
 echo -e "Pinged Google and Bing with updated sitemaps"
