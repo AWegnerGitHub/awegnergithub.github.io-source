@@ -10,11 +10,11 @@ TARGET_REPO=$GH_USERNAME/$GH_USERNAME.github.io.git
 
 
 if [ "$TRAVIS" == "true" ]; then
-	# Ensure Pull requests are not deployed
-	if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-		echo "Successfully built pull request #$TRAVIS_PULL_REQUEST."
-		exit 0
-	fi
+    # Ensure Pull requests are not deployed
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+        echo "Successfully built pull request #$TRAVIS_PULL_REQUEST."
+        exit 0
+    fi
 
     echo "Deploying site to $TARGET_REPO."
     git config --global user.email "travis@travis-ci.org"
@@ -23,8 +23,11 @@ fi
 
 
 # Get the most recent commit message of most recent commit
+p_dir=$(pwd)
+cd ..
 commitHash=$(git rev-parse HEAD)
 commitMessage=$(git log -1 --pretty=%B)
+cd $p_dir
 
 # Get current site
 git clone https://github.com/$TARGET_REPO $GITHUB_OUTPUT_FOLDER
