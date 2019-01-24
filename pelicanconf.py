@@ -16,7 +16,7 @@ MARKDOWN = {'extension_configs': {
     'mdx_video': {}
 }
 }
-STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt", "extra/keybase.txt"]
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt", "extra/keybase.txt", "extra/BingSiteAuth.xml"]
 EXTRA_PATH_METADATA = {r'extra/CNAME': {'path': 'CNAME'},
                        r'extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
                        r'extra/robots.txt': {'path': 'robots.txt'},
@@ -56,7 +56,7 @@ RELATIVE_URLS = True
 LANDING_PAGE_ABOUT = {'title': """Can that be automated?""",
                       'details': """<div itemscope itemtype="https://schema.org/Person"><p>My name
         is <span itemprop="name">Andy Wegner</span>. </p><p>I am a Product Reliability Engineer at a small company.
-		I've worked at a large manuafacturing company building software that  covers pretty much every aspect of a product's life 
+		I've worked at a large manuafacturing company building software that  covers pretty much every aspect of a product's life
 		cycle: initial conception, design, manufacturing, transportation, field operations, warranty returns, repair and remanufacturing.</p>
         <p>I was the community owner of Team Vipers for 5 years. Vipers was a gaming community, focused mainly around
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
@@ -115,8 +115,8 @@ FONT_AWESOME_EMBED_CODE = 'e4a49a2d36'
 AUTHORS = {
     u'Andy Wegner': {
         u'image': 'wegner_headshot.png',
-        u'blurb': """ is a father, an engineer and a computer scientist. He is interested in online 
-            community building, tinkering with new code and building new applications. 
+        u'blurb': """ is a father, an engineer and a computer scientist. He is interested in online
+            community building, tinkering with new code and building new applications.
             He writes about his experiences with each of these.""",
         u'friendly_name': "Andy Wegner",
         u'url': 'https://andrewwegner.com/'

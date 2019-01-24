@@ -27,7 +27,7 @@ commitHash=$(git rev-parse HEAD)
 commitMessage=$(git log -1 --pretty=%B)
 
 # Get current site
-git clone https://github.com/$TARGET_REPO $GITHUB_OUTPUT_FOLDER 
+git clone https://github.com/$TARGET_REPO $GITHUB_OUTPUT_FOLDER
 
 #copy the new output
 cd $GITHUB_OUTPUT_FOLDER
@@ -42,3 +42,7 @@ detailedMessage="Commit $commitHash pushed to GitHub by Travis build $TRAVIS_BUI
 git commit -m "$commitMessage" -m "$detailedMessage"
 git push -fq https://$GH_USERNAME:$GITHUB_API_KEY@github.com/$TARGET_REPO &>/dev/null || exit $?
 echo -e "Deploy completed\n"
+
+curl https://www.google.com/ping?sitemap=https://andrewwegner.com/sitemap.xml
+curl https://www.bing.com/ping?sitemap=https://andrewwegner.com/sitemap.xml
+echo -e "Pinged Google and Bing with updated sitemaps"
