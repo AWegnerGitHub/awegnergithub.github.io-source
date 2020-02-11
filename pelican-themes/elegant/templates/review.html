@@ -22,7 +22,6 @@
 
 {% block content %}
 <section itemscope itemtype="https://schema.org/Review">
-<meta itemprop="itemReviewed" content="{{ article.revieweditem|e }}" />
 <meta itemprop="headline" content="{{ article.title|e }}" />
 <time itemprop="datePublished" datetime="{{ article.date.isoformat() }}">
 <meta itemprop="publisher" content="{{ article.author }}" />
@@ -91,6 +90,11 @@
         </div>
         <section>
         <div class="span2" style="float:right;font-size:0.9em;">
+            <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Course" content="{{ article.revieweditem|e }}" >
+                <meta itemprop="name" content="{{ article.revieweditem|e }}" />
+                <meta itemprop="description" content="{{ article.revieweditem|e }}" />
+                <meta itemprop="provider" content="Udemy" />
+            </div>
             {% if article.date %}
             <h4>Published</h4>
             {% set day = article.date.strftime('%d')|int %}
