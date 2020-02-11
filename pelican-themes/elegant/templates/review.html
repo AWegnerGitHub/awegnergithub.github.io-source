@@ -96,6 +96,9 @@
             {% set day = article.date.strftime('%d')|int %}
             <time itemprop="dateCreated" datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%b') }} {{ day }} {{- article.date.strftime(', %Y') }}</time>
             {% endif %}
+            <div itemprop=”itemReviewed” itemscope itemtype=”http://schema.org/Course>
+                <h4><span itemprop=”name”>{{ article.revieweditem|e }}</span></h4>
+            </div>
             <h4>Score</h4>
             <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
               <span itemprop="ratingValue">{{ article.score }}</span>
