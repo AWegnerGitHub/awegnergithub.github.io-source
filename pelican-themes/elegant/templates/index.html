@@ -94,7 +94,7 @@
             {% from '_includes/_defaults.html' import RECENT_ARTICLES_COUNT with context %}
             {% if loop.index0 < RECENT_ARTICLES_COUNT %}
             <article itemscope itemtype="https://schema.org/Blog">
-                <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }} {%if article.summary %} <small> {{ article.summary }} </small> {% endif %} </a>
+                <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a> {%if article.summary %} <small> {{ article.summary }} </small> {% endif %}
                 <section>
                     posted in
                 <a href="{{ SITEURL }}/categories.html#{{ article.category.slug }}-ref">{{ article.category }}</a>
