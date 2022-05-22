@@ -5,3 +5,4 @@ mdx-video==0.1.8
 pyembed-markdown==1.1.0
 pelican-extended-sitemap==1.0.5
 beautifulsoup4==4.6.3
+jinja2<3.0
