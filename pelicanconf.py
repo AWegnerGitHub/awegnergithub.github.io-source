@@ -16,12 +16,12 @@ MARKDOWN = {'extension_configs': {
     'mdx_video': {}
 }
 }
-STATIC_PATHS = ['images', 'extra/CNAME', 'extra/google8e079521c0d93c27.html', "extra/robots.txt", "extra/keybase.txt", "extra/BingSiteAuth.xml"]
-EXTRA_PATH_METADATA = {r'extra/CNAME': {'path': 'CNAME'},
-                       r'extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
-                       r'extra/robots.txt': {'path': 'robots.txt'},
-                       r'extra/keybase.txt': {'path': 'keybase.txt'},
-                       r'extra/BingSiteAuth.xml': {'path': 'BingSiteAuth.xml'},
+STATIC_PATHS = ['content/images', 'content/extra/CNAME', 'content/extra/google8e079521c0d93c27.html', "content/extra/robots.txt", "content/extra/keybase.txt", "content/extra/BingSiteAuth.xml"]
+EXTRA_PATH_METADATA = {r'content/extra/CNAME': {'path': 'CNAME'},
+                       r'content/extra/google8e079521c0d93c27.html': {'path': 'google8e079521c0d93c27.html'},
+                       r'content/extra/robots.txt': {'path': 'robots.txt'},
+                       r'content/extra/keybase.txt': {'path': 'keybase.txt'},
+                       r'content/extra/BingSiteAuth.xml': {'path': 'BingSiteAuth.xml'},
                        }
 
 PATH = 'content'
