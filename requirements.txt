@@ -6,3 +6,4 @@ pyembed-markdown==1.1.0
 pelican-extended-sitemap==1.0.5
 beautifulsoup4==4.6.3
 jinja2<3.0
+MarkupSafe==2.0.1
