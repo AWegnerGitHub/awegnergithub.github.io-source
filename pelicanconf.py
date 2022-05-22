@@ -22,7 +22,7 @@ EXTRA_PATH_METADATA = {r'content/extra/CNAME': {'path': 'CNAME'},
                        r'content/extra/robots.txt': {'path': 'robots.txt'},
                        r'content/extra/keybase.txt': {'path': 'keybase.txt'},
                        r'content/extra/BingSiteAuth.xml': {'path': 'BingSiteAuth.xml'},
-                       r'content/images': {'path': 'images'},
+                       r'content/images/': {'path': 'images/'},
                        }
 
 PATH = 'content'
