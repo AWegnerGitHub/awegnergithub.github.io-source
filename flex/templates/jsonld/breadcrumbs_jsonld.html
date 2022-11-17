@@ -1,0 +1,81 @@
+{% if 'category'==heirarchy %}
+{% set position2_name = "Categories" %}
+{% set position2_url = SITEURL + "/categories.html" %}
+{% if category is defined %}
+{% set position3_name = category %}
+{% set position3_url = SITEURL + "/" + category.url %}
+{% endif %}
+{% if article is defined and article.title|length %}
+{% set position4_name = "{{ article.title|striptags|e}}" %}
+{% set position4_url = SITEURL + "/" + article.url %}
+{% endif %}
+
+{% elif 'tags'==heirarchy %}
+{% set position2_name = "Tags" %}
+{% set position2_url = SITEURL + "/tags.html" %}
+{% if tag is defined %}
+{% set position3_name = tag %}
+{% set position3_url = SITEURL + "/" + tag.url %}
+{% endif %}
+{% if article is defined and article.title|length %}
+{% set position4_name = "{{ article.title|striptags|e}}" %}
+{% set position4_url = SITEURL + "/" + article.url %}
+{% endif %}
+
+{% elif 'archives'==heirarchy %}
+{% set position2_name = "Archives" %}
+{% set position2_url = SITEURL + "/archives.html" %}
+
+{% elif 'about'==heirarchy %}
+{% set position2_name = "About Me" %}
+{% set position2_url = SITEURL + "/about" %}
+{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+  {
+    "@type": "ListItem",
+    "position": 1,
+    "item": 
+    {
+      "@id": "/",
+      "name": "{{ SITENAME }}"
+    }
+  },
+  {
+    "@type": "ListItem",
+    "position": 2,
+    "item": 
+    {
+      "@id": "{{ position2_url }}",
+      "name": "{{ position2_name }}"
+    }
+  }
+  {% if position3_name is defined %}
+  ,{
+    "@type": "ListItem",
+    "position": 3,
+    "item": 
+    {
+      "@id": "{{ position3_url }}",
+      "name": "{{ position3_name }}"
+    }
+  }
+  {% if position4_name is defined %}
+  ,{
+    "@type": "ListItem",
+    "position": 4,
+    "item": 
+    {
+      "@id": "{{ position4_url }}",
+      "name": "{{ position4_url }}"
+    }
+  }
+  {% endif %}
+  {% endif %}
+  ]
+}
+</script>

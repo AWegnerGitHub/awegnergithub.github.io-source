@@ -1,0 +1,89 @@
+<aside class="aside-border">
+  <div>
+    <a href="{{ SITEURL }}/">
+      {% if SITELOGO %}
+      <img class="hex-logo" src="{{ SITELOGO }}" alt="{{ SITENAME }}" title="{{ SITENAME }}">
+      {% else %}
+      <img class="hex-logo" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/wegner_headshot.png" alt="{{ SITETITLE }}"
+        title="{{ SITENAME }}">
+      {% endif %}
+    </a>
+
+    {% if PLUGINS %}
+    {% if ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
+    <form class="navbar-search" action="{{ SITEURL }}/search.html" role="search">
+      <input type="text" name="q" id="tipue_search_input" placeholder="{{ _('Search...') }}">
+    </form>
+    {% elif 'pelican.plugins.search' in PLUGINS %}
+    <div class="stork">
+      <input class="stork-input" type="text" autocomplete="off" name="q" data-stork="sitesearch"
+        placeholder="{{ _('Search...') }}" />
+      <div class="stork-output" data-stork="sitesearch-output"></div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if (pages and DISPLAY_PAGES_ON_MENU) or LINKS %}
+    <nav>
+      <ul class="list">
+        {# Open links in new window depending on the LINKS_IN_NEW_TAB setting #}
+        {% macro get_target(link) -%}
+        {%- if LINKS_IN_NEW_TAB in ('all', true) -%}
+        _blank
+        {%- elif LINKS_IN_NEW_TAB == "external" and not link.startswith("/") and not link.startswith(SITEURL) -%}
+        _blank
+        {%- else -%}
+        _self
+        {%- endif -%}
+        {%- endmacro %}
+
+        {% if PAGES_SORT_ATTRIBUTE -%}
+        {% set pages = pages|sort(attribute=PAGES_SORT_ATTRIBUTE) %}
+        {%- endif %}
+
+        {% if DISPLAY_PAGES_ON_MENU %}
+        {% for page in pages %}
+        <li>
+          <a target="{{ get_target(SITEURL) }}"
+            href="{{ SITEURL }}/{{ page.url }}{% if not DISABLE_URL_HASH %}#{{ page.slug }}{% endif %}">
+            {{ page.title }}
+          </a>
+        </li>
+        {% endfor %}
+        {% endif %}
+
+        {% for name, link in LINKS %}
+        <li>
+          <a target="{{ get_target(link) }}" href="{{ link }}">{{ name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% endif %}
+
+    {% if article and article.toc %}
+    <h1>Article Contents</h1>
+    <hr />
+    <nav class="toc">
+      {{ article.toc }}
+    </nav>
+    {% endif %}
+
+    {% if CONTACT %}
+    {% set solid = ['at', 'envelope', 'mailbox', 'rss', 'file-pdf'] %}
+    {% set relme = ['stack-overflow', 'envelope', 'linkedin', 'github'] %}
+    <ul class="social">
+      <div class="itsmefooter">{{ AUTHOR }}</div>
+      {% for name, link, id in CONTACT %}
+      <li>
+        <a id="{{ id }}" class="sc-{{ name }}" {% if name in relme %}rel="me" {% endif %} href="{{ link }}"
+          target="_blank">
+          <i class="{% if name in solid %}fa-solid{% else %}fa-brands{% endif %} fa-{{ name }}"></i>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+
+</aside>

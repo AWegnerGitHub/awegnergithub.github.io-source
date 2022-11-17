@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Categories') }} · {{ super() }}{% endblock %}
+
+{% set max_articles = [0] %}
+{% for category, articles in categories %}
+{% if articles|count > max_articles|last %}
+{% do max_articles.append(articles|count) %}
+{% endif %}
+{% endfor %}
+
+{% block content %}
+<article class="single">
+  <header>
+    {% with heirarchy="category" %}
+    {% include "partial/breadcrumbs.html" %}
+    {% endwith %}
+    <h1 id="categories">{{ _('Categories') }}</h1>
+  </header>
+  <div>
+    {% if CATEGORY_GRAPH %}
+    <table id="categories">
+      {% for category, articles in categories|sort %}
+      <tr>
+        <td class="category">
+          <a href="{{ SITEURL }}/{{ category.url }}">{{ category }}</a>
+        </td>
+        <td class="categorybarcol">
+          <div class="categorybar" style="width:{{ 100 * articles|count / max_articles|last }}%">
+            {{ articles|count }}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+
+    <ul class="list">
+      {% for category, articles in categories|sort %}
+      <li>
+        <a href="{{ SITEURL }}/{{ category.url }}">{{ category }}</a> ({{ articles|count }})
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif%}
+  </div>
+</article>
+{% endblock %}

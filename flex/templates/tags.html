@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Tags') }} · {{ super() }}{% endblock %}
+
+{% set max_articles = [0] %}
+{% for tag, articles in tags %}
+{% if articles|count > max_articles|last %}
+{% do max_articles.append(articles|count) %}
+{% endif %}
+{% endfor %}
+
+{% block content %}
+<article class="single">
+  <header>
+    {% with heirarchy="tags" %}
+    {% include "partial/breadcrumbs.html" %}
+    {% endwith %}
+    <h1>{{ _('Tags') }}</h1>
+  </header>
+  <div>
+    {% if TAG_GRAPH %}
+    <table id="tags">
+      {% for tag, articles in tags|sort %}
+      <tr>
+        <td class="tag">
+          <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+        </td>
+        <td class="tagbarcol">
+          <div class="tagbar" style="width:{{ 100 * articles|count / max_articles|last }}%">
+            {{ articles|count }}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <ul class="list">
+      {%- for tag, articles in tags|sort %}
+      <li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a> ({{ articles|count }})</li>
+      {% endfor %}
+    </ul>
+    {% endif%}
+  </div>
+</article>
+{% endblock %}

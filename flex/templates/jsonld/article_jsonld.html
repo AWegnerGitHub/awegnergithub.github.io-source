@@ -1,0 +1,45 @@
+{% if SITELOGO %}
+{% set default_cover = SITELOGO %}
+{% else %}
+{% set default_cover = '{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png' %}
+{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "{{ article.title|striptags }}",
+  "headline": "{{ article.title|striptags }}",
+  "dateCreated": "{{ article.date }}",
+  "datePublished": "{{ article.date }}",
+  "dateModified": "{{ article.modified }}",
+  "copyrightYear": "{{ article.date.strftime('%Y') }}",
+  "copyrightHolder": {
+    "@type": "Person",
+    "name": "{{ article.author.name }}",
+    "url": "{{ SITEURL }}"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}",
+    "sameAs": [
+      "https://www.andrewwegner.com/about/"
+      ],
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.andrewwegner.com/about/"
+      }
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ article.author }}",
+    "sameAs": [
+      "https://www.andrewwegner.com/about/"
+      ]
+  },
+  "image": "{{ article.metadata.get('cover', default_cover) }}",
+  "url": "{{ SITEURL }}/{{ article.url }}",
+  "description": "{{ article.summary|striptags }}",
+  "mainEntityOfPage": "True",
+  "articleSection": "{{ article.category }}"
+}
+</script>

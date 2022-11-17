@@ -1,0 +1,6 @@
+{% extends "index.html" %}
+{% block title %} {{ _('Tag %(name)s', name=tag) }} · {{ super() }}{% endblock %}
+{% set includeBreadcrumb = True %}
+{% set heirarchy = "tags" %}
+{% block aboutme %}{% endblock aboutme %}
+{% set summarise = True %}

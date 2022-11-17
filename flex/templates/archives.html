@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Archives') }} · {{ super() }}{% endblock %}
+
+{% block content %}
+<article class="single">
+    <header>
+        {% with heirarchy="archives" %}
+        {% include "partial/breadcrumbs.html" %}
+        {% endwith %}
+        <h1 id="archives">{{ _('Archives') }}</h1>
+    </header>
+    <div class="blog-archives">
+        {% for article in dates %}
+        {% set year = article.date.strftime('%Y') %}
+        {% if loop.first %}
+        <h2 id="{{year }}"><a href="#{{year}}">{{ year }}</a></h2>
+        {% else %}
+        {% set prevyear = loop.previtem.date.strftime('%Y') %}
+        {%if prevyear != year %}
+        <h2 id="{{year }}"><a href="#{{year}}">{{ year }}</a></h2>
+        {% endif %}
+        {% endif %}
+
+        {% if loop.last %}
+        <article class="last-entry-of-year">
+            {% else %}
+            {% set next_year = loop.nextitem.date.strftime('%Y') %}
+
+            {% if next_year != year %}
+            <article class="last-entry-of-year">
+                {% else %}
+                <article>
+                    {% endif %}
+                    {% endif %}
+
+                    <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }} {%if article.subtitle %} <small> {{
+                            article.subtitle }} </small> {% endif %} </a>
+                    <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%B %d, %Y') }}</time>
+                    <meta content="{{ article.title|e }}" />
+                </article>
+                {% endfor %}
+    </div>
+</article>
+{% endblock %}

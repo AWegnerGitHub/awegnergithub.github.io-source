@@ -1,0 +1,34 @@
+{% if PLUGINS and 'pelican.plugins.series' in PLUGINS and article.series %}
+<div class="neighbors">
+  {% if article.series.previous %}
+  <a class="btn float-left" href="{{ SITEURL }}/{{ article.series.previous.url }}"
+    title="{{ article.series.previous.title|striptags }}">
+    <i class="fa fa-angle-left"></i> {{ _('Previous Post') }}
+  </a>
+  {% endif %}
+  {% if article.series.next %}
+  <a class="btn float-right" href="{{ SITEURL }}/{{ article.series.next.url }}"
+    title="{{ article.series.next.title|striptags }}">
+    {{ _('Next Post') }} <i class="fa fa-angle-right"></i>
+  </a>
+  {% endif %}
+</div>
+
+
+
+{% elif PLUGINS and 'neighbors' in PLUGINS %}
+<div class="neighbors">
+  {% if article.prev_article %}
+  <a class="btn float-left" href="{{ SITEURL }}/{{ article.prev_article.url }}"
+    title="{{ article.prev_article.title|striptags }}">
+    <i class="fa fa-angle-left"></i> {{ _('Previous Post') }}
+  </a>
+  {% endif %}
+  {% if article.next_article %}
+  <a class="btn float-right" href="{{ SITEURL }}/{{ article.next_article.url }}"
+    title="{{ article.next_article.title|striptags }}">
+    {{ _('Next Post') }} <i class="fa fa-angle-right"></i>
+  </a>
+  {% endif %}
+</div>
+{% endif %}

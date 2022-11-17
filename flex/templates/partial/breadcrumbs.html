@@ -1,0 +1,48 @@
+{% if 'category'==heirarchy %}
+<nav>
+    <ul class="article-breadcrumbs">
+        <li><a href="/"><i class="fa-sharp fa-solid fa-house"></i>&nbsp;Home</a></li>
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/categories.html">Categories</a></li>
+        {% if category is defined %}
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/{{category.url}}">{{ category }}</a>
+        </li>
+        {% if article is defined and article.title|length %}
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/{{article.url}}"><i
+                    class="fa-solid fa-book"></i>&nbsp;<span class="breadcrumb-article">{{ article.title|striptags|e
+                    }}</span></li></a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+{% elif 'tags'==heirarchy %}
+<nav>
+    <ul class="article-breadcrumbs">
+        <li><a href="/"><i class="fa-sharp fa-solid fa-house"></i>&nbsp;Home</a></li>
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/tags.html">Tags</a></li>
+        {% if tag is defined %}
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/{{tag.url}}">{{ tag }}</a>
+        </li>
+        {% if article is defined and article.title|length %}
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/{{article.url}}"><i
+                    class="fa-solid fa-book"></i>&nbsp;<span class="breadcrumb-article">{{ article.title|striptags|e
+                    }}</span></li></a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+{% elif 'archives'==heirarchy %}
+<nav>
+    <ul class="article-breadcrumbs">
+        <li><a href="/"><i class="fa-sharp fa-solid fa-house"></i>&nbsp;Home</a></li>
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/archives.html">Archives</a></li>
+    </ul>
+</nav>
+{% elif 'about'==heirarchy %}
+<nav>
+    <ul class="article-breadcrumbs">
+        <li><a href="/"><i class="fa-sharp fa-solid fa-house"></i>&nbsp;Home</a></li>
+        <li><i class="fa-solid fa-greater-than"></i>&nbsp;<a href="{{ SITEURL }}/about"><i class="fa-solid fa-user"></i>&nbsp;About Me</a></li>
+    </ul>
+</nav>
+{% endif %}
+{% include "jsonld/breadcrumbs_jsonld.html" %}

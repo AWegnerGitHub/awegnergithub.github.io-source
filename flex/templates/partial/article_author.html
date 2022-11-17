@@ -1,0 +1,6 @@
+{% macro article_author(article) %}
+    {% if article.author %}
+        <span class="author_blurb"><a href="{{ AUTHORS[article.author|string]['url'] }}" rel="author"><span class="author_name">{{ AUTHORS[article.author|string]['friendly_name'] }}</span></a> -
+            {{ AUTHORS[article.author|string]['blurb'] }}</span>
+    {% endif %}
+{% endmacro %}
