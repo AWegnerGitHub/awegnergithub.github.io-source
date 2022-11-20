@@ -14,14 +14,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-  {% if article %}
-  <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}" />
-  {% endif%}
+  {% if page %}
+  <link rel="canonical" href="{{ SITEURL }}/{{ page.url }}">
+  {% elif article %}
+  <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}">
+  {% elif page_name == 'index' and not articles_previous_page %}
+  <link rel="canonical" href="{{ SITEURL }}">
+  {% elif author or category or tag or page_name == 'index' %}
+  <link rel="canonical" href="{{ SITEURL }}/{{ articles_page.url }}">
+  {% else %}
+  <link rel="canonical" href="{{ SITEURL }}/{{ output_file }}">
+  {% endif %}
 
   {% if page in hidden_pages %}
   <meta name="robots" content="noindex, nofollow" />
   {% else %}
-  <meta name="robots" content="{{ ROBOTS }}" />
+  <meta name="robots" content="index, follow" />
   {% endif %}
 
   {% if USE_GOOGLE_FONTS != False %}
@@ -86,22 +94,6 @@
   {% include "partial/feed.html" %}
 
   {% include "partial/heap.html" %}
-
-  {% if not PLUGINS or 'seo' not in PLUGINS %}
-  {% if REL_CANONICAL %}
-  {% if page %}
-  <link rel="canonical" href="{{ SITEURL }}/{{ page.url }}">
-  {% elif article %}
-  <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}">
-  {% elif page_name == 'index' and not articles_previous_page %}
-  <link rel="canonical" href="{{ SITEURL }}">
-  {% elif author or category or tag or page_name == 'index' %}
-  <link rel="canonical" href="{{ SITEURL }}/{{ articles_page.url }}">
-  {% else %}
-  <link rel="canonical" href="{{ SITEURL }}/{{ output_file }}">
-  {% endif %}
-  {% endif %}
-  {% endif %}
 
   {% block meta %}
   <meta name="author" content="{{ AUTHOR }}" />

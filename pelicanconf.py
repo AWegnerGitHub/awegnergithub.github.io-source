@@ -5,6 +5,7 @@ SITENAME = "Ponderings of an Andy"
 SITEURL = "https://andrewwegner.com"
 # SITEURL = ""
 SITESUBTITLE = "Can that be automated?"
+SITEDESCRIPTION = "Articles and reviews covering thoughts on work place leadership, technical course reviews, and other ponderings of Andy"
 COPYRIGHT_YEAR = datetime.date.today().year
 COPYRIGHT_NAME = "Andrew Wegner"
 SITELOGO = "/images/wegner_headshot.png"
