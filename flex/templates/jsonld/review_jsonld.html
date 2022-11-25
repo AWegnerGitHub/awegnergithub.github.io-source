@@ -45,6 +45,13 @@
               }
           }
         }
+        {% elif REVIEW_PROVIDERS[provider]['itemType'] == "Course" %}
+        ,
+        "provider": {
+          "@type": "{{ REVIEW_PROVIDERS[provider]['type'] }}",
+          "name": "{{ REVIEW_PROVIDERS[provider]['name'] }}",
+          "sameAs": "{{ REVIEW_PROVIDERS[provider]['sameAs'] }}"
+        }
         {% endif %}
       },
       "reviewRating": {
