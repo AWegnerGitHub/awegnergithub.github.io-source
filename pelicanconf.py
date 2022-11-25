@@ -118,8 +118,19 @@ AUTHORS = {
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/"},
-    "Coursera": {"type": "Organization", "name": "Coursera", "sameAs": "https://www.coursera.org/"},
+    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
+    "Coursera": {
+        "type": "Organization",
+        "name": "Coursera",
+        "sameAs": "https://www.coursera.org/",
+        "itemType": "Course",
+    },
+    "RiseGardens": {
+        "type": "Organization",
+        "name": "Rise Gardens",
+        "sameAs": "https://risegardens.com/",
+        "itemType": "Product",
+    },
 }
 
 EXTENDED_SITEMAP_PLUGIN = {

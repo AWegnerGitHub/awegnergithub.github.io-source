@@ -1,9 +1,3 @@
-{% if article.series.name == "Course Reviews" %}
-{% set thingType = "Course" %}
-{% else %}
-{% set thingType = "Thing" %}
-{% endif %}
-
 {% if article.provider is not defined %}
 {% set provider = "Udemy" %}
 {% else %}
@@ -27,9 +21,31 @@
         "url": "{{ SITEURL }}"
       },
       "itemReviewed": {
-        "@type": "{{ thingType }}",
+        "@type": "{{ REVIEW_PROVIDERS[provider]['itemType'] }}",
         "name": "{{ article.revieweditem|e }}",
         "description": "{{ article.revieweditem|e }}"
+        {% if REVIEW_PROVIDERS[provider]['itemType'] == "Product" %}
+        ,
+        "review": {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "{{ article.score }}",
+            "bestRating": "10"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "{{ article.author }}",
+            "sameAs": [
+              "https://www.andrewwegner.com/about/"
+              ],
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://www.andrewwegner.com/about/"
+              }
+          }
+        }
+        {% endif %}
       },
       "reviewRating": {
         "@type": "Rating",
