@@ -49,7 +49,7 @@ PAGE_SAVE_AS = "{slug}/index.html"
 # Blogroll
 LINKS = (
     ("Home", "/"),
-    ("About Me", "/about"),
+    ("About Me", "/about/"),
     ("Archives", "/archives.html"),
     ("Categories", "/categories.html"),
     ("Tags", "/tags.html"),
