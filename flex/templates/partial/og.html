@@ -9,7 +9,18 @@
   <meta property="og:title" content="{{ SITENAME }}"/>
   <meta property="og:description" content="{{ SITEDESCRIPTION }}"/>
   <meta property="og:locale" content="{{ default_locale }}"/>
-  <meta property="og:url" content="{{ SITEURL }}"/>
+
+  {% if page %}
+  <meta property="og:url" content="{{ SITEURL }}/{{ page.url }}">
+  {% elif article %}
+  <meta property="og:url" content="{{ SITEURL }}/{{ article.url }}">
+  {% elif page_name == 'index' and not articles_previous_page %}
+  <meta property="og:url" content="{{ SITEURL }}">
+  {% elif author or category or tag or page_name == 'index' %}
+  <meta property="og:url" content="{{ SITEURL }}/{{ articles_page.url }}">
+  {% else %}
+  <meta property="og:url" content="{{ SITEURL }}/{{ output_file }}">
+  {% endif %}
   {% if SITELOGO %}
   <meta property="og:image" content="{{ SITELOGO }}">
   {% endif %}
