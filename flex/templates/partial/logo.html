@@ -1,0 +1,8 @@
+<a href="{{ SITEURL }}/">
+    {% if SITELOGO %}
+    <img class="hex-logo" src="{{ SITELOGO }}" alt="{{ SITENAME }}" title="{{ SITENAME }}">
+    {% else %}
+    <img class="hex-logo" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/wegner_headshot.png" alt="{{ SITETITLE }}"
+      title="{{ SITENAME }}">
+    {% endif %}
+</a>

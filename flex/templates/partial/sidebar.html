@@ -1,13 +1,6 @@
 <aside class="aside-border">
-  <div>
-    <a href="{{ SITEURL }}/">
-      {% if SITELOGO %}
-      <img class="hex-logo" src="{{ SITELOGO }}" alt="{{ SITENAME }}" title="{{ SITENAME }}">
-      {% else %}
-      <img class="hex-logo" src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/wegner_headshot.png" alt="{{ SITETITLE }}"
-        title="{{ SITENAME }}">
-      {% endif %}
-    </a>
+  <div class="aside-cont">
+    {% include "partial/logo.html" %}
 
     {% if PLUGINS %}
     {% if ('tipue_search' in PLUGINS or 'pelican.plugins.tipue_search' in PLUGINS) %}
@@ -24,7 +17,7 @@
     {% endif %}
 
     {% if (pages and DISPLAY_PAGES_ON_MENU) or LINKS %}
-    <nav>
+    <nav id="nav-links">
       <ul class="list">
         {# Open links in new window depending on the LINKS_IN_NEW_TAB setting #}
         {% macro get_target(link) -%}
@@ -62,28 +55,26 @@
     {% endif %}
 
     {% if article and article.toc %}
-    <h2>Article Contents</h2>
+    <h3>Article Contents</h3>
     <hr />
     <nav class="toc">
       {{ article.toc }}
     </nav>
     {% endif %}
 
-    {% if CONTACT %}
-    {% set solid = ['at', 'envelope', 'mailbox', 'rss', 'file-pdf'] %}
-    {% set relme = ['stack-overflow', 'envelope', 'linkedin', 'github'] %}
-    <ul class="social">
-      <div class="itsmefooter">{{ AUTHOR }}</div>
-      {% for name, link, id in CONTACT %}
-      <li>
-        <a id="{{ id }}" class="sc-{{ name }}" {% if name in relme %}rel="me" {% endif %} href="{{ link }}"
-          target="_blank">
-          <i class="{% if name in solid %}fa-solid{% else %}fa-brands{% endif %} fa-{{ name }}"></i>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+    {% include "partial/socials.html" %}
   </div>
 
+{% if article and article.toc %}
+  <script type="text/javascript">
+
+    let acont = document.getElementsByClassName("toc content-cont")[0];
+    function back(){
+      acont.style.left = "-24vw";
+    }
+    function openCont(){
+      acont.style.left = "-1vw";
+    }
+  </script>
+{% endif %}
 </aside>

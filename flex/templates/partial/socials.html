@@ -1,0 +1,15 @@
+{% if CONTACT %}
+{% set solid = ['at', 'envelope', 'mailbox', 'rss', 'file-pdf'] %}
+{% set relme = ['stack-overflow', 'envelope', 'linkedin', 'github'] %}
+<ul class="social">
+  <div class="itsmefooter">{{ AUTHOR }}</div>
+  {% for name, link, id in CONTACT %}
+  <li>
+    <a id="{{ id }}" class="sc-{{ name }}" {% if name in relme %}rel="me" {% endif %} href="{{ link }}"
+      target="_blank">
+      <i class="{% if name in solid %}fa-solid{% else %}fa-brands{% endif %} fa-{{ name }}"></i>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
