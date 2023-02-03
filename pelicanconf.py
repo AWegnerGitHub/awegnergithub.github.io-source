@@ -125,6 +125,12 @@ REVIEW_PROVIDERS = {
         "sameAs": "https://www.coursera.org/",
         "itemType": "Course",
     },
+    "LevelUp": {
+        "type": "Organization",
+        "name": "LevelUp",
+        "sameAs": "https://levelup.gitlab.com/",
+        "itemType": "Course",
+    },
     "RiseGardens": {
         "type": "Organization",
         "name": "Rise Gardens",
