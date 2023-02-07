@@ -6,9 +6,15 @@
     </a>
   {% endif %}
   {% if articles_page.has_previous() %}
+    {% if articles_previous_page.url|string() == "index.html" %}
+    <a class="btn float-right" href="{{ SITEURL }}/">
+      {{ _('Newer Posts') }} <i class="fa fa-angle-right"></i>
+    </a>
+    {% else %}
     <a class="btn float-right" href="{{ SITEURL }}/{{ articles_previous_page.url }}">
       {{ _('Newer Posts') }} <i class="fa fa-angle-right"></i>
     </a>
+    {% endif %}
   {% endif %}
   </div>
 {% endif %}
