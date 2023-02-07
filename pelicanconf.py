@@ -58,7 +58,11 @@ LINKS = (
 # Social widget
 CONTACT = (
     ("linkedin", "https://www.linkedin.com/in/andrew-wegner/", "andy-linkedin"),
-    ("stack-overflow", "https://stackoverflow.com/users/189134/andy", "andy-stackoverflow"),
+    (
+        "stack-overflow",
+        "https://stackoverflow.com/users/189134/andy",
+        "andy-stackoverflow",
+    ),
     ("github", "https://github.com/AWegnerGitHub/", "andy-github"),
     ("file-pdf", "/resume.pdf", "andy-resume"),
     ("envelope", "mailto:blog.feedback@andrewwegner.com", "andy-blogemail"),
@@ -107,18 +111,23 @@ CATEGORY_GRAPH = True
 
 
 AUTHORS = {
-    u"Andy Wegner": {
-        u"image": "wegner_headshot.png",
-        u"blurb": """ is a father, an engineer and a computer scientist. He is interested in online
+    "Andy Wegner": {
+        "image": "wegner_headshot.png",
+        "blurb": """ is a father, an engineer and a computer scientist. He is interested in online
             community building, tinkering with new code and building new applications.
             He writes about his experiences with each of these.""",
-        u"friendly_name": "Andy Wegner",
-        u"url": "https://andrewwegner.com/",
+        "friendly_name": "Andy Wegner",
+        "url": "https://andrewwegner.com/",
     }
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
+    "Udemy": {
+        "type": "Organization",
+        "name": "Udemy",
+        "sameAs": "https://www.udemy.com/",
+        "itemType": "Course",
+    },
     "Coursera": {
         "type": "Organization",
         "name": "Coursera",
@@ -141,7 +150,12 @@ REVIEW_PROVIDERS = {
 
 EXTENDED_SITEMAP_PLUGIN = {
     "priorities": {"index": 1.0, "articles": 0.8, "pages": 0.5, "others": 0.4},
-    "changefrequencies": {"index": "daily", "articles": "weekly", "pages": "weekly", "others": "monthly"},
+    "changefrequencies": {
+        "index": "daily",
+        "articles": "weekly",
+        "pages": "weekly",
+        "others": "monthly",
+    },
 }
 
 LANDING_PAGE_ABOUT = """<div><p>My name
@@ -150,7 +164,7 @@ LANDING_PAGE_ABOUT = """<div><p>My name
         logistics company and at a company working to improve the hiring process for engineers. I've been an individual contributor 
         at a large manuafacturing company.
         I've built global teams of engineers and delivered solutions that impact customers worldwide.
-        I've personally built software that covers much every aspect of a product's lifecycle in multiple industries.</p>
+        I've personally built software that covers every aspect of a product's lifecycle in multiple industries.</p>
         <p>I was the community owner of Team Vipers for 5 years. Vipers was a gaming community, focused mainly around
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
         built a lot of software to help me in managing the community. </p>
