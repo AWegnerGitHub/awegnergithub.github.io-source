@@ -169,8 +169,8 @@ FAVICON16X16 = "/favicon-16x16.png"
 SITEMANIFEST = "/site.webmanifest"
 
 # Disable Author Pages (it's just me)
-# AUTHORS_SAVE_AS = ""
-# AUTHORS_URL = ""
-# AUTHOR_SAVE_AS = ""
-# AUTHOR_URL = ""
+AUTHORS_SAVE_AS = ""
+AUTHORS_URL = ""
+AUTHOR_SAVE_AS = ""
+AUTHOR_URL = ""
 
