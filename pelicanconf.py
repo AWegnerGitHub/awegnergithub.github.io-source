@@ -58,11 +58,7 @@ LINKS = (
 # Social widget
 CONTACT = (
     ("linkedin", "https://www.linkedin.com/in/andrew-wegner/", "andy-linkedin"),
-    (
-        "stack-overflow",
-        "https://stackoverflow.com/users/189134/andy",
-        "andy-stackoverflow",
-    ),
+    ("stack-overflow", "https://stackoverflow.com/users/189134/andy", "andy-stackoverflow"),
     ("github", "https://github.com/AWegnerGitHub/", "andy-github"),
     ("file-pdf", "/resume.pdf", "andy-resume"),
     ("envelope", "mailto:blog.feedback@andrewwegner.com", "andy-blogemail"),
@@ -122,12 +118,7 @@ AUTHORS = {
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {
-        "type": "Organization",
-        "name": "Udemy",
-        "sameAs": "https://www.udemy.com/",
-        "itemType": "Course",
-    },
+    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
     "Coursera": {
         "type": "Organization",
         "name": "Coursera",
@@ -150,12 +141,7 @@ REVIEW_PROVIDERS = {
 
 EXTENDED_SITEMAP_PLUGIN = {
     "priorities": {"index": 1.0, "articles": 0.8, "pages": 0.5, "others": 0.4},
-    "changefrequencies": {
-        "index": "daily",
-        "articles": "weekly",
-        "pages": "weekly",
-        "others": "monthly",
-    },
+    "changefrequencies": {"index": "daily", "articles": "weekly", "pages": "weekly", "others": "monthly"},
 }
 
 LANDING_PAGE_ABOUT = """<div><p>My name
@@ -183,8 +169,8 @@ FAVICON16X16 = "/favicon-16x16.png"
 SITEMANIFEST = "/site.webmanifest"
 
 # Disable Author Pages (it's just me)
-AUTHORS_SAVE_AS = ""
-AUTHORS_URL = ""
-AUTHOR_SAVE_AS = ""
-AUTHOR_URL = ""
+# AUTHORS_SAVE_AS = ""
+# AUTHORS_URL = ""
+# AUTHOR_SAVE_AS = ""
+# AUTHOR_URL = ""
 
