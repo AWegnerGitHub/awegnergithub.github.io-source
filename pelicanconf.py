@@ -181,3 +181,10 @@ APPLETOUCHICON = "/apple-touch-icon.png"
 FAVICON32X32 = "/favicon-32x32.png"
 FAVICON16X16 = "/favicon-16x16.png"
 SITEMANIFEST = "/site.webmanifest"
+
+# Disable Author Pages (it's just me)
+AUTHORS_SAVE_AS = ""
+AUTHORS_URL = ""
+AUTHOR_SAVE_AS = ""
+AUTHOR_URL = ""
+
