@@ -58,7 +58,11 @@ LINKS = (
 # Social widget
 CONTACT = (
     ("linkedin", "https://www.linkedin.com/in/andrew-wegner/", "andy-linkedin"),
-    ("stack-overflow", "https://stackoverflow.com/users/189134/andy", "andy-stackoverflow"),
+    (
+        "stack-overflow",
+        "https://stackoverflow.com/users/189134/andy",
+        "andy-stackoverflow",
+    ),
     ("github", "https://github.com/AWegnerGitHub/", "andy-github"),
     ("file-pdf", "/resume.pdf", "andy-resume"),
     ("envelope", "mailto:blog.feedback@andrewwegner.com", "andy-blogemail"),
@@ -118,7 +122,12 @@ AUTHORS = {
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
+    "Udemy": {
+        "type": "Organization",
+        "name": "Udemy",
+        "sameAs": "https://www.udemy.com/",
+        "itemType": "Course",
+    },
     "Coursera": {
         "type": "Organization",
         "name": "Coursera",
@@ -141,7 +150,12 @@ REVIEW_PROVIDERS = {
 
 EXTENDED_SITEMAP_PLUGIN = {
     "priorities": {"index": 1.0, "articles": 0.8, "pages": 0.5, "others": 0.4},
-    "changefrequencies": {"index": "daily", "articles": "weekly", "pages": "weekly", "others": "monthly"},
+    "changefrequencies": {
+        "index": "daily",
+        "articles": "weekly",
+        "pages": "weekly",
+        "others": "monthly",
+    },
 }
 
 LANDING_PAGE_ABOUT = """<div><p>My name
@@ -151,6 +165,9 @@ LANDING_PAGE_ABOUT = """<div><p>My name
         at a large manuafacturing company.
         I've built global teams of engineers and delivered solutions that impact customers worldwide.
         I've personally built software that covers every aspect of a product's lifecycle in multiple industries.</p>
+        <p>I am the owner of <a href="https://vivaprintworks.etsy.com">Viva Printworks</a> (with my wife!), where we create custom 
+        designs to put on products. In the future I expect I'll have some posts here about what happens behind
+        the scenes too, to make it successful.</p>
         <p>I was the community owner of Team Vipers for 5 years. Vipers was a gaming community, focused mainly around
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
         built a lot of software to help me in managing the community. </p>
@@ -173,4 +190,3 @@ AUTHORS_SAVE_AS = ""
 AUTHORS_URL = ""
 AUTHOR_SAVE_AS = ""
 AUTHOR_URL = ""
-
