@@ -61,11 +61,9 @@
         },
         "offers": {
             "@type": "Offer",
-            "highPrice": "{{ article.price }}",
-            "lowPrice": "{{ article.saleprice }}",
+            "price": "{{ article.price }}",
             "priceCurrency": "USD"
           }
-        }
         {% endif %}
       },
       "reviewRating": {
@@ -73,7 +71,6 @@
         "ratingValue": "{{ article.score }}",
         "bestRating": "10",
         "worstRating": "0"
-
       },
       "author": {
         "@type": "Person",
