@@ -36,6 +36,7 @@ MARKDOWN = {
     "extension_configs": {
         "markdown.extensions.codehilite": {"css_class": "codehilight code"},
         "markdown.extensions.toc": {"permalink": "true"},
+        "markdown.extensions.admonition": {},
         "customblocks": {},
     }
 }
