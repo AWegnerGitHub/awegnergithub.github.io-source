@@ -171,7 +171,7 @@ LANDING_PAGE_ABOUT = """<div><p>My name
         Team Fortress 2, but we dabbled in other games for brief periods of time. I helped the community prosper. I also
         built a lot of software to help me in managing the community. </p>
         <p>I am an elected Moderator on <a href="https://stackoverflow.com/users/189134/andy">Stack Overflow</a> and participate across the rest of the
-        Stack Exchange network. I moderate <a href="https://communitybuilding.stackexchange.com/">Community Building</a> and
+        Stack Exchange network. I am a former moderator on <a href="https://communitybuilding.stackexchange.com/">Community Building</a> and
         <a href="https://hardwarerecs.stackexchange.com/">Hardware Recommendations</a> as well. I've also
         built a few tools to help keep the low quality content off the Stack Exchange network.</p></div>"""
 
