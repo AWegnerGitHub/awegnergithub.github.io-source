@@ -1,0 +1,9 @@
+{% if 'about'==heirarchy %}
+    <h2 id="faq">Frequently Asked Questions</h2>
+    {% for item in FAQ_QUESTIONS %}
+        <h3>{{ item[0] }}</h3>
+        <p>{{ item[1] }}</p>
+    {% endfor %}
+
+{% include "jsonld/faq_jsonld.html" %}
+{% endif %}

@@ -26,6 +26,7 @@
   <div>
     {% block before_content %}{% endblock %}
     {% block page_content %}{{ page.content }}{% endblock %}
+    {% include "partial/faq.html" %}
     {% block after_content %}{% endblock %}
   </div>
 </article>
