@@ -114,7 +114,7 @@ AUTHORS = {
             community building, tinkering with new code and building new applications.
             He writes about his experiences with each of these.""",
         "friendly_name": "Andy Wegner",
-        "url": "https://andrewwegner.com/",
+        "url": "https://andrewwegner.com/about/",
     }
 }
 
