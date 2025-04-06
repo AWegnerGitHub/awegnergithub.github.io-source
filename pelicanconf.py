@@ -26,6 +26,7 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
+FEED_MAX_ITEMS = None
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["series", "extract_toc", "neighbors", "keyboard", "extended_sitemap"]
