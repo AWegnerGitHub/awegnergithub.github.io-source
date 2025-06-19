@@ -190,7 +190,7 @@ FAQ_QUESTIONS = [
     ),
     (
         "What leadership experience does Andrew have?",
-        "Andy has held Vice President level roles in software engineering organizations at Zayo and PacketFabric. He was a fractional CTO at White Square Media, a video AdTech company. He's held Director of Engineering level roles at FleetOps aka Class8 and Woven Teams. These experiences include building, grown and mentoring global engineering teams. Prior to this, he was an individual contributor and team lead at Caterpillar.",
+        "Andy has held Vice President level roles in software engineering organizations at Zayo and PacketFabric. He was a fractional CTO at White Square Media, a video AdTech company. He's held Director of Engineering level roles at FleetOps aka Class8 and Woven Teams. These experiences include building, growing and mentoring global engineering teams. Prior to this, he was an individual contributor and team lead at Caterpillar.",
     ),
     (
         "What is Andew's educational background?",
