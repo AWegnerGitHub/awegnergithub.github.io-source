@@ -19,6 +19,7 @@
     "url": "{{ SITEURL }}"
   },
   "author": {
+      "@type": "Person",
       "@id": "https://andrewwegner.com/#andrew"
   },
   "mainEntityOfPage": {
@@ -28,16 +29,7 @@
   },
   "publisher": {
     "@type": "Person",
-    "name": "{{ article.author }}",
-    "sameAs": [
-      "https://www.andrewwegner.com/",
-      "https://www.andrewwegner.com/about/",
-      "https://www.andrewwegner.com/resume.pdf",
-      "https://www.linkedin.com/in/andrew-wegner/",
-      "https://github.com/AWegnerGitHub/",
-      "https://stackoverflow.com/users/189134/andy",
-      "https://keybase.io/awegner"
-    ]
+    "@id": "https://andrewwegner.com/#andrew"
   },
   "image": "{{ article.metadata.get('cover', default_cover) }}",
   "url": "{{ SITEURL }}/{{ article.url }}",
