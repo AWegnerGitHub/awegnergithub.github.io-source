@@ -61,11 +61,7 @@ LINKS = (
 # Social widget
 CONTACT = (
     ("linkedin", "https://www.linkedin.com/in/andrew-wegner/", "andy-linkedin"),
-    (
-        "stack-overflow",
-        "https://stackoverflow.com/users/189134/andy",
-        "andy-stackoverflow",
-    ),
+    ("stack-overflow", "https://stackoverflow.com/users/189134/andy", "andy-stackoverflow"),
     ("github", "https://github.com/AWegnerGitHub/", "andy-github"),
     ("file-pdf", "/resume.pdf", "andy-resume"),
     ("envelope", "mailto:blog.feedback@andrewwegner.com", "andy-blogemail"),
@@ -125,12 +121,7 @@ AUTHORS = {
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {
-        "type": "Organization",
-        "name": "Udemy",
-        "sameAs": "https://www.udemy.com/",
-        "itemType": "Course",
-    },
+    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
     "Coursera": {
         "type": "Organization",
         "name": "Coursera",
@@ -153,12 +144,7 @@ REVIEW_PROVIDERS = {
 
 EXTENDED_SITEMAP_PLUGIN = {
     "priorities": {"index": 1.0, "articles": 0.8, "pages": 0.5, "others": 0.4},
-    "changefrequencies": {
-        "index": "daily",
-        "articles": "weekly",
-        "pages": "weekly",
-        "others": "monthly",
-    },
+    "changefrequencies": {"index": "daily", "articles": "weekly", "pages": "weekly", "others": "monthly"},
 }
 
 LANDING_PAGE_ABOUT = """<div><p>My name
@@ -184,7 +170,7 @@ FAQ_QUESTIONS = [
     ),
     (
         "What is Andrew's current role?",
-        "Andy is currently employeed at Zayo Group as Vice President Product, Strategic Software.",
+        "Andy is currently employed at Zayo Group as Vice President Product, Strategic Software.",
     ),
     (
         "What technology stack is Andrew most familiar with?",
@@ -192,16 +178,13 @@ FAQ_QUESTIONS = [
     ),
     (
         "What industries has Andrew worked in?",
-        "Andy has worked in Telecommunications, Logistics, Manufactoring, Human Resources Information Systems, and AdTech.",
+        "Andy has worked in Telecommunications, Logistics, Manufacturing, Human Resources Information Systems, and AdTech.",
     ),
     (
         "Is Andrew Wegner a Stack Overflow Moderator?",
-        "Yes. Andy was elected to as a Stack Overflow moderator in August 2017. He was appointed Moderator Pro Tempore on Hardware Recommandations in October 2015 (and stepped down in 2024), and Moderator Pro Tempore on Community Building in August 2014 (and stepped down in 2024).",
+        "Yes. Andy was elected to as a Stack Overflow moderator in August 2017. He was appointed Moderator Pro Tempore on Hardware Recommendations in October 2015 (and stepped down in 2024), and Moderator Pro Tempore on Community Building in August 2014 (and stepped down in 2024).",
     ),
-    (
-        "Does Andrew Wegner have a GitHub Account?",
-        "Yes. Andy maintains a GitHub account: AWegnerGithub",
-    ),
+    ("Does Andrew Wegner have a GitHub Account?", "Yes. Andy maintains a GitHub account: AWegnerGithub"),
     (
         "Does Andrew do consulting work?",
         "Yes. Andy does consulting work. Previously, consulting work was done in a development capacity utilizing Python. More recently, Andy provides leadership mentoring or fractional CTO services.",
