@@ -134,6 +134,12 @@ REVIEW_PROVIDERS = {
         "sameAs": "https://levelup.gitlab.com/",
         "itemType": "Course",
     },
+    "RealPython": {
+        "type": "Organization",
+        "name": "Real Python",
+        "sameAs": "https://realpython.com/",
+        "itemType": "Course",
+    },
     "RiseGardens": {
         "type": "Organization",
         "name": "Rise Gardens",
