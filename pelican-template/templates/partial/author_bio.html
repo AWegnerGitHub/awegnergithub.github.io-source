@@ -1,0 +1,30 @@
+{%- set hex_still_class = '' if HEADSHOT_MORPH|default(true) else ' hex-logo-still' -%}
+{%- set author_key = article.author|string if article is defined and article and article.author else AUTHOR|string %}
+{%- set author_data = AUTHORS[author_key] if AUTHORS and AUTHORS[author_key] else {} %}
+{%- set author_name = author_data.friendly_name|default(AUTHOR_DISPLAY|default(author_key)) %}
+{%- set author_url = author_data.url|default(None) %}
+{%- set author_image = author_data.image|default(HEADSHOT) %}
+<aside class="author-bio" aria-label="About the author">
+  <span class="hex-logo hex-logo-md{{ hex_still_class }}">
+    {%- if author_image %}
+    <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/img/{{ author_image }}" alt="{{ author_name }}" />
+    {%- else %}
+    <span class="hex-logo-inner"></span>
+    {%- endif %}
+  </span>
+  <div class="author-bio-text">
+    <p class="author-bio-blurb">
+      {%- if author_url -%}
+      <a href="{{ author_url }}" class="author-bio-name" rel="author">{{ author_name }}</a>
+      {%- else -%}
+      <span class="author-bio-name">{{ author_name }}</span>
+      {%- endif -%}
+      {%- if author_data.blurb %} -{{ author_data.blurb }}{% endif %}
+    </p>
+    <div class="author-bio-links">
+      {%- set about = namespace(url=None) %}
+      {%- for p in pages %}{% if p.slug == 'about' %}{% set about.url = SITEURL ~ '/' ~ p.url %}{% endif %}{% endfor %}
+      <a href="{{ about.url if about.url else SITEURL ~ '/about/' }}">About me →</a>
+    </div>
+  </div>
+</aside>

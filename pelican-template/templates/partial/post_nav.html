@@ -1,0 +1,16 @@
+{%- if article.prev_article or article.next_article %}
+<nav class="post-nav" aria-label="Post navigation">
+  {%- if article.prev_article %}
+  <a href="{{ SITEURL }}/{{ article.prev_article.url }}" class="post-nav-link post-nav-link-prev">
+    <span class="post-nav-dir">← Previous post</span>
+    <span class="post-nav-title">{{ article.prev_article.title }}</span>
+  </a>
+  {%- else %}<span></span>{% endif %}
+  {%- if article.next_article %}
+  <a href="{{ SITEURL }}/{{ article.next_article.url }}" class="post-nav-link post-nav-link-next">
+    <span class="post-nav-dir">Next post →</span>
+    <span class="post-nav-title">{{ article.next_article.title }}</span>
+  </a>
+  {%- else %}<span></span>{% endif %}
+</nav>
+{%- endif %}

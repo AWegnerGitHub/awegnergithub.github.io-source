@@ -1,0 +1,18 @@
+{%- if FAVICON %}
+<link rel="icon" href="{{ SITEURL }}{{ FAVICON }}" />
+{%- endif %}
+{%- if FAVICON32X32 %}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ SITEURL }}{{ FAVICON32X32 }}" />
+{%- endif %}
+{%- if FAVICON16X16 %}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ SITEURL }}{{ FAVICON16X16 }}" />
+{%- endif %}
+{%- if APPLETOUCHICON %}
+<link rel="apple-touch-icon" href="{{ SITEURL }}{{ APPLETOUCHICON }}" />
+{%- endif %}
+{%- if SITEMANIFEST %}
+<link rel="manifest" href="{{ SITEURL }}{{ SITEMANIFEST }}" />
+{%- endif %}
+{%- if BROWSER_COLOR %}
+<meta name="theme-color" content="{{ BROWSER_COLOR }}" />
+{%- endif %}

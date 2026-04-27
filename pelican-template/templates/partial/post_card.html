@@ -1,0 +1,25 @@
+<article class="post-card{% if lead|default(false) %} post-card-lead{% endif %}">
+  <div class="post-meta">
+    <span class="post-category">
+      <a href="{{ SITEURL }}/{{ article.category.url }}" style="color: inherit; text-decoration: none; position: relative; z-index: 2;">{{ article.category }}</a>
+    </span>
+    <span class="post-dot">·</span>
+    <span class="post-date">{{ article.locale_date }}</span>
+    {%- if article.stats and article.stats.read_mins %}
+    <span class="post-dot">·</span>
+    <span class="post-read">{{ article.stats.read_mins }} min</span>
+    {%- endif %}
+  </div>
+  <h3 class="post-title"><a class="post-card-link" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+  {%- if article.summary %}
+  <p class="post-excerpt">{{ article.summary|striptags }}</p>
+  {%- endif %}
+  {%- if article.tags %}
+  <div class="post-tags">
+    {%- for tag in article.tags %}
+    <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">#{{ tag }}</a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+  <span class="post-link" aria-hidden="true">Read essay <span class="btn-arrow">→</span></span>
+</article>

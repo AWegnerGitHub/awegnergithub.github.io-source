@@ -1,0 +1,24 @@
+{%- if article.series %}
+{%- set series_prev = article.series.all_previous[-1] if article.series.all_previous else None %}
+{%- set series_next = article.series.all_next[0] if article.series.all_next else None %}
+<section class="series-block" aria-label="Series">
+  <div class="series-block-head">
+    <div class="series-block-kicker">Series · {{ article.series.name }}</div>
+    <div class="series-block-progress">Part {{ article.series.index }}{% if article.series.all_previous or article.series.all_next %} of {{ (article.series.all_previous|length) + 1 + (article.series.all_next|length) }}{% endif %}</div>
+  </div>
+  <div class="series-block-nav">
+    {%- if series_prev %}
+    <a href="{{ SITEURL }}/{{ series_prev.url }}" class="series-block-link series-block-link-prev">
+      <span class="series-block-dir">← Previous in series</span>
+      <span class="series-block-title">{{ series_prev.title }}</span>
+    </a>
+    {%- else %}<span></span>{% endif %}
+    {%- if series_next %}
+    <a href="{{ SITEURL }}/{{ series_next.url }}" class="series-block-link series-block-link-next">
+      <span class="series-block-dir">Next in series →</span>
+      <span class="series-block-title">{{ series_next.title }}</span>
+    </a>
+    {%- else %}<span></span>{% endif %}
+  </div>
+</section>
+{%- endif %}

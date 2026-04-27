@@ -1,0 +1,25 @@
+{%- if list_items and list_items|length %}
+{%- set order_iri = 'https://schema.org/ItemListOrder' ~ (list_order|default('Unordered')) %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "{{ list_name|e }}",
+  {%- if list_description %}
+  "description": "{{ list_description|e }}",
+  {%- endif %}
+  "itemListOrder": "{{ order_iri }}",
+  "numberOfItems": {{ list_items|length }},
+  "itemListElement": [
+    {%- for a in list_items %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "url": "{{ SITEURL }}/{{ a.url }}",
+      "name": "{{ a.title|striptags|e }}"
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif %}

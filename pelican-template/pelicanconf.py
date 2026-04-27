@@ -21,22 +21,22 @@ COPYRIGHT_NAME = "Andrew Wegner"
 SITELOGO = "/images/wegner_headshot.png"
 
 
-PATH = "content"
+PATH = "content/"
 READERS = {"html": None}
-THEME = "pelican-template"
+THEME = "pelican-template/"
 OUTPUT_PATH = "output/"
 
 TIMEZONE = "America/Chicago"
 
 DEFAULT_LANG = "en"
 
-FEED_ALL_ATOM = "feeds/all.atom.xml"
-CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
-TAG_FEED_ATOM = "feeds/tag/{slug}.atom.xml"
+# Feed generation is usually not desired when developing
+FEED_ALL_ATOM = None
+CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
-FEED_MAX_ITEMS = 20
+FEED_MAX_ITEMS = None
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["series", "extract_toc", "neighbors", "keyboard", "extended_sitemap"]
@@ -55,56 +55,15 @@ MARKDOWN = {
 JINJA_ENVIRONMENT = {"extensions": ["jinja2.ext.do"]}
 
 
-# --- Jinja filters -----------------------------------------------------------
-# Inlined here (rather than imported from theme_filters.py) because Pelican
-# loads this file with importlib.util.spec_from_file_location, which does not
-# place the config directory on sys.path.
-import re as _re
-
-_DUR_RE = _re.compile(
-    r"^P"
-    r"(?:(?P<days>\d+)D)?"
-    r"(?:T"
-    r"(?:(?P<hours>\d+)H)?"
-    r"(?:(?P<minutes>\d+)M)?"
-    r"(?:(?P<seconds>\d+)S)?"
-    r")?$"
-)
-
-
-def humanize_duration(value):
-    """ISO 8601 duration (``PT8H30M``) -> human text (``8 hours 30 minutes``).
-    Returns the input unchanged if unparseable."""
-    if not value:
-        return ""
-    s = str(value).strip()
-    m = _DUR_RE.match(s)
-    if not m:
-        return s
-    parts = []
-    for unit in ("days", "hours", "minutes", "seconds"):
-        v = m.group(unit)
-        if v:
-            n = int(v)
-            word = unit[:-1]  # "days" -> "day"
-            parts.append(f"{n} {word}{'s' if n != 1 else ''}")
-    return " ".join(parts) if parts else s
-
-
-JINJA_FILTERS = {
-    "humanize_duration": humanize_duration,
-}
-
-
 PAGE_URL = "{slug}/"
 PAGE_SAVE_AS = "{slug}/index.html"
 
 # Top-nav menu (rendered by partial/nav.html)
 MENUITEMS = (
-    ("About", "/about/"),
-    ("Archives", "/archives.html"),
+    ("About",      "/about/"),
+    ("Archives",   "/archives.html"),
     ("Categories", "/categories.html"),
-    ("Tags", "/tags.html"),
+    ("Tags",       "/tags.html"),
 )
 
 STATIC_PATHS = [
@@ -139,10 +98,6 @@ EXTRA_PATH_METADATA = {
 }
 
 DEFAULT_PAGINATION = 10
-
-# Add 404 to direct-rendered templates so Pelican emits output/404.html for
-# GitHub Pages' custom 404 support.
-DIRECT_TEMPLATES = ("index", "tags", "categories", "archives", "authors", "404")
 
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
@@ -277,7 +232,7 @@ AUTHOR_ROLE_LINES = [
     "Strategic Software",
 ]  # stacked on two lines in the nav wordmark and sidebar
 
-# --- Headshot & accent color ------------------------------------------------
+# --- Headshot -------------------------------------------------------------
 HEADSHOT = "wegner_headshot.png"  # filename inside theme static/img/
 HEADSHOT_MORPH = True  # True = morphing blob animation; False = still circle
 
@@ -285,7 +240,7 @@ HEADSHOT_MORPH = True  # True = morphing blob animation; False = still circle
 CONTACT_EMAIL = "blog.feedback@andrewwegner.com"
 RESUME_URL = "/resume.pdf"
 RESUME_LABEL = "Download résumé (PDF)"
-
+# Derived from CONTACT above but with display-friendly labels for the footer meta block:
 SOCIAL_META = [
     ("LinkedIn", "https://www.linkedin.com/in/andrew-wegner/", "in/andrew-wegner"),
     ("GitHub", "https://github.com/AWegnerGitHub/", "@AWegnerGitHub"),
@@ -297,9 +252,7 @@ SOCIAL_META = [
 ]
 
 FOOTER_KICKER = "GET IN TOUCH"
-FOOTER_HEADLINE = (
-    "Let me bring my experience to your business. Together we can solve the problem."
-)
+FOOTER_HEADLINE = "Currently open to VP Engineering and CTO conversations."
 FOOTER_SUB = (
     "I'm selective about what I take on, but always happy to talk about "
     "engineering leadership, distributed teams, and hiring."
@@ -307,7 +260,7 @@ FOOTER_SUB = (
 
 # --- Home page sections -----------------------------------------------------
 LANDING_HERO = {
-    "kicker": "Engineering leader · Mentor · Architect",
+    "kicker": "Engineering leader · Writer · Moderator",
     "headline": "Building the teams that <em>build the systems</em>.",
     "sub": (
         "I lead, grow and mentor engineering organizations across telecom, "
@@ -316,47 +269,40 @@ LANDING_HERO = {
         "distributed teams, managing technical debt, and hiring engineers in "
         "the age of AI."
     ),
-    "primary_cta": {"url": "#writing", "label": "Read the latest article"},
+    "primary_cta": {"url": "#writing", "label": "Read the latest essay"},
     "secondary_cta": {"url": "/archives.html", "label": "Browse all writing"},
     "meta": [
-        ("Currently", "VP Product, Strategic Software"),
-        ("Previously", "VP Software Engineering · Director Eng"),
-        (
-            "Industries",
-            "Telecommunications, Software Development, Transportation Logistics, Manufacturing, HRIS",
-        ),
+        ("Currently", "VP, Strategic Software"),
+        ("Previously", "VP Eng · Director Eng"),
+        ("Writing since", "2019"),
     ],
 }
 
 LANDING_METRICS = [
-    ("50+", "Engineers in largest organization led"),
-    ("17+", "Years shipping software end-to-end"),
-    (
-        "6",
-        "Continents where engineers I've led live (every continent except Antartica)",
-    ),
-    ("8", "Weeks to achieve SOC 2 attestation"),
+    ("40+", "Engineers in largest org led"),
+    ("5", "Industries: telecom, logistics, hiring, manufacturing"),
+    ("15+", "Years shipping software end-to-end"),
+    ("3", "VP / Director engineering roles"),
 ]
 
 LANDING_PRINCIPLES_HEAD = (
-    "Four ideas that shape how I run engineering organizations.",
-    "Drawn from years building teams across telecom, logistics, hiring "
-    "and manufacturing. Read my article on each principal.",
+    "Four ideas that shape how I run engineering orgs.",
+    "Drawn from fifteen years building teams across telecom, logistics, hiring "
+    "and manufacturing. Each one has a corresponding essay.",
 )
 
 LANDING_PRINCIPLES = [
     # Each entry is (number, title, body) or (number, title, body, article_url).
     # If a 4th element is present and truthy, the whole card becomes a link to
-    # that URL. Internal article URLs starting with "/" get SITEURL prepended;
-    # full URLs (https://...) are used verbatim. Omit the 4th element to render
-    # a non-clickable card.
+    # that URL. Internal URLs starting with "/" get SITEURL prepended; full
+    # URLs (https://...) are used verbatim. Omit the 4th element to render a
+    # non-clickable card.
     (
         "01",
         "Distance doesn't diminish performance.",
         "Distributed teams outperform co-located ones when the operating model "
         "is designed for async decisions, written context, and clear ownership. "
         "Not transplanted from the office.",
-        "/why-remote-work-is-good-for-your-team.html",
     ),
     (
         "02",
@@ -364,7 +310,6 @@ LANDING_PRINCIPLES = [
         "Most technical interviews measure test-taking under a stopwatch. I "
         "rebuild hiring around problem framing, trade-off articulation, and "
         "shipped evidence: the signals that correlate with on-the-job success.",
-        "/ai-broke-our-interview-process-i-had-to-fix-it.html",
     ),
     (
         "03",
@@ -372,14 +317,12 @@ LANDING_PRINCIPLES = [
         "Every team has debt. The ones that keep moving treat it as a portfolio "
         "(with explicit cost, interest, and a payback schedule), instead of a "
         "cleanup someone will get to someday.",
-        "/tech-debt-management-strategic-approach.html",
     ),
     (
         "04",
         "Grow engineers as the product.",
         "Mentorship and career ladders aren't HR overhead. They're the "
-        "compounding investment. The output of an engineering organization is the "
+        "compounding investment. The output of an engineering org is the "
         "engineers it produces as much as the software it ships.",
-        "/junior-engineer-crisis-ai-code-generation.html",
     ),
 ]

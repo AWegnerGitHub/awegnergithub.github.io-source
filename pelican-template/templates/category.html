@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'category' %}
+{%- set page_slug = category.slug|default(category|string) %}
+{%- set page_articles = articles_page.object_list if articles_page else articles %}
+
+{% block title %}<title>{{ category }} — {{ SITENAME }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{%- if page_articles %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ category }} — {{ SITENAME }}",
+  "url": "{{ SITEURL }}{% if output_file %}/{{ output_file }}{% endif %}",
+  {%- if articles_paginator and articles_paginator.num_pages > 1 %}
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "name": "Category: {{ category }}",
+    "@id": "{{ SITEURL }}/{{ category.url }}"
+  },
+  {%- endif %}
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Category: {{ category }}",
+    "description": "Articles in the {{ category }} category on {{ SITENAME }}.",
+    "itemListOrder": "https://schema.org/ItemListOrderDescending",
+    "numberOfItems": {{ page_articles|length }},
+    "itemListElement": [
+      {%- for a in page_articles %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "url": "{{ SITEURL }}/{{ a.url }}",
+        "name": "{{ a.title|striptags|e }}"
+      }{% if not loop.last %},{% endif %}
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+<section class="listing">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Categories', 'url': SITEURL ~ '/categories.html'},
+      {'label': category|string}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="listing-header">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Category</span>
+      </div>
+      <h1 class="listing-heading">{{ category }}</h1>
+      {%- if category.description %}
+      <p class="listing-description">{{ category.description }}</p>
+      {%- endif %}
+    </header>
+
+    <div class="section-rule">
+      <span class="section-rule-label">{{ articles_paginator.count|default(articles|length) }} {{ 'post' if (articles_paginator.count|default(articles|length)) == 1 else 'posts' }}</span>
+      <span class="section-rule-line"></span>
+      {%- if articles_paginator and articles_paginator.num_pages > 1 %}
+      <span class="section-rule-count">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span>
+      {%- endif %}
+    </div>
+
+    <div class="listing-list">
+      {%- for article in page_articles %}
+      {% include 'partial/post_card.html' %}
+      {%- endfor %}
+    </div>
+
+    {% include 'partial/pagination.html' %}
+  </div>
+</section>
+{% endblock %}

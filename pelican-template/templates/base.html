@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ DEFAULT_LANG|default('en') }}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+{% block title %}<title>{{ SITENAME }}</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ SITEDESCRIPTION|default(SITESUBTITLE|default('')) }}" />
+{% if AUTHOR %}<meta name="author" content="{{ AUTHOR }}" />{% endif %}
+{% endblock %}
+
+<link rel="canonical" href="{{ SITEURL }}{% if output_file %}/{{ output_file }}{% endif %}" />
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ SITEURL }}/sitemap.xml" />
+{%- if articles_page and articles_page.has_previous() and articles_previous_page %}
+<link rel="prev" href="{{ SITEURL }}/{{ articles_previous_page.url }}" />
+{%- endif %}
+{%- if articles_page and articles_page.has_next() and articles_next_page %}
+<link rel="next" href="{{ SITEURL }}/{{ articles_next_page.url }}" />
+{%- endif %}
+
+{% include 'partial/icon.html' %}
+{% include 'partial/feed.html' %}
+{% include 'partial/og.html' %}
+{% block head_extra %}{% endblock %}
+
+<link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/css/site.css" />
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/js/site.js" defer></script>
+
+{% include 'partial/jsonld/blog.html' %}
+{% block head_jsonld %}{% endblock %}
+</head>
+<body data-page-type="{{ page_type|default('unknown') }}" data-page-slug="{{ page_slug|default('') }}"{% if track_scroll %} data-track-scroll="1"{% endif %}>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="site light compact">
+  {% include 'partial/nav.html' %}
+  <div class="page">
+    {% include 'partial/sidebar.html' %}
+    <main class="main" id="main-content" tabindex="-1">
+      {% block content %}{% endblock %}
+      {% include 'partial/footer.html' %}
+    </main>
+  </div>
+</div>
+
+{% include 'partial/heap.html' %}
+</body>
+</html>

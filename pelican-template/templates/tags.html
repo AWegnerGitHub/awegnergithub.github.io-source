@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'tags' %}
+{% set tag_list = tags|sort(attribute=0) %}
+
+{% block title %}<title>Tags — {{ SITENAME }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{%- if tag_list %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tags — {{ SITENAME }}",
+  "description": "All tags on {{ SITENAME }}.",
+  "itemListOrder": "https://schema.org/ItemListUnordered",
+  "numberOfItems": {{ tag_list|length }},
+  "itemListElement": [
+    {%- for tag, posts in tag_list %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "url": "{{ SITEURL }}/{{ tag.url }}",
+      "name": "#{{ tag|e }}"
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+{% set total_posts = tag_list|map(attribute=1)|map('length')|sum %}
+{% set max_count = tag_list|map(attribute=1)|map('length')|max if tag_list else 1 %}
+{% set top = namespace(tag=none, count=0) %}
+{%- for tag, posts in tag_list %}
+  {%- if posts|length > top.count %}
+    {%- set top.count = posts|length %}
+    {%- set top.tag = tag %}
+  {%- endif %}
+{%- endfor %}
+
+<section class="taxonomy">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Tags'}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="listing-header listing-header-split">
+      <div class="listing-header-main">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Index</span>
+        </div>
+        <h1 class="listing-heading">Tags</h1>
+        <p class="listing-description">
+          Every tag, alphabetical. Tags cross-cut categories, so this is the
+          fastest way to find writing on a specific topic.
+        </p>
+      </div>
+      <aside class="listing-header-stats" aria-label="Summary">
+        <dl>
+          <div><dt>Tags</dt><dd>{{ tag_list|length }}</dd></div>
+          <div><dt>Total posts</dt><dd>{{ total_posts }}</dd></div>
+          {%- if top.tag %}
+          <div><dt>Most used</dt><dd>#{{ top.tag }}</dd></div>
+          {%- endif %}
+        </dl>
+      </aside>
+    </header>
+
+    <div class="section-rule">
+      <span class="section-rule-label">{{ tag_list|length }} {{ 'tag' if tag_list|length == 1 else 'tags' }}</span>
+      <span class="section-rule-line"></span>
+      <span class="section-rule-count">{{ total_posts }} posts</span>
+    </div>
+
+    <ul class="taxonomy-list">
+      {%- for tag, posts in tag_list %}
+      {%- set pct = (posts|length / max_count * 100)|round(2) %}
+      <li class="taxonomy-row">
+        <a href="{{ SITEURL }}/{{ tag.url }}" class="taxonomy-link">
+          <span class="taxonomy-name">#{{ tag }}</span>
+          <span class="taxonomy-bar" aria-hidden="true">
+            <span class="taxonomy-bar-fill" style="width: {{ pct }}%"></span>
+          </span>
+          <span class="taxonomy-count">{{ posts|length }} {{ 'post' if posts|length == 1 else 'posts' }}</span>
+          <span class="taxonomy-arrow">→</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

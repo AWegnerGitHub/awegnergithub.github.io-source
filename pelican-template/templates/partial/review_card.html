@@ -1,0 +1,43 @@
+{%- if article.score %}
+{%- set provider_key = article.provider|default('Udemy') %}
+{%- set provider = REVIEW_PROVIDERS[provider_key] if REVIEW_PROVIDERS and REVIEW_PROVIDERS[provider_key] else none %}
+{%- set provider_name = provider.name if provider else provider_key %}
+{%- set provider_url = provider.sameAs if provider and provider.sameAs else none %}
+<aside class="review-card" aria-label="Review summary">
+  <div class="review-card-score">
+    <div class="review-card-score-value">{{ '%.1f'|format(article.score|float) }}</div>
+    <div class="review-card-score-out">out of 10</div>
+  </div>
+  <div class="review-card-body">
+    <div class="review-card-kicker">Review</div>
+    <div class="review-card-item">{{ article.revieweditem }}</div>
+    <dl class="review-card-meta">
+      {%- if provider_name %}
+      <div><dt>Provider</dt><dd>
+        {%- if provider_url -%}
+          <a href="{{ provider_url }}" class="review-card-provider-link">{{ provider_name }}</a>
+        {%- else -%}
+          {{ provider_name }}
+        {%- endif %}
+      </dd></div>
+      {%- endif %}
+      {%- if article.workload %}
+      <div><dt>Workload</dt><dd>{{ article.workload|humanize_duration }}</dd></div>
+      {%- endif %}
+      {%- if article.price %}
+      <div>
+        <dt>Price</dt>
+        <dd>
+          {%- if article.saleprice and article.saleprice != article.price %}
+          <span class="review-card-saleprice">${{ '%.2f'|format(article.saleprice|float) }}</span>
+          <span class="review-card-strikeprice">${{ '%.2f'|format(article.price|float) }}</span>
+          {%- else %}
+          <span>${{ '%.2f'|format(article.price|float) }}</span>
+          {%- endif %}
+        </dd>
+      </div>
+      {%- endif %}
+    </dl>
+  </div>
+</aside>
+{%- endif %}

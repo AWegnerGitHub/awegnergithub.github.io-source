@@ -1,0 +1,95 @@
+{%- set provider_key = article.provider|default('Udemy') %}
+{%- set provider = REVIEW_PROVIDERS[provider_key] if REVIEW_PROVIDERS and REVIEW_PROVIDERS[provider_key] else {} %}
+{%- set item_type = provider.itemType|default('Course') %}
+{%- set person_id = SITEURL ~ '/#andrew' %}
+{%- set author_name = AUTHOR_DISPLAY|default(article.author|string) %}
+<script type="application/ld+json">
+{%- if item_type == 'Product' %}
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ article.revieweditem|e }}",
+  {%- if provider.name %}
+  "brand": { "@type": "Brand", "name": "{{ provider.name }}" },
+  {%- endif %}
+  "review": {
+    "@type": "Review",
+    "name": "{{ article.title|striptags|e }}",
+    "url": "{{ SITEURL }}/{{ article.url }}",
+    "datePublished": "{{ article.date.isoformat() }}",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "{{ article.score }}",
+      "bestRating": "10"
+    },
+    "author": {
+      "@type": "Person",
+      "@id": "{{ person_id }}",
+      "name": "{{ author_name|e }}",
+      "url": "{{ SITEURL }}"
+    }
+  }
+}
+{%- else %}
+{
+  "@context": "https://schema.org/",
+  "@type": "Review",
+  "name": "{{ article.revieweditem|e }}",
+  "headline": "{{ article.title|striptags|e }}",
+  "url": "{{ SITEURL }}/{{ article.url }}",
+  "dateCreated": "{{ article.date.isoformat() }}",
+  "datePublished": "{{ article.date.isoformat() }}",
+  {%- if article.modified %}
+  "dateModified": "{{ article.modified.isoformat() }}",
+  {%- endif %}
+  "itemReviewed": {
+    "@type": "{{ item_type }}",
+    "name": "{{ article.revieweditem|e }}",
+    {%- if article.summary %}
+    "description": "{{ article.summary|striptags|e }}",
+    {%- endif %}
+    {%- if provider.name %}
+    "provider": {
+      "@type": "Organization",
+      "name": "{{ provider.name }}"
+      {%- if provider.sameAs %},
+      "sameAs": "{{ provider.sameAs }}"
+      {%- endif %}
+    }
+    {%- if article.workload or article.price %},
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "online"
+      {%- if article.workload %},
+      "courseWorkload": "{{ article.workload }}"
+      {%- endif %}
+      {%- if article.price %},
+      "offers": {
+        "@type": "Offer",
+        {%- if article.saleprice and article.saleprice != article.price %}
+        "price": "{{ article.saleprice }}",
+        {%- else %}
+        "price": "{{ article.price }}",
+        {%- endif %}
+        "priceCurrency": "USD"
+      }
+      {%- endif %}
+    }
+    {%- endif %}
+    {%- endif %}
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "{{ article.score }}",
+    "bestRating": "10"
+  },
+  "author": {
+    "@type": "Person",
+    "@id": "{{ person_id }}",
+    "name": "{{ author_name|e }}",
+    "url": "{{ SITEURL }}"
+  },
+  "mainEntityOfPage": "True"
+}
+{%- endif %}
+</script>

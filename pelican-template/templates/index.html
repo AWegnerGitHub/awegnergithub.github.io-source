@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'index' %}
+{%- set track_scroll = true %}
+{%- set is_first_page = not articles_page or articles_page.number == 1 %}
+{%- set current_page_articles = articles_page.object_list if articles_page else articles %}
+{%- set archive_articles = current_page_articles[3:] if is_first_page else current_page_articles %}
+
+{%- set featured = [] %}
+{%- for a in articles %}
+  {%- set flag = a.metadata.get('featured', '')|string|lower %}
+  {%- if flag in ['true', 'yes', '1', 'y'] %}
+    {%- do featured.append(a) %}
+  {%- endif %}
+{%- endfor %}
+
+{% block title %}<title>{{ SITENAME }}{% if not is_first_page %} — Page {{ articles_page.number }}{% elif SITESUBTITLE %} — {{ SITESUBTITLE }}{% endif %}</title>{% endblock %}
+
+{% block head_jsonld %}
+{% if is_first_page %}
+{% include 'partial/jsonld/person.html' %}
+{% with list_name='Recent Articles',
+        list_description='Recent articles published on ' ~ SITENAME ~ '.',
+        list_order='Descending',
+        list_items=articles[:10] %}
+{% include 'partial/jsonld/itemlist.html' %}
+{% endwith %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{%- if LANDING_HERO %}
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      {%- if LANDING_HERO.kicker %}
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>{{ LANDING_HERO.kicker }}</span>
+      </div>
+      {%- endif %}
+      <h1 class="hero-headline">{{ LANDING_HERO.headline|safe }}</h1>
+      {%- if LANDING_HERO.sub %}
+      <p class="hero-sub">{{ LANDING_HERO.sub }}</p>
+      {%- endif %}
+      <div class="hero-ctas">
+        {%- if LANDING_HERO.primary_cta %}
+        {%- set primary_href = (SITEURL ~ LANDING_HERO.primary_cta.url) if LANDING_HERO.primary_cta.url.startswith('/') else LANDING_HERO.primary_cta.url %}
+        <a href="{{ primary_href }}" class="btn btn-primary">
+          {{ LANDING_HERO.primary_cta.label }}
+          <span class="btn-arrow">→</span>
+        </a>
+        {%- endif %}
+        {%- if LANDING_HERO.secondary_cta %}
+        {%- set secondary_href = (SITEURL ~ LANDING_HERO.secondary_cta.url) if LANDING_HERO.secondary_cta.url.startswith('/') else LANDING_HERO.secondary_cta.url %}
+        <a href="{{ secondary_href }}" class="btn btn-ghost">{{ LANDING_HERO.secondary_cta.label }}</a>
+        {%- endif %}
+      </div>
+      {%- if LANDING_HERO.meta %}
+      <dl class="hero-meta">
+        {%- for item in LANDING_HERO.meta %}
+        <div><dt>{{ item[0] }}</dt><dd>{{ item[1] }}</dd></div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+    </div>
+    <aside class="hero-aside" aria-label="Recent publishing">
+      <div class="hero-aside-label">
+        <span class="hero-aside-dot"></span>
+        Recently Published
+      </div>
+      <div class="hero-aside-cards">
+        {%- for a in articles[:3] %}
+        <a href="{{ SITEURL }}/{{ a.url }}" class="hero-aside-card">
+          <div class="hero-aside-card-meta">
+            <span class="hero-aside-card-cat">{{ a.category }}</span>
+            {%- if a.stats and a.stats.read_mins %}
+            <span class="hero-aside-card-dot">·</span>
+            <span>{{ a.stats.read_mins }} min</span>
+            {%- endif %}
+          </div>
+          <h3 class="hero-aside-card-title">{{ a.title }}</h3>
+          <div class="hero-aside-card-date">{{ a.locale_date }}</div>
+        </a>
+        {%- endfor %}
+      </div>
+    </aside>
+  </div>
+</section>
+{%- endif %}
+
+{%- if LANDING_METRICS %}
+<section class="metrics" aria-label="Impact">
+  <div class="container">
+    <div class="section-rule"><span class="section-rule-label">IMPACT</span><span class="section-rule-line"></span></div>
+    <div class="metrics-grid">
+      {%- for value, label in LANDING_METRICS %}
+      <div class="metric">
+        <div class="metric-value">{{ value }}</div>
+        <div class="metric-label">{{ label }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if LANDING_PRINCIPLES %}
+<section class="principles" id="principles">
+  <div class="container">
+    <div class="section-rule"><span class="section-rule-label">LEADERSHIP PRINCIPLES</span><span class="section-rule-line"></span></div>
+    {%- if LANDING_PRINCIPLES_HEAD %}
+    <div class="principles-head">
+      <h2>{{ LANDING_PRINCIPLES_HEAD[0] }}</h2>
+      <p>{{ LANDING_PRINCIPLES_HEAD[1] }}</p>
+    </div>
+    {%- endif %}
+    <div class="principles-grid">
+      {%- for principle in LANDING_PRINCIPLES %}
+      {%- set n = principle[0] %}
+      {%- set p_title = principle[1] %}
+      {%- set body = principle[2] %}
+      {%- set raw_url = principle[3] if principle|length > 3 else none %}
+      {%- set href = (SITEURL ~ raw_url) if (raw_url and raw_url.startswith('/')) else raw_url %}
+      {%- if href %}
+      <a class="principle principle-link" href="{{ href }}">
+        <span class="principle-n">{{ n }}</span>
+        <h3 class="principle-title">{{ p_title }}</h3>
+        <p class="principle-body">{{ body }}</p>
+        <span class="principle-arrow" aria-hidden="true">Read essay →</span>
+      </a>
+      {%- else %}
+      <div class="principle">
+        <span class="principle-n">{{ n }}</span>
+        <h3 class="principle-title">{{ p_title }}</h3>
+        <p class="principle-body">{{ body }}</p>
+      </div>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+{%- if featured %}
+<section class="featured" id="writing">
+  <div class="container">
+    <div class="section-rule">
+      <span class="section-rule-label">SELECTED WRITING</span>
+      <span class="section-rule-line"></span>
+      <a href="{{ SITEURL }}/archives.html" class="section-rule-link">View archive →</a>
+    </div>
+
+    {%- if featured|length > 3 %}
+    <div class="featured-carousel" data-carousel>
+      <button class="featured-carousel-btn featured-carousel-prev" type="button" aria-label="Scroll to previous featured articles">←</button>
+      <div class="featured-grid-scroll" data-carousel-track>
+        {%- for a in featured %}
+        {% with article=a %}{% include 'partial/post_card.html' %}{% endwith %}
+        {%- endfor %}
+      </div>
+      <button class="featured-carousel-btn featured-carousel-next" type="button" aria-label="Scroll to next featured articles">→</button>
+    </div>
+    {%- else %}
+    <div class="featured-grid">
+      {%- for a in featured %}
+      {% with article=a, lead=loop.first %}{% include 'partial/post_card.html' %}{% endwith %}
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if archive_articles %}
+<section class="archive" id="archive">
+  <div class="container">
+    <div class="section-rule">
+      <span class="section-rule-label">ARCHIVE{% if not is_first_page %} · PAGE {{ articles_page.number }} OF {{ articles_paginator.num_pages }}{% endif %}</span>
+      <span class="section-rule-line"></span>
+      <a href="{{ SITEURL }}/archives.html" class="section-rule-link">View full archive →</a>
+    </div>
+    <ul class="archive-list">
+      {%- for a in archive_articles %}
+      {% with article=a %}{% include 'partial/archive_row.html' %}{% endwith %}
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif %}
+
+{% with paginator_anchor='archive' %}
+{% include 'partial/pagination.html' %}
+{% endwith %}
+{% endblock %}

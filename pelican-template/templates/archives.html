@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'archives' %}
+
+{% block title %}<title>Archives — {{ SITENAME }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{% with list_name='Archive — ' ~ SITENAME,
+        list_description='Every article published on ' ~ SITENAME ~ ', in reverse chronological order.',
+        list_order='Descending',
+        list_items=dates %}
+{% include 'partial/jsonld/itemlist.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<section class="archives">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Archives'}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="listing-header">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Archive</span>
+      </div>
+      <h1 class="listing-heading">Archives</h1>
+      <p class="listing-description">Every post, grouped by year.</p>
+    </header>
+
+    {% set years = {} %}
+    {%- for article in dates %}
+      {%- set y = article.date.year %}
+      {%- if years.update({y: years.get(y, []) + [article]}) %}{% endif %}
+    {%- endfor %}
+
+    {%- for year in years.keys()|sort(reverse=true) %}
+    <section class="archives-year archives-year-{{ 'a' if loop.index0 is even else 'b' }}">
+      <div class="archives-year-head">
+        <h2 class="archives-year-heading">{{ year }}</h2>
+        <span class="archives-year-count">
+          {{ years[year]|length }} {{ 'post' if years[year]|length == 1 else 'posts' }}
+        </span>
+      </div>
+      <ul class="archive-list">
+        {%- for article in years[year] %}
+        {% include 'partial/archive_row.html' %}
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
+  </div>
+</section>
+{% endblock %}

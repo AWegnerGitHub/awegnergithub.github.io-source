@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{#- review.html extends this template and sets page_type first; don't overwrite it. -#}
+{%- set page_type = page_type|default('article') %}
+{%- set page_slug = article.slug %}
+{%- set track_scroll = true %}
+
+{% block title %}<title>{{ article.title|striptags|e }} — {{ SITENAME }}</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ article.summary|striptags|e }}" />
+{% if article.author %}<meta name="author" content="{{ article.author }}" />{% endif %}
+{% endblock %}
+
+{% block head_extra %}
+{% include 'partial/og_article.html' %}
+{% endblock %}
+
+{% block head_jsonld %}
+{% include 'partial/jsonld/blogposting.html' %}
+{% endblock %}
+
+{% block content %}
+<article class="article">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Categories', 'url': SITEURL ~ '/categories.html'},
+      {'label': article.category|string, 'url': SITEURL ~ '/' ~ article.category.url}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="article-header">
+      <div class="article-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>{{ article.category }}</span>
+        {%- if article.series %}
+        <span class="article-eyebrow-dot">·</span>
+        <span>Part {{ article.series.index }}{% if article.series.all_previous or article.series.all_next %} of {{ (article.series.all_previous|length) + 1 + (article.series.all_next|length) }}{% endif %} · {{ article.series.name }}</span>
+        {%- endif %}
+      </div>
+      <h1 class="article-title">{{ article.title }}</h1>
+      {% if article.summary %}<p class="article-summary">{{ article.summary|striptags }}</p>{% endif %}
+      <div class="article-meta">
+        <time datetime="{{ article.date.isoformat() }}" class="article-meta-date">{{ article.locale_date }}</time>
+        {%- if article.tags %}
+        <div class="article-meta-tags">
+          {%- for tag in article.tags %}
+          <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">#{{ tag }}</a>
+          {%- endfor %}
+        </div>
+        {%- endif %}
+      </div>
+    </header>
+
+    <div class="article-layout">
+      <div class="article-body" id="article-body">
+        {%- if article.toc %}
+        <div class="article-toc-inline">
+          <div class="article-toc-heading">Article Contents</div>
+          {{ article.toc }}
+        </div>
+        {%- endif %}
+        <div class="prose">
+          {{ article.content }}
+        </div>
+      </div>
+      {% include 'partial/toc.html' %}
+    </div>
+
+    {% include 'partial/series_block.html' %}
+    {% include 'partial/post_nav.html' %}
+    {% include 'partial/author_bio.html' %}
+  </div>
+</article>
+{% endblock %}

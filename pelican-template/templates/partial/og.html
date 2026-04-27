@@ -1,0 +1,9 @@
+<meta property="og:site_name" content="{{ SITENAME }}" />
+<meta property="og:type" content="{{ og_type|default('website') }}" />
+<meta property="og:title" content="{{ self.title()|striptags|e if self.title else SITENAME }}" />
+<meta property="og:url" content="{{ SITEURL }}{% if output_file %}/{{ output_file }}{% endif %}" />
+<meta property="og:description" content="{{ SITEDESCRIPTION|default(SITESUBTITLE|default('')) }}" />
+{%- if SITELOGO %}
+<meta property="og:image" content="{{ SITEURL }}{{ SITELOGO }}" />
+{%- endif %}
+<meta name="twitter:card" content="summary" />

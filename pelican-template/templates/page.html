@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'page' %}
+{%- set page_slug = page.slug %}
+{%- set track_scroll = true %}
+
+{% block title %}<title>{{ page.title|striptags|e }} — {{ SITENAME }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{%- if page.slug == 'about' %}
+{% include 'partial/jsonld/person.html' %}
+{%- endif %}
+{%- if FAQ_QUESTIONS and page.slug == 'about' %}
+{% include 'partial/jsonld/faq.html' %}
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+<section class="flat">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': page.title|string}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="listing-header">
+      {%- if page.metadata.kicker %}
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>{{ page.metadata.kicker }}</span>
+      </div>
+      {%- endif %}
+      <h1 class="listing-heading">{{ page.title }}</h1>
+      {%- if page.summary %}
+      <p class="listing-description">{{ page.summary|striptags }}</p>
+      {%- endif %}
+    </header>
+
+    <div class="flat-layout">
+      <div class="flat-body prose">
+        {{ page.content }}
+        {%- if FAQ_QUESTIONS and page.slug == 'about' %}
+        <dl class="faq">
+          {%- for question, answer in FAQ_QUESTIONS %}
+          {%- set slug = question|lower|replace(' ', '-')|replace('?', '')|replace(',', '')|replace("'", '') %}
+          <div class="faq-item" id="{{ slug }}">
+            <dt class="faq-question">{{ question }}</dt>
+            <dd class="faq-answer">{{ answer|safe }}</dd>
+          </div>
+          {%- endfor %}
+        </dl>
+        {%- endif %}
+      </div>
+      {%- if FAQ_QUESTIONS and page.slug == 'about' %}
+      <aside class="flat-toc" aria-label="On this page">
+        <div class="article-toc-heading">On this page</div>
+        <ol class="article-toc-list">
+          {%- for question, answer in FAQ_QUESTIONS %}
+          {%- set slug = question|lower|replace(' ', '-')|replace('?', '')|replace(',', '')|replace("'", '') %}
+          <li class="article-toc-item article-toc-item-l2">
+            <a href="#{{ slug }}">{{ question }}</a>
+          </li>
+          {%- endfor %}
+        </ol>
+      </aside>
+      {%- elif page.toc %}
+      <aside class="flat-toc" aria-label="On this page">
+        <div class="article-toc-heading">On this page</div>
+        {{ page.toc }}
+      </aside>
+      {%- endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

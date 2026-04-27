@@ -1,0 +1,44 @@
+{%- set person_id = SITEURL ~ '/#andrew' %}
+{%- set author_name = AUTHOR_DISPLAY|default(article.author|string) %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "{{ article.title|striptags|e }}",
+  "headline": "{{ article.title|striptags|e }}",
+  "dateCreated": "{{ article.date.isoformat() }}",
+  "datePublished": "{{ article.date.isoformat() }}",
+  {%- if article.modified %}
+  "dateModified": "{{ article.modified.isoformat() }}",
+  {%- else %}
+  "dateModified": "{{ article.date.isoformat() }}",
+  {%- endif %}
+  "copyrightYear": "{{ article.date.strftime('%Y') }}",
+  "copyrightHolder": {
+    "@type": "Person",
+    "name": "{{ author_name|e }}",
+    "url": "{{ SITEURL }}"
+  },
+  "author": {
+    "@type": "Person",
+    "@id": "{{ person_id }}",
+    "name": "{{ author_name|e }}",
+    "url": "{{ SITEURL }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "@id": "{{ person_id }}",
+    "name": "{{ author_name|e }}",
+    "url": "{{ SITEURL }}"
+  },
+  {%- if article.metadata.cover %}
+  "image": "{{ SITEURL }}/{{ article.metadata.cover }}",
+  {%- elif DEFAULT_COVER %}
+  "image": "{{ SITEURL }}/{{ DEFAULT_COVER }}",
+  {%- endif %}
+  "url": "{{ SITEURL }}/{{ article.url }}",
+  "description": "{{ article.summary|striptags|e }}",
+  "mainEntityOfPage": "True",
+  "articleSection": "{{ article.category }}"
+}
+</script>

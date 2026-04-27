@@ -1,0 +1,60 @@
+{%- set hex_still_class = '' if HEADSHOT_MORPH|default(true) else ' hex-logo-still' -%}
+{%- set _social_map = {
+  'LinkedIn':       'linkedin',
+  'GitHub':         'github',
+  'Stack Overflow': 'stackoverflow'
+} -%}
+{#- Paginated index pages (index2.html, index3.html, …) auto-scroll to #archive
+    on load, which puts the page past the sidebar/wordmark threshold before JS
+    can measure it. Pre-apply the scrolled state so the sidebar doesn't flash
+    in for a frame. -#}
+{%- set _paginated_index = articles_page and articles_page.number > 1 and output_file and output_file.startswith('index') -%}
+{%- set _brand_class = 'sidebar-brand-hidden' if _paginated_index else 'sidebar-brand-visible' -%}
+{%- macro site_url(path) -%}
+{%- if path and path.startswith('/') -%}{{ SITEURL }}{{ path }}{%- else -%}{{ path }}{%- endif -%}
+{%- endmacro -%}
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <div class="sidebar-brand {{ _brand_class }}" aria-hidden="true">
+      <span class="hex-logo hex-logo-lg{{ hex_still_class }}">
+        {%- if HEADSHOT %}
+        <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/img/{{ HEADSHOT }}" alt="" />
+        {%- else %}
+        <span class="hex-logo-inner"></span>
+        {%- endif %}
+      </span>
+      <div class="sidebar-caption">
+        <span class="sidebar-name">
+          <span>{{ AUTHOR_GIVEN|default('Andrew') }}</span>
+          <span><b>{{ AUTHOR_FAMILY|default('Wegner') }}</b></span>
+        </span>
+        <span class="sidebar-role">
+          {%- for line in AUTHOR_ROLE_LINES|default(['VP,', 'Strategic Software']) %}
+          <span>{{ line }}</span>
+          {%- endfor %}
+        </span>
+      </div>
+    </div>
+    <nav class="sidebar-social" aria-label="Contact Andrew">
+      {%- for label, url, _display in SOCIAL_META|default([]) %}
+      {%- set key = _social_map.get(label) %}
+      {%- if key %}
+      <a href="{{ url }}" class="sidebar-social-link" aria-label="{{ label }} profile"
+         target="_blank" rel="noopener noreferrer">
+        {%- include 'partial/icon/' ~ key ~ '.svg' %}
+      </a>
+      {%- endif %}
+      {%- endfor %}
+      {%- if RESUME_URL %}
+      <a href="{{ site_url(RESUME_URL) }}" class="sidebar-social-link" aria-label="{{ RESUME_LABEL|default('Download résumé (PDF)') }}">
+        {%- include 'partial/icon/resume.svg' %}
+      </a>
+      {%- endif %}
+      {%- if CONTACT_EMAIL %}
+      <a href="mailto:{{ CONTACT_EMAIL }}" class="sidebar-social-link" aria-label="Email {{ AUTHOR_DISPLAY|default(AUTHOR)|default('Andrew') }}">
+        {%- include 'partial/icon/email.svg' %}
+      </a>
+      {%- endif %}
+    </nav>
+  </div>
+</aside>

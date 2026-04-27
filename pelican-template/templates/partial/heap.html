@@ -1,0 +1,35 @@
+{%- if HEAP_ANALYTICS %}
+<script type="text/javascript">
+(window.heap=window.heap||[],heap.load=function(e,t){(window.heap.appid=e,window.heap.config=t=t||{});var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])});
+heap.load("{{ HEAP_ANALYTICS }}");
+(function(){
+  var body = document.body;
+  heap.addEventProperties({
+    page_type: body.dataset.pageType || 'unknown',
+    page_slug: body.dataset.pageSlug || ''
+  });
+  if (body.dataset.trackScroll === '1') {
+    var depths = [25, 50, 75, 100];
+    var fired = {};
+    function measure() {
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) {
+        // Page fits in viewport — count as fully read.
+        depths.forEach(function(d){ if(!fired[d]){ fired[d]=true; heap.track('scroll_depth', {depth:d}); } });
+        return;
+      }
+      var pct = (window.scrollY / scrollable) * 100;
+      depths.forEach(function(d){
+        if (!fired[d] && pct >= d) {
+          fired[d] = true;
+          heap.track('scroll_depth', {depth: d});
+        }
+      });
+    }
+    measure();
+    window.addEventListener('scroll', measure, {passive: true});
+  }
+})();
+</script>
+{%- endif %}

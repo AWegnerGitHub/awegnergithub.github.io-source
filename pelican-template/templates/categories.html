@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'categories' %}
+{% set cats = categories|sort(attribute=0) %}
+
+{% block title %}<title>Categories — {{ SITENAME }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{%- if cats %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Categories — {{ SITENAME }}",
+  "description": "All categories on {{ SITENAME }}.",
+  "itemListOrder": "https://schema.org/ItemListUnordered",
+  "numberOfItems": {{ cats|length }},
+  "itemListElement": [
+    {%- for cat, posts in cats %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "url": "{{ SITEURL }}/{{ cat.url }}",
+      "name": "{{ cat|e }}"
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+{% set total_posts = cats|map(attribute=1)|map('length')|sum %}
+{% set max_count = cats|map(attribute=1)|map('length')|max if cats else 1 %}
+{% set top = namespace(cat=none, count=0) %}
+{%- for cat, posts in cats %}
+  {%- if posts|length > top.count %}
+    {%- set top.count = posts|length %}
+    {%- set top.cat = cat %}
+  {%- endif %}
+{%- endfor %}
+
+<section class="taxonomy">
+  <div class="container">
+    {% set crumbs = [
+      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Categories'}
+    ] %}
+    {% include 'partial/breadcrumb.html' %}
+
+    <header class="listing-header listing-header-split">
+      <div class="listing-header-main">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Index</span>
+        </div>
+        <h1 class="listing-heading">Categories</h1>
+        <p class="listing-description">
+          {{ cats|length }} categories across the archive. Reviews of courses and tools,
+          leadership essays, technical notes, and the occasional side project.
+        </p>
+      </div>
+      <aside class="listing-header-stats" aria-label="Summary">
+        <dl>
+          <div><dt>Categories</dt><dd>{{ cats|length }}</dd></div>
+          <div><dt>Total posts</dt><dd>{{ total_posts }}</dd></div>
+          {%- if top.cat %}
+          <div><dt>Most used</dt><dd>{{ top.cat }}</dd></div>
+          {%- endif %}
+        </dl>
+      </aside>
+    </header>
+
+    <div class="section-rule">
+      <span class="section-rule-label">{{ cats|length }} {{ 'category' if cats|length == 1 else 'categories' }}</span>
+      <span class="section-rule-line"></span>
+      <span class="section-rule-count">{{ total_posts }} posts</span>
+    </div>
+
+    <ul class="taxonomy-list">
+      {%- for category, posts in cats %}
+      {%- set pct = (posts|length / max_count * 100)|round(2) %}
+      <li class="taxonomy-row">
+        <a href="{{ SITEURL }}/{{ category.url }}" class="taxonomy-link">
+          <span class="taxonomy-name">{{ category }}</span>
+          <span class="taxonomy-bar" aria-hidden="true">
+            <span class="taxonomy-bar-fill" style="width: {{ pct }}%"></span>
+          </span>
+          <span class="taxonomy-count">{{ posts|length }} {{ 'post' if posts|length == 1 else 'posts' }}</span>
+          <span class="taxonomy-arrow">→</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

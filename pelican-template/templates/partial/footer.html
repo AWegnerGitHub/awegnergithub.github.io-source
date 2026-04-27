@@ -1,0 +1,31 @@
+<footer class="footer" id="contact">
+  <div class="container footer-inner">
+    <div class="footer-primary">
+      <div class="footer-kicker">{{ FOOTER_KICKER|default('GET IN TOUCH') }}</div>
+      <h2 class="footer-headline">{{ FOOTER_HEADLINE|default('Currently open to VP Engineering and CTO conversations.') }}</h2>
+      <p class="footer-sub">{{ FOOTER_SUB|default("I'm selective about what I take on, but always happy to talk about engineering leadership, distributed teams, and hiring.") }}</p>
+      <div class="footer-ctas">
+        {%- if CONTACT_EMAIL %}
+        <a href="mailto:{{ CONTACT_EMAIL }}" class="btn btn-primary" data-heap-id="footer-email">{{ CONTACT_EMAIL }}</a>
+        {%- endif %}
+        {%- if RESUME_URL %}
+        {%- set resume_href = (SITEURL ~ RESUME_URL) if RESUME_URL.startswith('/') else RESUME_URL %}
+        <a href="{{ resume_href }}" class="btn btn-ghost" data-heap-id="footer-resume">{{ RESUME_LABEL|default('Download résumé (PDF)') }}</a>
+        {%- endif %}
+      </div>
+    </div>
+    <div class="footer-secondary">
+      <dl class="footer-meta">
+        {%- for label, url, display in SOCIAL_META|default([]) %}
+        <div><dt>{{ label }}</dt><dd><a href="{{ url }}">{{ display }}</a></dd></div>
+        {%- endfor %}
+        {%- if FEED_ALL_ATOM %}
+        <div><dt>RSS</dt><dd><a href="{{ SITEURL }}/{{ FEED_ALL_ATOM }}">RSS feed</a></dd></div>
+        {%- endif %}
+      </dl>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ COPYRIGHT_YEAR|default(2026) }} {{ COPYRIGHT_NAME|default(AUTHOR_DISPLAY|default(AUTHOR|default(SITENAME))) }}</span>
+    </div>
+  </div>
+</footer>

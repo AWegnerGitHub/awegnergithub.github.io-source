@@ -1,0 +1,45 @@
+{%- set hex_still_class = '' if HEADSHOT_MORPH|default(true) else ' hex-logo-still' -%}
+{%- set _paginated_index = articles_page and articles_page.number > 1 and output_file and output_file.startswith('index') -%}
+{%- set _wordmark_class = 'wordmark-visible' if _paginated_index else 'wordmark-hidden' -%}
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand-col">
+      <a href="{{ SITEURL }}/index.html" class="wordmark {{ _wordmark_class }}">
+        <span class="hex-logo{{ hex_still_class }}" aria-hidden="true">
+          {%- if HEADSHOT %}
+          <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/img/{{ HEADSHOT }}" alt="" />
+          {%- else %}
+          <span class="hex-logo-inner"></span>
+          {%- endif %}
+        </span>
+        <span class="wordmark-caption">
+          <span class="wordmark-name">
+            <span>{{ AUTHOR_GIVEN|default('Andrew') }}</span>
+            <span><b>{{ AUTHOR_FAMILY|default('Wegner') }}</b></span>
+          </span>
+          <span class="wordmark-role">
+            {%- for line in AUTHOR_ROLE_LINES|default(['VP,', 'Strategic Software']) %}
+            <span>{{ line }}</span>
+            {%- endfor %}
+          </span>
+        </span>
+      </a>
+    </div>
+    <div class="nav-main-col">
+      <nav class="nav-links">
+        {%- if MENUITEMS %}
+          {%- for title, link in MENUITEMS %}
+          <a href="{{ SITEURL }}{{ link }}">{{ title }}</a>
+          {%- endfor %}
+        {%- else %}
+          {%- set about = namespace(url=None) %}
+          {%- for p in pages %}{% if p.slug == 'about' %}{% set about.url = SITEURL ~ '/' ~ p.url %}{% endif %}{% endfor %}
+          <a href="{{ about.url if about.url else SITEURL ~ '/about/' }}">About</a>
+          <a href="{{ SITEURL }}/archives.html">Archives</a>
+          <a href="{{ SITEURL }}/categories.html">Categories</a>
+          <a href="{{ SITEURL }}/tags.html">Tags</a>
+        {%- endif %}
+      </nav>
+    </div>
+  </div>
+</header>
