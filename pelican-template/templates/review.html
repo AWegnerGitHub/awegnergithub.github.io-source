@@ -11,7 +11,7 @@
 <article class="article">
   <div class="container">
     {% set crumbs = [
-      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Home', 'url': SITEURL ~ '/'},
       {'label': 'Categories', 'url': SITEURL ~ '/categories.html'},
       {'label': article.category|string, 'url': SITEURL ~ '/' ~ article.category.url}
     ] %}

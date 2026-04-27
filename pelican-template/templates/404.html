@@ -13,7 +13,7 @@
 <section class="flat">
   <div class="container">
     {% set crumbs = [
-      {'label': 'Home', 'url': SITEURL ~ '/index.html'},
+      {'label': 'Home', 'url': SITEURL ~ '/'},
       {'label': 'Page not found'}
     ] %}
     {% include 'partial/breadcrumb.html' %}
@@ -32,7 +32,7 @@
     <div class="flat-layout">
       <div class="flat-body prose">
         <ul>
-          <li><a href="{{ SITEURL }}/index.html">Start at the home page</a> — the latest essays and featured writing.</li>
+          <li><a href="{{ SITEURL }}/">Start at the home page</a> — the latest essays and featured writing.</li>
           <li><a href="{{ SITEURL }}/archives.html">Browse the archive</a> — every post I've published, grouped by year.</li>
           <li><a href="{{ SITEURL }}/categories.html">Categories</a> or <a href="{{ SITEURL }}/tags.html">tags</a> — if you were looking for a topic.</li>
           {%- for p in pages %}{% if p.slug == 'about' %}
