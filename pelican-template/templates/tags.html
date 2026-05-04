@@ -3,7 +3,7 @@
 {%- set page_type = 'tags' %}
 {% set tag_list = tags|sort(attribute=0) %}
 
-{% block title %}<title>Tags — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Tags - {{ SITENAME }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if tag_list %}
@@ -11,7 +11,7 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Tags — {{ SITENAME }}",
+  "name": "Tags - {{ SITENAME }}",
   "description": "All tags on {{ SITENAME }}.",
   "itemListOrder": "https://schema.org/ItemListUnordered",
   "numberOfItems": {{ tag_list|length }},

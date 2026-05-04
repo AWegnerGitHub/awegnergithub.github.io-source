@@ -2,7 +2,7 @@
 
 {%- set page_type = '404' %}
 
-{% block title %}<title>Page not found — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Page not found - {{ SITENAME }}</title>{% endblock %}
 
 {% block meta %}
 <meta name="description" content="The page you were looking for doesn't exist on {{ SITENAME }}." />
@@ -32,11 +32,11 @@
     <div class="flat-layout">
       <div class="flat-body prose">
         <ul>
-          <li><a href="{{ SITEURL }}/">Start at the home page</a> — the latest essays and featured writing.</li>
-          <li><a href="{{ SITEURL }}/archives.html">Browse the archive</a> — every post I've published, grouped by year.</li>
-          <li><a href="{{ SITEURL }}/categories.html">Categories</a> or <a href="{{ SITEURL }}/tags.html">tags</a> — if you were looking for a topic.</li>
+          <li><a href="{{ SITEURL }}/">Start at the home page</a> - the latest essays and featured writing.</li>
+          <li><a href="{{ SITEURL }}/archives.html">Browse the archive</a> - every post I've published, grouped by year.</li>
+          <li><a href="{{ SITEURL }}/categories.html">Categories</a> or <a href="{{ SITEURL }}/tags.html">tags</a> - if you were looking for a topic.</li>
           {%- for p in pages %}{% if p.slug == 'about' %}
-          <li><a href="{{ SITEURL }}/{{ p.url }}">About me</a> — who runs this site.</li>
+          <li><a href="{{ SITEURL }}/{{ p.url }}">About me</a> - who runs this site.</li>
           {%- endif %}{% endfor %}
         </ul>
         {%- if CONTACT_EMAIL %}

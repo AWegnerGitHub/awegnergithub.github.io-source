@@ -15,7 +15,7 @@ heap.load("{{ HEAP_ANALYTICS }}");
       var doc = document.documentElement;
       var scrollable = doc.scrollHeight - window.innerHeight;
       if (scrollable <= 0) {
-        // Page fits in viewport — count as fully read.
+        // Page fits in viewport - count as fully read.
         depths.forEach(function(d){ if(!fired[d]){ fired[d]=true; heap.track('scroll_depth', {depth:d}); } });
         return;
       }

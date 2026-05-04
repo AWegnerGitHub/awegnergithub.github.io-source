@@ -4,7 +4,7 @@
 {%- set page_slug = page.slug %}
 {%- set track_scroll = true %}
 
-{% block title %}<title>{{ page.title|striptags|e }} — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>{{ page.title|striptags|e }} - {{ SITENAME }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if page.slug == 'about' %}

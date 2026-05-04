@@ -4,7 +4,7 @@
 {%- set page_slug = tag.slug|default(tag|string) %}
 {%- set page_articles = articles_page.object_list if articles_page else articles %}
 
-{% block title %}<title>#{{ tag }} — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>#{{ tag }} - {{ SITENAME }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if page_articles %}
@@ -12,7 +12,7 @@
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "#{{ tag }} — {{ SITENAME }}",
+  "name": "#{{ tag }} - {{ SITENAME }}",
   "url": "{{ SITEURL }}{% if output_file %}/{{ output_file }}{% endif %}",
   {%- if articles_paginator and articles_paginator.num_pages > 1 %}
   "isPartOf": {

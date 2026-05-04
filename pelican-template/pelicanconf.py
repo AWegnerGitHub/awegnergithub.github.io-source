@@ -1,9 +1,9 @@
-# pelicanconf.py — copied from the upstream -source repo and edited for the
+# pelicanconf.py - copied from the upstream -source repo and edited for the
 # redesign theme. Drop this into the -source repo's root (overwriting the
 # existing pelicanconf.py) and point THEME at this theme directory.
 #
-# Changes from upstream are grouped below under "REDESIGN — NEW CONFIG".
-# Nothing else in this file was removed — all upstream config is preserved so
+# Changes from upstream are grouped below under "REDESIGN - NEW CONFIG".
+# Nothing else in this file was removed - all upstream config is preserved so
 # plugins, feeds, static paths, AUTHORS, REVIEW_PROVIDERS, FAQ_QUESTIONS, etc.
 # continue to work unchanged.
 
@@ -213,10 +213,10 @@ AUTHOR_URL = ""
 
 
 # =============================================================================
-# REDESIGN — NEW CONFIG
+# REDESIGN - NEW CONFIG
 #
-# Everything below is new with this theme. None of it is required — every
-# variable falls back to a sensible default if absent — but set them to match
+# Everything below is new with this theme. None of it is required - every
+# variable falls back to a sensible default if absent - but set them to match
 # the intent of the redesign prototype.
 # =============================================================================
 

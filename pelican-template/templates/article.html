@@ -5,7 +5,7 @@
 {%- set page_slug = article.slug %}
 {%- set track_scroll = true %}
 
-{% block title %}<title>{{ article.title|striptags|e }} — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>{{ article.title|striptags|e }} - {{ SITENAME }}</title>{% endblock %}
 
 {% block meta %}
 <meta name="description" content="{{ article.summary|striptags|e }}" />

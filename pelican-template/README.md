@@ -1,6 +1,6 @@
-# Pelican theme — Andrew Wegner redesign
+# Pelican theme - Andrew Wegner redesign
 
-Drop-in Pelican theme that renders the redesign. Rename the directory to whatever you want and point `THEME` at it in `pelicanconf.py` — nothing inside references the directory name.
+Drop-in Pelican theme that renders the redesign. Rename the directory to whatever you want and point `THEME` at it in `pelicanconf.py` - nothing inside references the directory name.
 
 ## Install
 
@@ -15,15 +15,15 @@ THEME = 'path/to/this/directory'
 - `SITENAME`, `SITEURL`, `AUTHOR`, `DEFAULT_LANG`
 
 ### Recommended
-- `SITESUBTITLE` — shown in `<title>` when present
-- `SITEDESCRIPTION` — meta description + Blog JSON-LD
-- `SITELOGO` — path to the logo image relative to site root (used in Blog JSON-LD + OG image fallback)
+- `SITESUBTITLE` - shown in `<title>` when present
+- `SITEDESCRIPTION` - meta description + Blog JSON-LD
+- `SITELOGO` - path to the logo image relative to site root (used in Blog JSON-LD + OG image fallback)
 - `FAVICON`, `FAVICON_32X32`, `FAVICON_16X16`, `APPLETOUCHICON`, `SITEMANIFEST`, `BROWSER_COLOR`
-- `FEED_ALL_ATOM` / `FEED_ALL_RSS` / `CATEGORY_FEED_ATOM` / `TAG_FEED_ATOM` — standard Pelican feed config
-- `MENUITEMS` — list of `(title, url)` tuples for the main nav. If absent the theme falls back to a built-in nav (Archives / Categories / Tags / About).
-- `CONTACT_EMAIL` — powers the top-right "Contact Me" button + footer mailto
-- `RESUME_URL`, `RESUME_LABEL` — "Download résumé (PDF)" button
-- `SOCIAL_META` — list of `(label, url, display_text)` tuples for the footer meta block (LinkedIn / GitHub / Stack Overflow / etc.)
+- `FEED_ALL_ATOM` / `FEED_ALL_RSS` / `CATEGORY_FEED_ATOM` / `TAG_FEED_ATOM` - standard Pelican feed config
+- `MENUITEMS` - list of `(title, url)` tuples for the main nav. If absent the theme falls back to a built-in nav (Archives / Categories / Tags / About).
+- `CONTACT_EMAIL` - powers the top-right "Contact Me" button + footer mailto
+- `RESUME_URL`, `RESUME_LABEL` - "Download résumé (PDF)" button
+- `SOCIAL_META` - list of `(label, url, display_text)` tuples for the footer meta block (LinkedIn / GitHub / Stack Overflow / etc.)
 - `COPYRIGHT_YEAR`
 
 ### Redesign-specific (new with this theme)
@@ -39,7 +39,7 @@ AUTHOR_FAMILY = 'Wegner'
 AUTHOR_ROLE = 'VP, Strategic Software'
 AUTHOR_ROLE_LINES = ['VP,', 'Strategic Software']   # how the nav wordmark and sidebar stack the role on two lines
 
-# Home page content (all optional — sections render only if present)
+# Home page content (all optional - sections render only if present)
 LANDING_HERO = {
     'kicker':   'Engineering leader · Writer · Moderator',
     'headline': 'Building the teams that <em>build the systems</em>.',   # HTML allowed
@@ -89,7 +89,7 @@ Set `template: review` in markdown front-matter plus:
 Set `FAQ_QUESTIONS = [('Question text?', 'Answer HTML'), ...]`. Only renders inside the page whose slug is `about`. Emits FAQPage JSON-LD automatically.
 
 ### Analytics
-- `HEAP_ANALYTICS` — project ID. Autocapture only (no identify / track calls are emitted by the theme).
+- `HEAP_ANALYTICS` - project ID. Autocapture only (no identify / track calls are emitted by the theme).
 
 ### Plugins (must be enabled in `pelicanconf.py`)
 The theme reads these plugin-injected values:
@@ -127,7 +127,7 @@ templates/
         ├── review.html            Review / Course / Product (reviews)
         ├── breadcrumb.html        BreadcrumbList (emitted by breadcrumb.html)
         ├── faq.html               FAQPage (About)
-        └── person.html            ProfilePage / Person — verbatim port from old theme
+        └── person.html            ProfilePage / Person - verbatim port from old theme
 static/
 ├── css/site.css           single stylesheet; light theme only
 └── img/wegner_headshot.png
@@ -136,6 +136,6 @@ static/
 ## Notes
 
 - **Zero path references to this directory's name.** Every asset URL uses `{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/...`. You can rename `pelican-template/` to anything.
-- **Sidebar ↔ nav-wordmark scroll animation** is a small inline `<script>` at the end of `base.html` — no build step, no framework.
+- **Sidebar ↔ nav-wordmark scroll animation** is a small inline `<script>` at the end of `base.html` - no build step, no framework.
 - **Light theme only.** The `.dark` CSS was stripped during the port. If you want dark mode back, reintroduce the `.site.dark { ... }` blocks from the prototype's `styles/site.css`.
 - **The morphing blob animation** around the headshot is on by default. Set `HEADSHOT_MORPH = False` to get a plain circle.

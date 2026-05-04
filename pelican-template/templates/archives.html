@@ -2,10 +2,10 @@
 
 {%- set page_type = 'archives' %}
 
-{% block title %}<title>Archives — {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Archives - {{ SITENAME }}</title>{% endblock %}
 
 {% block head_jsonld %}
-{% with list_name='Archive — ' ~ SITENAME,
+{% with list_name='Archive - ' ~ SITENAME,
         list_description='Every article published on ' ~ SITENAME ~ ', in reverse chronological order.',
         list_order='Descending',
         list_items=dates %}

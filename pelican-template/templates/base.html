@@ -11,10 +11,13 @@
 {% if AUTHOR %}<meta name="author" content="{{ AUTHOR }}" />{% endif %}
 {% endblock %}
 
-<link rel="canonical" href="{{ SITEURL }}{% if output_file %}/{{ output_file }}{% endif %}" />
+{%- set _canonical_path = '' if (output_file in (None, '', 'index.html'))
+    else (output_file[:-10] if output_file.endswith('/index.html') else output_file) %}
+<link rel="canonical" href="{{ SITEURL }}/{{ _canonical_path }}" />
 <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ SITEURL }}/sitemap.xml" />
 {%- if articles_page and articles_page.has_previous() and articles_previous_page %}
-<link rel="prev" href="{{ SITEURL }}/{{ articles_previous_page.url }}" />
+{%- set _prev_url = '' if articles_previous_page.url == 'index.html' else articles_previous_page.url %}
+<link rel="prev" href="{{ SITEURL }}/{{ _prev_url }}" />
 {%- endif %}
 {%- if articles_page and articles_page.has_next() and articles_next_page %}
 <link rel="next" href="{{ SITEURL }}/{{ articles_next_page.url }}" />

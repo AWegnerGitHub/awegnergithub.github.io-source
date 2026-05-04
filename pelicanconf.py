@@ -39,7 +39,7 @@ AUTHOR_FEED_RSS = None
 FEED_MAX_ITEMS = 20
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["series", "extract_toc", "neighbors", "keyboard", "extended_sitemap"]
+PLUGINS = ["series", "extract_toc", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter"]
 
 TOC = {"TOC_HEADERS": "^h[1-3]"}
 
@@ -201,6 +201,12 @@ EXTENDED_SITEMAP_PLUGIN = {
         "others": "monthly",
     },
 }
+
+# Removed from the generated sitemap.xml after extended_sitemap runs (see
+# plugins/sitemap_filter). 404.html is in DIRECT_TEMPLATES so Pelican writes
+# output/404.html for GitHub Pages, but the page is noindex and shouldn't
+# appear in the sitemap.
+SITEMAP_EXCLUDE = ["/404.html"]
 
 FAQ_QUESTIONS = [
     (

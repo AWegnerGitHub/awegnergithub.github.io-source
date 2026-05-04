@@ -2,7 +2,8 @@
 {%- set _anchor = ('#' ~ paginator_anchor) if paginator_anchor else '' %}
 <nav class="pagination" aria-label="Pagination">
   {%- if articles_page.has_previous() %}
-  <a href="{{ SITEURL }}/{{ articles_previous_page.url }}{{ _anchor }}" class="pagination-link pagination-link-prev">
+  {%- set _prev_url = '' if articles_previous_page.url == 'index.html' else articles_previous_page.url %}
+  <a href="{{ SITEURL }}/{{ _prev_url }}{{ _anchor }}" class="pagination-link pagination-link-prev">
     <span class="pagination-arrow">←</span>
     <span>Newer posts</span>
   </a>

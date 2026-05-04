@@ -5,8 +5,8 @@
 <link rel="alternate" type="application/rss+xml" title="{{ SITENAME }} (RSS)" href="{{ SITEURL }}/{{ FEED_ALL_RSS }}" />
 {%- endif %}
 {%- if CATEGORY_FEED_ATOM and category %}
-<link rel="alternate" type="application/atom+xml" title="{{ SITENAME }} — {{ category }} (Atom)" href="{{ SITEURL }}/{{ CATEGORY_FEED_ATOM|replace('{slug}', category.slug) }}" />
+<link rel="alternate" type="application/atom+xml" title="{{ SITENAME }} - {{ category }} (Atom)" href="{{ SITEURL }}/{{ CATEGORY_FEED_ATOM|replace('{slug}', category.slug) }}" />
 {%- endif %}
 {%- if TAG_FEED_ATOM and tag %}
-<link rel="alternate" type="application/atom+xml" title="{{ SITENAME }} — #{{ tag }} (Atom)" href="{{ SITEURL }}/{{ TAG_FEED_ATOM|replace('{slug}', tag.slug) }}" />
+<link rel="alternate" type="application/atom+xml" title="{{ SITENAME }} - #{{ tag }} (Atom)" href="{{ SITEURL }}/{{ TAG_FEED_ATOM|replace('{slug}', tag.slug) }}" />
 {%- endif %}
