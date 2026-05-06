@@ -14,7 +14,7 @@
   {%- endif %}
 {%- endfor %}
 
-{% block title %}<title>{{ SITENAME }}{% if not is_first_page %} - Page {{ articles_page.number }}{% elif SITESUBTITLE %} - {{ SITESUBTITLE }}{% endif %}</title>{% endblock %}
+{% block title %}<title>{% if is_first_page %}{{ SITENAME }}{% if SITESUBTITLE %} - {{ SITESUBTITLE }}{% endif %}{% else %}{{ SITENAME_SHORT|default(SITENAME) }} - Page {{ articles_page.number }}{% endif %}</title>{% endblock %}
 
 {% block head_jsonld %}
 {% if is_first_page %}

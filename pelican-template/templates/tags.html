@@ -3,7 +3,7 @@
 {%- set page_type = 'tags' %}
 {% set tag_list = tags|sort(attribute=0) %}
 
-{% block title %}<title>Tags - {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Tags - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if tag_list %}

@@ -4,7 +4,7 @@
 {%- set page_slug = category.slug|default(category|string) %}
 {%- set page_articles = articles_page.object_list if articles_page else articles %}
 
-{% block title %}<title>{{ category }} - {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>{{ category }} - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if page_articles %}

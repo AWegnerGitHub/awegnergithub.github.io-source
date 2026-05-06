@@ -3,7 +3,7 @@
 {%- set page_type = 'categories' %}
 {% set cats = categories|sort(attribute=0) %}
 
-{% block title %}<title>Categories - {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Categories - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {%- if cats %}

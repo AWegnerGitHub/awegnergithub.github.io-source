@@ -2,7 +2,7 @@
 
 {%- set page_type = 'archives' %}
 
-{% block title %}<title>Archives - {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Archives - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
 
 {% block head_jsonld %}
 {% with list_name='Archive - ' ~ SITENAME,

@@ -11,6 +11,7 @@ import datetime
 
 AUTHOR = "Andy Wegner"
 SITENAME = "Andrew Wegner | Ponderings of an Andy"
+SITENAME_SHORT = "Andrew Wegner"
 SITEURL = "https://andrewwegner.com"
 # SITEURL = ""
 SITESUBTITLE = "Can that be automated?"

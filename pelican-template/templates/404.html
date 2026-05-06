@@ -2,7 +2,7 @@
 
 {%- set page_type = '404' %}
 
-{% block title %}<title>Page not found - {{ SITENAME }}</title>{% endblock %}
+{% block title %}<title>Page not found - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
 
 {% block meta %}
 <meta name="description" content="The page you were looking for doesn't exist on {{ SITENAME }}." />
