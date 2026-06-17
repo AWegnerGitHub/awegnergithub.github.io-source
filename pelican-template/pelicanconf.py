@@ -18,7 +18,7 @@ SITESUBTITLE = "Can that be automated?"
 SITEDESCRIPTION = "Andrew Wegner (Andy Wegner) - VP Strategic Software at Zayo, Stack Overflow moderator. Engineering leadership insights, Python tutorials, and technical articles from 15+ years building global software teams."
 COPYRIGHT_YEAR = datetime.date.today().year
 COPYRIGHT_NAME = "Andrew Wegner"
-SITELOGO = "/images/wegner_headshot.png"
+SITELOGO = "/theme/img/wegner_headshot.png"
 
 
 PATH = "content/"
