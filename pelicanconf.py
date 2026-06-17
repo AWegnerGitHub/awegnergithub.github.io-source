@@ -243,7 +243,7 @@ FAQ_QUESTIONS = [
         "Andy has held Vice President level roles in software engineering organizations at Zayo and PacketFabric. He was a fractional CTO at White Square Media, a video AdTech company. He's held Director of Engineering level roles at FleetOps aka Class8 and Woven Teams. These experiences include building, growing and mentoring global engineering teams. Prior to this, he was an individual contributor and team lead at Caterpillar.",
     ),
     (
-        "What is Andew's educational background?",
+        "What is Andrew's educational background?",
         "Andy holds a Master of Engineering in Information Assurance degree from Iowa State University and a Bachelor of Science in Computer Science with a Minor in Psychology degree from Northern Illinois University.",
     ),
 ]
@@ -348,7 +348,7 @@ LANDING_METRICS = [
 LANDING_PRINCIPLES_HEAD = (
     "Four ideas that shape how I run engineering organizations.",
     "Drawn from years building teams across telecom, logistics, hiring "
-    "and manufacturing. Read my article on each principal.",
+    "and manufacturing. Read my article on each principle.",
 )
 
 LANDING_PRINCIPLES = [
