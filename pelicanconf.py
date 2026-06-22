@@ -340,7 +340,7 @@ LANDING_METRICS = [
     ("17+", "Years shipping software end-to-end"),
     (
         "6",
-        "Continents where engineers I've led live (every continent except Antartica)",
+        "Continents where engineers I've led live (every continent except Antarctica)",
     ),
     ("8", "Weeks to achieve SOC 2 attestation"),
 ]
