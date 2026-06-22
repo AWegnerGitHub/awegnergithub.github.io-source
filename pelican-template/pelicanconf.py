@@ -15,7 +15,7 @@ SITEURL = "https://andrewwegner.com"
 # SITEURL = ""
 SITESUBTITLE = "Can that be automated?"
 # SITEDESCRIPTION = "Articles and reviews covering thoughts on work place leadership, technical course reviews, and other ponderings of Andy Wegner"
-SITEDESCRIPTION = "Andrew Wegner (Andy Wegner) - VP Strategic Software at Zayo, Stack Overflow moderator. Engineering leadership insights, Python tutorials, and technical articles from 15+ years building global software teams."
+SITEDESCRIPTION = "Andrew Wegner (Andy Wegner) - VP Strategic Software at Zayo, Stack Overflow moderator. Engineering leadership insights, Python tutorials, and technical articles from nearly 20 years of building global software teams."
 COPYRIGHT_YEAR = datetime.date.today().year
 COPYRIGHT_NAME = "Andrew Wegner"
 SITELOGO = "/theme/img/wegner_headshot.png"
@@ -281,7 +281,7 @@ LANDING_HERO = {
 LANDING_METRICS = [
     ("40+", "Engineers in largest org led"),
     ("5", "Industries: telecom, logistics, hiring, manufacturing"),
-    ("15+", "Years shipping software end-to-end"),
+    ("~20", "Years shipping software end-to-end"),
     ("3", "VP / Director engineering roles"),
 ]
 
