@@ -327,7 +327,7 @@ LANDING_HERO = {
     "secondary_cta": {"url": "/archives.html", "label": "Browse all writing"},
     "meta": [
         ("Currently", "VP Product, Strategic Software"),
-        ("Previously", "VP Software Engineering · Director Eng"),
+        ("Previously", "VP Software Engineering · Director Engineering"),
         (
             "Industries",
             "Telecommunications, Software Development, Transportation Logistics, Manufacturing, HRIS",

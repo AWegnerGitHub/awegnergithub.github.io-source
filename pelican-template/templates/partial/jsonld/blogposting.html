@@ -38,7 +38,7 @@
   {%- endif %}
   "url": "{{ SITEURL }}/{{ article.url }}",
   "description": "{{ article.summary|striptags|e }}",
-  "mainEntityOfPage": "True",
+  "mainEntityOfPage": "{{ SITEURL }}/{{ article.url }}",
   "articleSection": "{{ article.category }}"
 }
 </script>
