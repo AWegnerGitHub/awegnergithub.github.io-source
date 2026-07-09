@@ -89,7 +89,7 @@
     "name": "{{ author_name|e }}",
     "url": "{{ SITEURL }}"
   },
-  "mainEntityOfPage": "True"
+  "mainEntityOfPage": "{{ SITEURL }}/{{ article.url }}"
 }
 {%- endif %}
 </script>
