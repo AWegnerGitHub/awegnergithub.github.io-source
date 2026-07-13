@@ -34,7 +34,7 @@
       </div>
       {%- endif %}
       <h1 class="listing-heading">{{ page.title }}</h1>
-      {%- if page.summary %}
+      {%- if page.summary and page.slug != 'about' %}
       <p class="listing-description">{{ page.summary|striptags }}</p>
       {%- endif %}
     </header>
