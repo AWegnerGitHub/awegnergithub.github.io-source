@@ -8,7 +8,9 @@
 
 {% block head_jsonld %}
 {%- if page.slug == 'about' %}
+{% include 'partial/jsonld/profile.html' %}
 {% include 'partial/jsonld/person.html' %}
+{% include 'partial/jsonld/organization.html' %}
 {%- endif %}
 {%- if FAQ_QUESTIONS and page.slug == 'about' %}
 {% include 'partial/jsonld/faq.html' %}
@@ -19,8 +21,8 @@
 <section class="flat">
   <div class="container">
     {% set crumbs = [
-      {'label': 'Home', 'url': SITEURL ~ '/'},
-      {'label': page.title|string}
+    {'label': 'Home', 'url': SITEURL ~ '/'},
+    {'label': page.title|string}
     ] %}
     {% include 'partial/breadcrumb.html' %}
 

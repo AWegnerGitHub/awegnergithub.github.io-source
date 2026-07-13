@@ -318,8 +318,8 @@ LANDING_HERO = {
     "headline": "Building the teams that <em>build the systems</em>.",
     "sub": (
         "I lead, grow and mentor engineering organizations across telecom, "
-        "logistics and SaaS. Currently VP of Strategic Software at a "
-        "telecommunications company. I write about what I've learned running "
+        "logistics and SaaS. Currently VP of Strategic Software at "
+        "Zayo. I write about what I've learned running "
         "distributed teams, managing technical debt, and hiring engineers in "
         "the age of AI."
     ),

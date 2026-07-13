@@ -8,21 +8,23 @@
 
 {%- set featured = [] %}
 {%- for a in articles %}
-  {%- set flag = a.metadata.get('featured', '')|string|lower %}
-  {%- if flag in ['true', 'yes', '1', 'y'] %}
-    {%- do featured.append(a) %}
-  {%- endif %}
+{%- set flag = a.metadata.get('featured', '')|string|lower %}
+{%- if flag in ['true', 'yes', '1', 'y'] %}
+{%- do featured.append(a) %}
+{%- endif %}
 {%- endfor %}
 
-{% block title %}<title>{% if is_first_page %}{{ SITENAME }}{% if SITESUBTITLE %} - {{ SITESUBTITLE }}{% endif %}{% else %}{{ SITENAME_SHORT|default(SITENAME) }} - Page {{ articles_page.number }}{% endif %}</title>{% endblock %}
+{% block title %}<title>{% if is_first_page %}{{ SITENAME }}{% if SITESUBTITLE %} - {{ SITESUBTITLE }}{% endif %}{% else
+  %}{{ SITENAME_SHORT|default(SITENAME) }} - Page {{ articles_page.number }}{% endif %}</title>{% endblock %}
 
 {% block head_jsonld %}
 {% if is_first_page %}
 {% include 'partial/jsonld/person.html' %}
+{% include 'partial/jsonld/organization.html' %}
 {% with list_name='Recent Articles',
-        list_description='Recent articles published on ' ~ SITENAME ~ '.',
-        list_order='Descending',
-        list_items=articles[:10] %}
+list_description='Recent articles published on ' ~ SITENAME ~ '.',
+list_order='Descending',
+list_items=articles[:10] %}
 {% include 'partial/jsonld/itemlist.html' %}
 {% endwith %}
 {% endif %}
@@ -45,21 +47,26 @@
       {%- endif %}
       <div class="hero-ctas">
         {%- if LANDING_HERO.primary_cta %}
-        {%- set primary_href = (SITEURL ~ LANDING_HERO.primary_cta.url) if LANDING_HERO.primary_cta.url.startswith('/') else LANDING_HERO.primary_cta.url %}
+        {%- set primary_href = (SITEURL ~ LANDING_HERO.primary_cta.url) if LANDING_HERO.primary_cta.url.startswith('/')
+        else LANDING_HERO.primary_cta.url %}
         <a href="{{ primary_href }}" class="btn btn-primary">
           {{ LANDING_HERO.primary_cta.label }}
           <span class="btn-arrow">→</span>
         </a>
         {%- endif %}
         {%- if LANDING_HERO.secondary_cta %}
-        {%- set secondary_href = (SITEURL ~ LANDING_HERO.secondary_cta.url) if LANDING_HERO.secondary_cta.url.startswith('/') else LANDING_HERO.secondary_cta.url %}
+        {%- set secondary_href = (SITEURL ~ LANDING_HERO.secondary_cta.url) if
+        LANDING_HERO.secondary_cta.url.startswith('/') else LANDING_HERO.secondary_cta.url %}
         <a href="{{ secondary_href }}" class="btn btn-ghost">{{ LANDING_HERO.secondary_cta.label }}</a>
         {%- endif %}
       </div>
       {%- if LANDING_HERO.meta %}
       <dl class="hero-meta">
         {%- for item in LANDING_HERO.meta %}
-        <div><dt>{{ item[0] }}</dt><dd>{{ item[1] }}</dd></div>
+        <div>
+          <dt>{{ item[0] }}</dt>
+          <dd>{{ item[1] }}</dd>
+        </div>
         {%- endfor %}
       </dl>
       {%- endif %}
@@ -92,7 +99,8 @@
 {%- if LANDING_METRICS %}
 <section class="metrics" aria-label="Impact">
   <div class="container">
-    <div class="section-rule"><span class="section-rule-label">IMPACT</span><span class="section-rule-line"></span></div>
+    <div class="section-rule"><span class="section-rule-label">IMPACT</span><span class="section-rule-line"></span>
+    </div>
     <div class="metrics-grid">
       {%- for value, label in LANDING_METRICS %}
       <div class="metric">
@@ -108,7 +116,8 @@
 {%- if LANDING_PRINCIPLES %}
 <section class="principles" id="principles">
   <div class="container">
-    <div class="section-rule"><span class="section-rule-label">LEADERSHIP PRINCIPLES</span><span class="section-rule-line"></span></div>
+    <div class="section-rule"><span class="section-rule-label">LEADERSHIP PRINCIPLES</span><span
+        class="section-rule-line"></span></div>
     {%- if LANDING_PRINCIPLES_HEAD %}
     <div class="principles-head">
       <h2>{{ LANDING_PRINCIPLES_HEAD[0] }}</h2>
@@ -153,13 +162,15 @@
 
     {%- if featured|length > 3 %}
     <div class="featured-carousel" data-carousel>
-      <button class="featured-carousel-btn featured-carousel-prev" type="button" aria-label="Scroll to previous featured articles">←</button>
+      <button class="featured-carousel-btn featured-carousel-prev" type="button"
+        aria-label="Scroll to previous featured articles">←</button>
       <div class="featured-grid-scroll" data-carousel-track>
         {%- for a in featured %}
         {% with article=a %}{% include 'partial/post_card.html' %}{% endwith %}
         {%- endfor %}
       </div>
-      <button class="featured-carousel-btn featured-carousel-next" type="button" aria-label="Scroll to next featured articles">→</button>
+      <button class="featured-carousel-btn featured-carousel-next" type="button"
+        aria-label="Scroll to next featured articles">→</button>
     </div>
     {%- else %}
     <div class="featured-grid">
@@ -176,7 +187,8 @@
 <section class="archive" id="archive">
   <div class="container">
     <div class="section-rule">
-      <span class="section-rule-label">ARCHIVE{% if not is_first_page %} · PAGE {{ articles_page.number }} OF {{ articles_paginator.num_pages }}{% endif %}</span>
+      <span class="section-rule-label">ARCHIVE{% if not is_first_page %} · PAGE {{ articles_page.number }} OF {{
+        articles_paginator.num_pages }}{% endif %}</span>
       <span class="section-rule-line"></span>
       <a href="{{ SITEURL }}/archives.html" class="section-rule-link">View full archive →</a>
     </div>

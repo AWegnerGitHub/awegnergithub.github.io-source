@@ -127,7 +127,10 @@ templates/
         ├── review.html            Review / Course / Product (reviews)
         ├── breadcrumb.html        BreadcrumbList (emitted by breadcrumb.html)
         ├── faq.html               FAQPage (About)
+        ├── organization.html      Organization information (useful for rich results; publisher information)
+        ├── profile.html           Used only for the about page to indicate this is a profile
         └── person.html            ProfilePage / Person - verbatim port from old theme
+
 static/
 ├── css/site.css           single stylesheet; light theme only
 └── img/wegner_headshot.png
