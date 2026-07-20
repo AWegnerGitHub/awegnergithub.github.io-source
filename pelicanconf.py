@@ -40,7 +40,7 @@ AUTHOR_FEED_RSS = None
 FEED_MAX_ITEMS = 20
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["series", "extract_toc", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter"]
+PLUGINS = ["series", "extract_toc", "extract_faq", "defined_terms", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter"]
 
 TOC = {"TOC_HEADERS": "^h[1-3]"}
 
