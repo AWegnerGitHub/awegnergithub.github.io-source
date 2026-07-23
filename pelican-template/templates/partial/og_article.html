@@ -10,6 +10,3 @@
 {%- for tag in article.tags %}
 <meta property="article:tag" content="{{ tag }}" />
 {%- endfor %}
-{%- if article.metadata.cover %}
-<meta property="og:image" content="{{ SITEURL }}/{{ article.metadata.cover }}" />
-{%- endif %}

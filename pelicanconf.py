@@ -8,6 +8,7 @@
 # continue to work unchanged.
 
 import datetime
+import os
 
 AUTHOR = "Andy Wegner"
 SITENAME = "Andrew Wegner | Ponderings of an Andy"
@@ -40,7 +41,7 @@ AUTHOR_FEED_RSS = None
 FEED_MAX_ITEMS = 20
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["series", "extract_toc", "extract_faq", "defined_terms", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter"]
+PLUGINS = ["series", "extract_toc", "extract_faq", "defined_terms", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter", "card_images"]
 
 TOC = {"TOC_HEADERS": "^h[1-3]"}
 
@@ -390,3 +391,30 @@ LANDING_PRINCIPLES = [
         "/junior-engineer-crisis-ai-code-generation.html",
     ),
 ]
+
+# =============================================================================
+# OG TITLE CARDS  (card_images plugin)
+#
+# Auto-generates a 1200x630 Open-Graph share image for every published article
+# that has neither a `cover:` nor `no_card: true`. The card URL is exposed to
+# the templates as `article.card_image` and wired into og:image / twitter:image
+# (partial/og.html) and BlogPosting.image (partial/jsonld/blogposting.html).
+# Cards are share-preview only and are never rendered on the article page.
+#
+# All settings are optional; Bump
+# CARD_VERSION to force every card to re-render after a design/asset change.
+# =============================================================================
+CARD_GENERATE = True
+CARD_OUTPUT_DIR = "theme/img/cards"     # output subdir + public URL path
+CARD_VERSION = "1"                       # change -> full re-render
+CARD_SUPERSAMPLE = 2                      # 2 = crisp (default); 1 = ~40% faster, smaller
+CARD_ROLE = "Engineering Leadership"     # byline role line on every card
+# CARD_NAME / CARD_DOMAIN / CARD_LOGO / CARD_HEADSHOT / CARD_FONT_DIR all have
+# sensible defaults (AUTHOR_DISPLAY, SITEURL host, theme static images, the
+# fonts bundled with the plugin) and only need setting to override.
+
+# Incremental cache: the CI deploy step 
+# restores the previously generated cards from the published repo into a folder
+# and points CARD_CACHE_DIR at it, so unchanged cards are copied instead of
+# re-rendered. Locally / on first run this is unset and all cards render.
+CARD_CACHE_DIR = os.environ.get("CARD_CACHE_DIR") or None

@@ -3,7 +3,21 @@
 <meta property="og:title" content="{{ self.title()|striptags|e if self.title else SITENAME }}" />
 <meta property="og:url" content="{{ SITEURL }}/{{ _canonical_path }}" />
 <meta property="og:description" content="{{ SITEDESCRIPTION|default(SITESUBTITLE|default('')) }}" />
-{%- if SITELOGO %}
-<meta property="og:image" content="https://andrewwegner.com/theme/img/wegner_headshot.png" />
+{%- set _cover = article.metadata.cover if (article is defined and article.metadata.cover) else '' %}
+{%- set _card = article.card_image if (article is defined and article.card_image) else '' %}
+{%- set _share = _cover or _card %}
+{%- if _share %}
+<meta property="og:image" content="{{ SITEURL }}/{{ _share }}" />
+{%- if _card and not _cover %}
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 {%- endif %}
+<meta property="og:image:alt" content="{{ (article.title if article is defined else SITENAME)|striptags|e }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{ SITEURL }}/{{ _share }}" />
+{%- elif SITELOGO %}
+<meta property="og:image" content="https://andrewwegner.com/theme/img/wegner_headshot.png" />
 <meta name="twitter:card" content="summary" />
+{%- else %}
+<meta name="twitter:card" content="summary" />
+{%- endif %}

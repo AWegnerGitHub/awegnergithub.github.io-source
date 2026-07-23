@@ -723,6 +723,7 @@ dependencies = [
     { name = "pelican-extended-sitemap" },
     { name = "pelican-seo" },
     { name = "pelican-series" },
+    { name = "pillow" },
     { name = "python-magic-bin", marker = "sys_platform == 'win32'" },
     { name = "pytz" },
 ]
@@ -738,6 +739,7 @@ requires-dist = [
     { name = "pelican-extended-sitemap", specifier = ">=1.2.3" },
     { name = "pelican-seo", specifier = ">=1.4.0" },
     { name = "pelican-series", specifier = ">=3.1.1" },
+    { name = "pillow", specifier = ">=11.0.0" },
     { name = "python-magic-bin", marker = "sys_platform == 'win32'", specifier = ">=0.4.14" },
     { name = "pytz", specifier = ">=2026.1.post1" },
 ]

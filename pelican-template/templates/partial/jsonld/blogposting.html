@@ -34,6 +34,8 @@
   },
   {%- if article.metadata.cover %}
   "image": "{{ SITEURL }}/{{ article.metadata.cover }}",
+  {%- elif article.card_image %}
+  "image": "{{ SITEURL }}/{{ article.card_image }}",
   {%- elif DEFAULT_COVER %}
   "image": "{{ SITEURL }}/{{ DEFAULT_COVER }}",
   {%- endif %}
