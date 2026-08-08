@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{%- set page_type = '404' %}
+
+{% block title %}<title>Page not found - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="The page you were looking for doesn't exist on {{ SITENAME }}.">
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block content %}
+{% set crumbs = [
+  {'label': 'Home', 'url': SITEURL ~ '/'},
+  {'label': 'Page not found'}
+] %}
+
+<div class="band">
+  <div class="band__inner">
+    {% include 'partial/breadcrumb.html' %}
+    <h1 class="page-title">This page isn't here.</h1>
+    <p class="page-dek">
+      The URL you followed may be broken, or the post may have moved. A few places that might help.
+    </p>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="flat">
+    <div class="prose">
+      <ul>
+        <li><a href="{{ SITEURL }}/">Start at the home page</a> — the latest essays and featured writing.</li>
+        <li><a href="{{ SITEURL }}/archives.html">Browse the archive</a> — every post I've published, grouped by year.</li>
+        <li><a href="{{ SITEURL }}/categories.html">Categories</a> or <a href="{{ SITEURL }}/tags.html">tags</a> — if you were looking for a topic.</li>
+        {%- for p in pages %}{% if p.slug == 'about' %}
+        <li><a href="{{ SITEURL }}/{{ p.url }}">About me</a> — who runs this site.</li>
+        {%- endif %}{% endfor %}
+      </ul>
+      {%- if CONTACT_EMAIL %}
+      <p>
+        If you got here by clicking a link from somewhere, I'd appreciate a heads-up at
+        <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a> so I can fix it.
+      </p>
+      {%- endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

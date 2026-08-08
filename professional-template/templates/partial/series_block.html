@@ -1,0 +1,29 @@
+{#- Where this post sits in its series. In this theme the series lives in the
+    rail rather than as a banner in the body, so it reads as orientation
+    alongside the contents list instead of interrupting the essay. -#}
+{%- if article is defined and article and article.series %}
+{%- set series_prev = article.series.all_previous[-1] if article.series.all_previous else None %}
+{%- set series_next = article.series.all_next[0] if article.series.all_next else None %}
+<div class="rail__block">
+  <span class="rail__label">Series</span>
+  <span class="rail__series-name">{{ article.series.name }}</span>
+  <span class="rail__series-part">Part {{ article.series.index }}{% if article.series.all_previous or article.series.all_next %} of {{ (article.series.all_previous|length) + 1 + (article.series.all_next|length) }}{% endif %}</span>
+  {%- if series_prev or series_next %}
+  <nav class="series-nav" aria-label="Series navigation">
+    {%- if series_prev %}
+    <a class="series-nav__link" href="{{ SITEURL }}/{{ series_prev.url }}">
+      <span class="series-nav__dir">← Previous</span>
+      <span class="series-nav__title">{{ series_prev.title }}</span>
+    </a>
+    {%- endif %}
+    {%- if series_next %}
+    <a class="series-nav__link" href="{{ SITEURL }}/{{ series_next.url }}">
+      <span class="series-nav__dir">Next →</span>
+      <span class="series-nav__title">{{ series_next.title }}</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+  <a class="rail__all" href="{{ SITEURL }}/archives.html">All posts by date →</a>
+</div>
+{%- endif %}

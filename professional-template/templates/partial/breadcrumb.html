@@ -1,0 +1,11 @@
+{%- if crumbs %}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  {%- for c in crumbs %}
+    {%- if not loop.first %}<span aria-hidden="true">/</span>{% endif %}
+    {%- if c.url and not loop.last %}<a href="{{ c.url }}">{{ c.label }}</a>
+    {%- else %}<span aria-current="page">{{ c.label }}</span>
+    {%- endif %}
+  {%- endfor %}
+</nav>
+{% with crumbs=crumbs %}{% include 'partial/jsonld/breadcrumb.html' %}{% endwith %}
+{%- endif %}

@@ -1,0 +1,21 @@
+{#- The article rail: contents, series position, tags.
+
+    It leads the .layout grid in the DOM and is placed back into the right-hand
+    column by CSS, so the contents list is reachable before the body on a phone
+    without reading order and visual order disagreeing. -#}
+<aside class="rail" aria-label="Article information" data-contents>
+  {% include 'partial/toc.html' %}
+
+  {% include 'partial/series_block.html' %}
+
+  {%- if article.tags %}
+  <div class="rail__block">
+    <span class="rail__label">Tags</span>
+    <span class="tag-list">
+      {%- for tag in article.tags %}
+      <a class="tag" href="{{ SITEURL }}/{{ tag.url }}">#{{ tag }}</a>
+      {%- endfor %}
+    </span>
+  </div>
+  {%- endif %}
+</aside>

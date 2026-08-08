@@ -1,0 +1,56 @@
+{#- Site header: brand, primary nav, reading-progress line.
+
+    On any page that opens with the identity block — the home hero and About —
+    the brand is handed off from that headshot as you scroll (site.js
+    `initBrandHandoff`); the page template says so by setting `brand_handoff`.
+    `data-navbrandlink` marks the anchor so the script can hide it outright
+    while it is faded — an invisible tab stop is a WCAG 2.4.7 failure, an
+    absent one is not. -#}
+{%- set _handoff = brand_handoff|default(false) -%}
+{%- set about = namespace(url=None) -%}
+{%- for p in pages %}{% if p.slug == 'about' %}{% set about.url = SITEURL ~ '/' ~ p.url %}{% endif %}{% endfor -%}
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{{ SITEURL }}/"{% if _handoff %} data-navbrandlink{% endif %}>
+      <span class="brand__mark"{% if _handoff %} data-navbrand{% endif %}>
+        {%- if HEADSHOT %}
+        <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/img/{{ HEADSHOT }}" alt="" width="27" height="27">
+        {%- endif %}
+      </span>
+      <span class="brand__text"{% if _handoff %} data-navname{% endif %}>
+        <span class="brand__name">{{ AUTHOR_DISPLAY|default(AUTHOR|default('Andrew Wegner')) }}</span>
+        <span class="brand__role">{{ AUTHOR_ROLE|default('Engineering leader') }}</span>
+      </span>
+    </a>
+    <div class="site-header__end">
+      <nav class="site-nav" aria-label="Primary">
+        {%- if MENUITEMS %}
+        {%- for title, link in MENUITEMS %}
+        <a href="{{ SITEURL }}{{ link }}"{% if nav_current == title %} aria-current="page"{% endif %}>{{ title }}</a>
+        {%- endfor %}
+        {%- else %}
+        <a href="{{ about.url if about.url else SITEURL ~ '/about/' }}"{% if nav_current == 'About' %} aria-current="page"{% endif %}>About</a>
+        <a href="{{ SITEURL }}/archives.html"{% if nav_current == 'Archives' %} aria-current="page"{% endif %}>Archives</a>
+        <a href="{{ SITEURL }}/categories.html"{% if nav_current == 'Categories' %} aria-current="page"{% endif %}>Categories</a>
+        <a href="{{ SITEURL }}/tags.html"{% if nav_current == 'Tags' %} aria-current="page"{% endif %}>Tags</a>
+        {%- endif %}
+      </nav>
+      {#- Light/dark toggle. Both glyphs ship; CSS shows the one that names the
+          scheme the button would switch *to*, so it is right on the first
+          frame without waiting for site.js. The label here is the direction-
+          neutral one, true in either scheme; site.js replaces it with the
+          directional wording once it knows which scheme is live. -#}
+      <button type="button" class="theme-toggle" aria-label="Switch theme" data-theme-toggle>
+        {%- include 'partial/icon/sun.svg' %}
+        {%- include 'partial/icon/moon.svg' %}
+      </button>
+    </div>
+  </div>
+  {#- Reading progress. Only on pages that are a single piece of writing: on a
+      landing page or an index there is no "how far through" to report, and a bar
+      that fills as you scroll a list of links is decoration. `track_scroll` is
+      set by article.html, which review.html extends. -#}
+  {%- if track_scroll %}
+  <div class="progress" aria-hidden="true"><div class="progress__bar" data-progress></div></div>
+  {%- endif %}
+</header>

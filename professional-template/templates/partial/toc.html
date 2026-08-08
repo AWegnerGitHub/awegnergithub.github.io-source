@@ -1,0 +1,12 @@
+{#- Contents list for the rail. `article.toc` / `page.toc` arrive from the
+    Markdown TOC extension as a bare nested <ul>; site.js reads the anchors and
+    marks the section currently under the reading line. -#}
+{%- set _toc = article.toc if (article is defined and article and article.toc) else (page.toc if (page is defined and page and page.toc) else none) %}
+{%- if _toc %}
+<div class="rail__group">
+  <span class="rail__label" id="rail-contents-label">{{ toc_label|default('Article contents') }}</span>
+  <nav class="rail-toc" aria-labelledby="rail-contents-label">
+    {{ _toc }}
+  </nav>
+</div>
+{%- endif %}

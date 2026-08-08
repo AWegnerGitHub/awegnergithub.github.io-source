@@ -1,0 +1,25 @@
+{#- Headshot, name, role — the block the home hero and the About band both open
+    with, so it lives in one place. `data-herobrand` is the element site.js hands
+    off to the header brand as the reader scrolls; a template that includes this
+    also sets `brand_handoff` so partial/nav.html knows to expect it.
+
+    The role line is a single config string, and only the first item in it is the
+    role — "Engineering leader · Mentor · Architect" is one job and two other
+    things he does. So it is split on the middle dot and only the lead takes the
+    accent. A string with no dot is all lead, which is what AUTHOR_ROLE is. -#}
+{%- if HEADSHOT %}
+{%- set _role = LANDING_HERO.kicker if (LANDING_HERO and LANDING_HERO.kicker) else AUTHOR_ROLE %}
+<div class="hero__id">
+  <span class="hero__mark" data-herobrand>
+    <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/img/{{ HEADSHOT }}"
+         alt="{{ AUTHOR_DISPLAY|default(AUTHOR) }}" width="72" height="72">
+  </span>
+  <span class="hero__names">
+    <span class="hero__name">{{ AUTHOR_DISPLAY|default(AUTHOR|default('Andrew Wegner')) }}</span>
+    {%- if _role %}
+    {%- set _parts = _role.split('·')|map('trim')|select|list %}
+    <span class="hero__role"><span class="hero__role-lead">{{ _parts[0] }}</span>{% if _parts|length > 1 %} · {{ _parts[1:]|join(' · ') }}{% endif %}</span>
+    {%- endif %}
+  </span>
+</div>
+{%- endif %}

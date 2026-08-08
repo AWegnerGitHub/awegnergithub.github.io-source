@@ -1,0 +1,55 @@
+{#- Palette switcher, body half — TEMPORARY. thoughts.md #26.
+
+    A dev control for choosing the redesign's ground, not a reader feature. It
+    sits in the left gutter on every page and repaints the whole site in any of
+    the twelve candidates from palettes/PALETTES.md, so a palette can be judged
+    on real pages — an archive of 148 rows, a code-heavy essay, the home
+    carousel — instead of on a swatch card.
+
+    The list is grouped into the two waves, because they answer different
+    questions: wave 1 moves the whole surface group together, wave 2 pins the
+    ground near white and keeps the blue in the panels, ink, rules or accent.
+    The grouping is generated, not written here — make-switcher-css.py reads
+    the wave sentinels out of PALETTES.md.
+
+    TO REMOVE, once a ground is settled (six things):
+      1. these two include lines in base.html
+      2. templates/partial/palette_switcher.html          (this file)
+      3. templates/partial/palette_switcher_head.html
+      4. templates/partial/palette_switcher_options.html  (generated)
+      5. static/css/palette-switcher.css                  (generated)
+      6. static/js/palette-switcher.js
+    Nothing else refers to any of them, and no site.css or site.js rule was
+    changed to make this work. `palettes/make-switcher-css.py` regenerates 4
+    and 5; it can go with them or stay, since it writes nothing else.
+
+    <details> rather than a bespoke disclosure: the open/closed state, the
+    keyboard handling and the focus behaviour are the browser's, and the panel
+    still opens with scripting off — at which point the radios are inert, so
+    palette-switcher.css hides the whole thing until base.html's inline script
+    has added `has-js`.
+
+    The radios are real radios for the same reason: one name, one choice,
+    arrow-key navigation and the grouping a screen reader announces all come
+    for free, and none of it has to be re-implemented. -#}
+{%- if PALETTE_SWITCHER|default(true) %}
+<details class="palette-switch" data-palette-switch>
+  <summary class="palette-switch__summary">
+    <span class="palette-switch__swatch" data-palette="cream" data-palette-now-swatch aria-hidden="true"></span>
+    <span class="palette-switch__label">
+      <span class="palette-switch__kicker">Ground</span>
+      <span class="palette-switch__now" data-palette-now>Cream</span>
+    </span>
+  </summary>
+  <div class="palette-switch__body">
+    <fieldset class="palette-switch__list">
+      <legend class="palette-switch__legend">Ground palette</legend>
+      {% include 'partial/palette_switcher_options.html' %}
+    </fieldset>
+    <p class="palette-switch__note">
+      Temporary — <code>thoughts.md</code> #26. Choice is kept in this browser
+      only and travels between pages.
+    </p>
+  </div>
+</details>
+{%- endif %}

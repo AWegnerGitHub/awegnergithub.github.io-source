@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'page' %}
+{%- set page_slug = page.slug %}
+{%- set is_about = page.slug == 'about' %}
+{%- set nav_current = 'About' if is_about else none %}
+{%- set has_faq = FAQ_QUESTIONS and is_about %}
+{#- About opens with the identity block, so it takes the same scroll handoff to
+    the header brand that the home hero does. Read by partial/nav.html. -#}
+{%- set brand_handoff = is_about and HEADSHOT %}
+
+{% block title %}<title>{{ page.title|striptags|e }} - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{%- if is_about %}
+{% include 'partial/jsonld/profile.html' %}
+{% include 'partial/jsonld/person.html' %}
+{% include 'partial/jsonld/organization.html' %}
+{%- endif %}
+{%- if has_faq %}
+{% include 'partial/jsonld/faq.html' %}
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+{% set crumbs = [
+{'label': 'Home', 'url': SITEURL ~ '/'},
+{'label': page.title|string}
+] %}
+
+<div class="band">
+  <div class="band__inner">
+    {%- if is_about %}
+    {#- No dek here on purpose: the only candidate strings are the SEO
+        meta description and the page's own opening paragraph, and both
+        read worse in this slot than the essay that follows it. -#}
+    {% include 'partial/breadcrumb.html' %}
+    {#- The same identity block the home hero opens with, including the handoff
+        to the header on scroll. The two landing surfaces introduce the same
+        person, so they introduce him the same way. -#}
+    {% include 'partial/identity.html' %}
+    <h1 class="page-title">{{ page.title }}</h1>
+    {%- else %}
+    {% include 'partial/breadcrumb.html' %}
+    <h1 class="page-title">{{ page.title }}</h1>
+    {%- if page.summary %}
+    <p class="page-dek">{{ page.summary|striptags }}</p>
+    {%- endif %}
+    {%- endif %}
+  </div>
+</div>
+
+<div class="layout">
+  {%- if has_faq or page.toc %}
+  <aside class="rail" aria-label="Page information" data-contents>
+    <div class="rail__group">
+      <span class="rail__label" id="rail-contents-label">On this page</span>
+      <nav class="rail-toc" aria-labelledby="rail-contents-label">
+        {%- if page.toc %}
+        {{ page.toc }}
+        {%- elif has_faq %}
+        <a class="rail-toc__link" href="#page-body">Overview</a>
+        <a class="rail-toc__link" href="#common-questions">Common questions</a>
+        {%- for question, answer in FAQ_QUESTIONS %}
+        {%- set slug = question|lower|replace(' ', '-')|replace('?', '')|replace(',', '')|replace("'", '') %}
+        <a class="rail-toc__link" href="#{{ slug }}">{{ question }}</a>
+        {%- endfor %}
+        {%- endif %}
+      </nav>
+    </div>
+    {#- Nothing else belongs in this rail. It used to carry the LANDING_HERO
+        ledger again plus a résumé link; both already appear on the home page,
+        and a contents rail that also holds career facts and a download is two
+        components wearing one border. The rail is the contents list now. -#}
+  </aside>
+  {%- endif %}
+
+  <div class="flat">
+    <div class="prose" id="page-body">
+      {{ page.content }}
+    </div>
+
+    {%- if has_faq %}
+    <section class="article-faq" aria-labelledby="common-questions">
+      <h2 class="faq-heading" id="common-questions">Common questions</h2>
+      <div class="faq">
+        {%- for question, answer in FAQ_QUESTIONS %}
+        {%- set slug = question|lower|replace(' ', '-')|replace('?', '')|replace(',', '')|replace("'", '') %}
+        <div class="faq__item" id="{{ slug }}">
+          <h3 class="faq__q">{{ question }}</h3>
+          <div class="faq__a">{{ answer|safe }}</div>
+        </div>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+  </div>
+</div>
+{% endblock %}

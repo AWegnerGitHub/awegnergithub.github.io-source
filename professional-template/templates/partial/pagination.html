@@ -1,0 +1,17 @@
+{%- if articles_paginator and articles_paginator.num_pages > 1 %}
+{%- set _anchor = ('#' ~ paginator_anchor) if paginator_anchor else '' %}
+<nav class="pager" aria-label="Pagination">
+  {%- if articles_page.has_previous() %}
+  {%- set _prev_url = '' if articles_previous_page.url == 'index.html' else articles_previous_page.url %}
+  <a href="{{ SITEURL }}/{{ _prev_url }}{{ _anchor }}" class="pager__link" rel="prev">← Newer posts</a>
+  {%- else %}
+  <span class="pager__link pager__link--disabled">← Newer posts</span>
+  {%- endif %}
+  <span class="pager__pos">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span>
+  {%- if articles_page.has_next() %}
+  <a href="{{ SITEURL }}/{{ articles_next_page.url }}{{ _anchor }}" class="pager__link" rel="next">Older posts →</a>
+  {%- else %}
+  <span class="pager__link pager__link--disabled">Older posts →</span>
+  {%- endif %}
+</nav>
+{%- endif %}

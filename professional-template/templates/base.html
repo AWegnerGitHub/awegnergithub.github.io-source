@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="{{ DEFAULT_LANG|default('en') }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{#- Runs before the first paint, which is the whole point: applying a saved
+    theme from site.js would show one scheme and then the other. It writes
+    data-theme *only* when the reader has actually chosen, so a visitor who
+    never touched the toggle keeps following their system setting — and keeps
+    following it live, since the stylesheet's prefers-color-scheme block stays
+    in charge. The class is what reveals the toggle: with scripting off the
+    button would be inert, and an inert control is worse than no control. -#}
+<script>
+(function () {
+  var root = document.documentElement;
+  root.className += (root.className ? ' ' : '') + 'has-js';
+  try {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  } catch (e) { /* storage blocked; the system setting still applies */ }
+})();
+</script>
+
+{% block title %}<title>{{ SITENAME }}</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ SITEDESCRIPTION|default(SITESUBTITLE|default('')) }}">
+{% if AUTHOR %}<meta name="author" content="{{ AUTHOR }}">{% endif %}
+{% endblock %}
+
+{%- set _canonical_path = '' if (output_file in (None, '', 'index.html'))
+    else (output_file[:-10] if output_file.endswith('/index.html') else output_file) %}
+<link rel="canonical" href="{{ SITEURL }}/{{ _canonical_path }}">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ SITEURL }}/sitemap.xml">
+{%- if articles_page and articles_page.has_previous() and articles_previous_page %}
+{%- set _prev_url = '' if articles_previous_page.url == 'index.html' else articles_previous_page.url %}
+<link rel="prev" href="{{ SITEURL }}/{{ _prev_url }}">
+{%- endif %}
+{%- if articles_page and articles_page.has_next() and articles_next_page %}
+<link rel="next" href="{{ SITEURL }}/{{ articles_next_page.url }}">
+{%- endif %}
+
+{% include 'partial/icon.html' %}
+{% include 'partial/feed.html' %}
+{% include 'partial/og.html' %}
+{% block head_extra %}{% endblock %}
+
+{#- Two faces preloaded, and only two.
+
+    Archivo sets every heading and every line of body copy, so it needs no
+    argument. JetBrains Mono was on the critical path without being hinted,
+    which is `redesign-next-steps.md` §7: it carries dates, tallies, the
+    contents counts and inline code. Measured across the eleven page types at
+    1280x900 and 390x844, it renders inside the first viewport on nine of them —
+    on all 148 articles the topmost instance is the `.article__date`, 142px down,
+    directly under the header. On the two exceptions, About and 404, it still
+    sets the footer's legal line, so the request happens on every page of the
+    site either way and hinting it moves a fetch earlier rather than adding one.
+
+    `archivo-latin-ext.woff2` is deliberately *not* preloaded. Its
+    `unicode-range` covers accented Latin that this content almost never uses,
+    so hinting it would pull 32KB per page to be discarded. -#}
+<link rel="preload" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+
+{#- Linked unminified, on purpose. The deploy workflow minifies this file in
+    place after Pelican runs — `lightningcss-cli --minify -o
+    output/theme/css/site.css output/theme/css/site.css`, then
+    `html-minifier-terser` over every page — so the name the markup asks for has
+    to stay `site.css` or that step would minify a file nobody requests.
+
+    A local build is therefore *expected* to serve ~76KB where production serves
+    ~39KB. Do not read that as a missing optimisation and do not add a second
+    minifier here; run `tools/build/minify-check.py`, which applies the deploy
+    workflow's own commands to a build tree and asserts the result is the same
+    stylesheet. -#}
+<link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/css/site.css">
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/js/site.js" defer></script>
+{# TEMPORARY — thoughts.md #26. Delete this line and the one in <body>. #}
+{% include 'partial/palette_switcher_head.html' %}
+
+{% include 'partial/jsonld/blog.html' %}
+{% block head_jsonld %}{% endblock %}
+</head>
+<body class="page-{{ page_type|default('unknown') }}" data-page-type="{{ page_type|default('unknown') }}" data-page-slug="{{ page_slug|default('') }}"{% if track_scroll %} data-track-scroll="1"{% endif %}>
+<a href="#main" class="skip-link">Skip to content</a>
+
+{% include 'partial/nav.html' %}
+
+<main id="main" class="{% block main_class %}main{% endblock %}" tabindex="-1">
+  {% block content %}{% endblock %}
+</main>
+
+{% include 'partial/footer.html' %}
+
+{# TEMPORARY — thoughts.md #26. Delete this line and the one in <head>. #}
+{% include 'partial/palette_switcher.html' %}
+
+{% include 'partial/heap.html' %}
+</body>
+</html>

@@ -1,0 +1,65 @@
+{#- One article as a card.
+
+    `card_variant`:
+      'carousel' (default) — a homepage carousel tile. `slot` (1|2|3) sets the
+                             opening position; site.js rewrites data-slot as
+                             the deck rotates, and with JS off every card
+                             simply renders.
+      'entry'              — a stacked row for the category and tag listings.
+
+    The lead tile is the only one that shows the summary; the compact tiles
+    carry date, category and title alone, which is what keeps the panel from
+    reading as three copies of the same card.
+
+    `deck` — how many cards are in this carousel, which decides *which* tiles
+    can ever be the lead. site.js rotates a deck only when it holds more than
+    the three slots it can show (`if (count <= 3) return`), so:
+
+      deck > 3   any tile can be promoted to slot 1 at runtime, so every tile
+                 has to carry the summary and the read link
+      deck <= 3  the lead is whichever tile was rendered into slot 1 and it
+                 never changes, so the summary on the other two is markup no
+                 reader can reach — CSS hides it in every scheme, at every
+                 width, with or without scripting
+
+    Omitting `deck` assumes it rotates, which is the safe default: it ships
+    markup that might go unread rather than withholding markup that is needed.
+    The 3 is the same slot count as `[data-slot="1|2|3"]` in site.css and
+    `Math.min(3, count)` in site.js; thoughts.md #22 rejected making it config
+    precisely because it lives in all three places. -#}
+{%- set _variant = card_variant|default('carousel') -%}
+{%- set _rotates = (deck is not defined) or (deck is none) or (deck > 3) -%}
+{%- set _is_lead = slot is defined and slot == 1 -%}
+{%- if _variant == 'entry' -%}
+<li class="entry">
+  <div class="entry__meta">
+    <span class="entry__date">{{ article.date.strftime('%d %b %Y') }}</span>
+    <a class="entry__cat" href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+    {%- if article.stats and article.stats.read_mins %}
+    <span>{{ article.stats.read_mins }} min read</span>
+    {%- endif %}
+  </div>
+  <h2 class="entry__title"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+  {%- if article.summary %}
+  <p class="entry__dek">{{ article.summary|striptags }}</p>
+  {%- endif %}
+  {%- if article.tags %}
+  <div class="entry__tags">
+    {%- for tag in article.tags %}
+    <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">#{{ tag }}</a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</li>
+{%- else -%}
+<a class="carousel__item"{% if slot %} data-slot="{{ slot }}"{% endif %} href="{{ SITEURL }}/{{ article.url }}">
+  <span class="card__meta">{{ article.date.strftime('%d %b %Y') }} · {{ article.category }}{% if article.stats and article.stats.read_mins %} · {{ article.stats.read_mins }} min{% endif %}</span>
+  <span class="card__title">{{ article.title }}</span>
+  {%- if _rotates or _is_lead %}
+  {%- if article.summary %}
+  <span class="card__dek">{{ article.summary|striptags }}</span>
+  {%- endif %}
+  <span class="card__more">Read essay →</span>
+  {%- endif %}
+</a>
+{%- endif -%}

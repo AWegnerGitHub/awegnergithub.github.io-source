@@ -1,0 +1,53 @@
+{#- Palette switcher, head half — TEMPORARY. thoughts.md #26.
+
+    Two includes rather than one because this feature needs to be in two places
+    at once: the stylesheet and the pre-paint script belong in <head>, the
+    control belongs in <body>. Splitting it keeps both halves deletable as a
+    pair — see partial/palette_switcher.html for the full removal list.
+
+    The script runs before the first paint for the same reason base.html's
+    theme script does: applying a saved palette from palette-switcher.js would
+    paint the shipped ground and then repaint the chosen one, and a page
+    that flashes the control palette is useless for judging a candidate.
+
+    `PALETTE_SWITCHER` defaults on, so the theme needs no config entry to carry
+    the tool. It is set in two places as of 2026-07-29: `pelicanconf.py` turns
+    it **off**, which every config inherits, and `redesignconf.py` turns it back
+    **on** for the build that exists for looking at the redesign. That split is
+    deliberate — off in production, alive locally, where it is the cheapest way
+    to re-check the ground against a real page and where
+    `tools/browser/palette-switch.mjs` needs it rendered in order to test it. -#}
+{%- if PALETTE_SWITCHER|default(true) %}
+<link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/css/palette-tokens.css">
+<link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/css/palette-switch.css">
+<script>
+(function () {
+  try {
+    /* Whatever was stored, with no opinion about which palette ships. This
+       runs while the head is still parsing, so the generated
+       `data-palette-default` marker does not exist yet the way it does for
+       palette-switcher.js — and it need not: a stored value equal to the
+       shipped palette resolves to the same colours as :root, and
+       palette-switcher.js drops the redundant attribute once it runs.
+       Hardcoding the default here would put the name of the shipped ground in
+       a second place. */
+    var saved = localStorage.getItem('palette');
+    if (saved && /^[a-z0-9-]+$/.test(saved)) {
+      document.documentElement.setAttribute('data-palette', saved);
+    }
+  } catch (e) { /* storage blocked; the shipped ground applies */ }
+
+  /* Stamp the theme-color tags with what partial/icon.html authored, while it
+     is still the only thing that has touched them. site.js rewrites their
+     content on an explicit scheme choice — including at its own init, which
+     runs before palette-switcher.js — so by the time that script could read
+     them the authored value may already be gone. It needs the original to hand
+     the tags back unchanged whenever no palette is in force. */
+  var tags = document.querySelectorAll('meta[name="theme-color"]');
+  for (var i = 0; i < tags.length; i++) {
+    tags[i].setAttribute('data-authored', tags[i].getAttribute('content'));
+  }
+})();
+</script>
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR|default('theme') }}/js/palette-switcher.js" defer></script>
+{%- endif %}

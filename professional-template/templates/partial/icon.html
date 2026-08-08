@@ -1,0 +1,46 @@
+{%- if FAVICON %}
+<link rel="icon" href="{{ SITEURL }}{{ FAVICON }}">
+{%- endif %}
+{%- if FAVICON32X32 %}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ SITEURL }}{{ FAVICON32X32 }}">
+{%- endif %}
+{%- if FAVICON16X16 %}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ SITEURL }}{{ FAVICON16X16 }}">
+{%- endif %}
+{%- if APPLETOUCHICON %}
+<link rel="apple-touch-icon" href="{{ SITEURL }}{{ APPLETOUCHICON }}">
+{%- endif %}
+{%- if SITEMANIFEST %}
+<link rel="manifest" href="{{ SITEURL }}{{ SITEMANIFEST }}">
+{%- endif %}
+{#- Browser chrome, one tag per scheme (thoughts.md #20a).
+
+    Each value is the scheme's --paper, which is what the sticky header paints,
+    so the browser's own bar continues the page rather than sitting against it.
+    The `media` attribute is what makes this work with no JavaScript at all:
+    the browser picks the first tag whose media matches, so an OS-dark reader
+    gets the dark ground on the very first paint. This replaces BROWSER_COLOR,
+    which was a single near-black carried over from the old theme and corrected
+    by site.js a beat after load.
+
+    The defaults below are the theme's own ramp and are the values to keep in
+    step with `--paper` in site.css if that ever moves — the browser resolves
+    `oklch(0.972 0.002 255)` to #f5f6f7 and `oklch(0.205 0.0104 255)` to
+    #14171c, measured, not converted by hand. (They were #f7f5f2 / #191713
+    until 2026-07-29, when the shipped ground changed from Cream to Chalk;
+    `tools/browser/paper-hex.mjs` is what to run if it moves again.) A behaviour test asserts the two stay
+    equal, because this is the one place in the theme where a colour is written
+    outside `:root` and drift would otherwise be silent.
+
+    Set THEME_COLOR_LIGHT / THEME_COLOR_DARK to override either; set one to ""
+    to emit no tag for that scheme. site.js takes over only when the reader
+    presses the toggle, because `media` answers what the *system* wants and a
+    chosen scheme is a different question. -#}
+{%- set _theme_color_light = THEME_COLOR_LIGHT if THEME_COLOR_LIGHT is defined else '#f5f6f7' %}
+{%- set _theme_color_dark = THEME_COLOR_DARK if THEME_COLOR_DARK is defined else '#14171c' %}
+{%- if _theme_color_light %}
+<meta name="theme-color" content="{{ _theme_color_light }}" media="(prefers-color-scheme: light)">
+{%- endif %}
+{%- if _theme_color_dark %}
+<meta name="theme-color" content="{{ _theme_color_dark }}" media="(prefers-color-scheme: dark)">
+{%- endif %}

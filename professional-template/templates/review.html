@@ -1,0 +1,17 @@
+{% extends 'article.html' %}
+
+{#- A review is an article that opens on its verdict. Everything else — band,
+    rail, prose, FAQ, post nav, author — is inherited unchanged; only the score
+    block and the extra Review JSON-LD are added. -#}
+{%- set page_type = 'review' %}
+
+{% block head_jsonld %}
+{% include 'partial/jsonld/blogposting.html' %}
+{% include 'partial/jsonld/review.html' %}
+{% include 'partial/jsonld/faq_article.html' %}
+{% include 'partial/jsonld/definedterm.html' %}
+{% endblock %}
+
+{% block article_lede %}
+{% include 'partial/review_card.html' %}
+{% endblock %}

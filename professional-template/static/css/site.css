@@ -1,0 +1,2948 @@
+/* ==========================================================================
+   Andrew Wegner — site styles
+
+   Two families, one warm accent, a near-white cool ground, no rounding.
+
+     Archivo          prose, headings, UI
+     JetBrains Mono   dates, tallies, code — anything the machine recorded
+
+   Every colour is a token. Nothing below :root writes a raw colour value; the
+   token table is the contract, and both the light and dark ramps are verified
+   to clear WCAG AA (4.5:1) against every surface they render on.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Fonts — self-hosted. No third-party origin is contacted at render time.
+   -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("../fonts/archivo.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("../fonts/archivo-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --------------------------------------------------------------------------
+   Tokens
+
+   The light ramp below is Chalk — a near-white ground with the cool cast in
+   the panels, and the rust accent kept warm against it. Chosen 2026-07-29 from
+   the twelve candidates in palettes/PALETTES.md, replacing the cream ground the
+   design was drawn on. The dark ramp is the same design at night: same hues,
+   same relationships, the lightness axis inverted.
+
+   Which one is live is decided in three steps, in this order:
+
+     1. no preference expressed anywhere            -> light
+     2. the operating system asks for dark          -> dark
+     3. the reader pressed the header toggle        -> whatever they chose
+
+   Step 1 is the default because this is a light design that also has a dark
+   mode, not a dark one. Step 2 exists because a reader who has told their
+   operating system they want dark has already answered the question, and a
+   site that ignores that answer is overriding a preference, not setting a
+   default. Step 3 wins because it is the only one a person did on this site.
+   It is carried on <html data-theme>, written before first paint by the inline
+   script in base.html and persisted in localStorage by site.js.
+
+   Worth knowing, because it looks like a missing case: there is no signal for
+   "the user never chose". `prefers-color-scheme: no-preference` was dropped
+   from the spec and never matches — Chrome reports `dark` even when asked to
+   emulate it — and an operating system set to "auto" reports plain `dark` once
+   it is dark out. Step 1 therefore means "the browser says light", which is
+   what every browser says absent a dark preference.
+
+   CSS cannot share one declaration block between a media query and an
+   attribute selector, so the dark ramp is written twice — once for step 2,
+   once for step 3. The two blocks are identical and must stay that way; they
+   are the only place in the stylesheet where a value is repeated. Nothing
+   below :root knows which scheme is live.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Absent an explicit choice the UA's own surfaces — form controls, the
+     scrollbar, the canvas behind an overscroll — follow the system. The two
+     [data-theme] blocks pin this down once the reader has chosen. */
+  color-scheme: light dark;
+
+  /* type */
+  --font-text: "Archivo", system-ui, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* surfaces — Chalk. A near-white ground with the cool cast carried by the
+     panels rather than by the sheet, and the brick accent kept warm against
+     it. Chosen 2026-07-29 from the twelve candidates in palettes/PALETTES.md;
+     the ramp below is that file's Chalk table verbatim, so a change belongs
+     there and then here, not here alone.
+
+     Every lightness value is the one the design was drawn with. Chalk moves
+     hue and chroma only, which is why the whole contrast table below survived
+     the change untouched.
+
+     --paper is 0.002 chroma at hue 255 -> rgb(245,246,247). Two things follow.
+     The ground reads as white rather than as a tint, which was the point. And
+     the detector's cream-palette rule cannot fire on it at all: that rule
+     needs a *warm* ordering, red >= green >= blue, and this is the opposite.
+     The old 0.005 cap on a warm ground existed to stay under that rule by one
+     8-bit step; on a cool ground the constraint simply does not exist, so
+     every surface here carries its full tint. */
+  --paper: oklch(0.972 0.002 255);
+  --paper-sunk: oklch(0.948 0.0117 255);
+  --card: oklch(0.995 0.0039 255);
+  --zebra: oklch(0.955 0.0143 255);
+  /* 0.94, not 0.93: --ink-faint (the archive row date) reads on this ground
+     only when a row is hovered, so an at-rest contrast pass never sees it.
+     At 0.93 it measured 4.46:1. */
+  --zebra-hover: oklch(0.94 0.0234 255);
+  --row-hover: oklch(0.955 0.0104 255);
+  --wash: oklch(0.935 0.0143 255);
+  --code-bg: oklch(0.945 0.0117 255);
+
+  /* ink */
+  --ink: oklch(0.19 0.0144 265);
+  --ink-body: oklch(0.26 0.0144 265);
+  --ink-mid: oklch(0.33 0.0144 265);
+  --ink-nav: oklch(0.36 0.0144 265);
+  --ink-soft: oklch(0.38 0.0144 265);
+  --ink-muted: oklch(0.46 0.0144 265);
+  --ink-faint: oklch(0.52 0.0144 265);
+  --ink-cat: oklch(0.46 0.04 25);
+
+  /* lines */
+  --rule: oklch(0.885 0.0104 255);
+  --rule-soft: oklch(0.9 0.0078 255);
+  --rule-strong: oklch(0.875 0.0104 255);
+  --border: oklch(0.86 0.0104 255);
+  --chip-border: oklch(0.85 0.013 255);
+  --btn-border: oklch(0.8 0.013 255);
+
+  /* accent — the one warm thing on a cool page, and the reason Chalk was
+     picked over the other four in its wave. Unchanged from the shipped ramp. */
+  --accent: oklch(0.52 0.13 25);
+  --accent-hover: oklch(0.43 0.13 25);
+  --on-accent: oklch(0.99 0.0052 255);
+  --select: oklch(0.52 0.13 25 / 0.18);
+  --lift: oklch(0.4 0.04 265 / 0.5);
+
+  /* callouts — hue only; the tint and the title colour are derived */
+  --note: oklch(0.45 0.1 155);
+  --tip: oklch(0.44 0.11 235);
+  --warn: oklch(0.47 0.12 72);
+  --danger: oklch(0.47 0.15 25);
+  --definition: oklch(0.44 0.14 285);
+
+  /* metrics — plus one dial that is not here: --theme-fade, the light/dark
+     cross-fade duration, is declared with the block that uses it at the end of
+     this file so the whole feature stays deletable in one piece. */
+  --shell: 980px;
+  --header-h: 60px;
+  --gutter: 40px;
+  --rail-top: 82px;
+}
+
+/* Step 2 — the system asks for dark and the reader has not overridden it.
+   Keep in sync with the [data-theme="dark"] block directly below. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: oklch(0.205 0.0104 255);
+    --paper-sunk: oklch(0.245 0.0117 255);
+    --card: oklch(0.262 0.0117 255);
+    --zebra: oklch(0.238 0.0117 255);
+    --zebra-hover: oklch(0.318 0.0252 255);
+    --row-hover: oklch(0.248 0.0104 255);
+    --wash: oklch(0.285 0.0156 255);
+    --code-bg: oklch(0.245 0.013 255);
+
+    --ink: oklch(0.962 0.006 265);
+    --ink-body: oklch(0.905 0.0084 265);
+    --ink-mid: oklch(0.855 0.0096 265);
+    --ink-nav: oklch(0.835 0.0096 265);
+    --ink-soft: oklch(0.815 0.0096 265);
+    --ink-muted: oklch(0.735 0.012 265);
+    --ink-faint: oklch(0.685 0.012 265);
+    --ink-cat: oklch(0.75 0.055 25);
+
+    --rule: oklch(0.345 0.0117 255);
+    --rule-soft: oklch(0.315 0.0104 255);
+    --rule-strong: oklch(0.385 0.0117 255);
+    --border: oklch(0.4 0.013 255);
+    --chip-border: oklch(0.42 0.0143 255);
+    --btn-border: oklch(0.48 0.0156 255);
+
+    --accent: oklch(0.745 0.125 25);
+    --accent-hover: oklch(0.825 0.1 25);
+    --on-accent: oklch(0.18 0.026 255);
+    --select: oklch(0.745 0.125 25 / 0.28);
+    --lift: oklch(0.06 0.01 265 / 0.7);
+
+    --note: oklch(0.8 0.11 155);
+    --tip: oklch(0.79 0.1 235);
+    --warn: oklch(0.83 0.11 72);
+    --danger: oklch(0.78 0.13 25);
+    --definition: oklch(0.79 0.11 285);
+  }
+}
+
+/* Step 3 — the reader pressed the toggle and chose dark. Identical ramp to the
+   media block above; the only difference is what triggers it. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: oklch(0.205 0.0104 255);
+  --paper-sunk: oklch(0.245 0.0117 255);
+  --card: oklch(0.262 0.0117 255);
+  --zebra: oklch(0.238 0.0117 255);
+  --zebra-hover: oklch(0.318 0.0252 255);
+  --row-hover: oklch(0.248 0.0104 255);
+  --wash: oklch(0.285 0.0156 255);
+  --code-bg: oklch(0.245 0.013 255);
+
+  --ink: oklch(0.962 0.006 265);
+  --ink-body: oklch(0.905 0.0084 265);
+  --ink-mid: oklch(0.855 0.0096 265);
+  --ink-nav: oklch(0.835 0.0096 265);
+  --ink-soft: oklch(0.815 0.0096 265);
+  --ink-muted: oklch(0.735 0.012 265);
+  --ink-faint: oklch(0.685 0.012 265);
+  --ink-cat: oklch(0.75 0.055 25);
+
+  --rule: oklch(0.345 0.0117 255);
+  --rule-soft: oklch(0.315 0.0104 255);
+  --rule-strong: oklch(0.385 0.0117 255);
+  --border: oklch(0.4 0.013 255);
+  --chip-border: oklch(0.42 0.0143 255);
+  --btn-border: oklch(0.48 0.0156 255);
+
+  --accent: oklch(0.745 0.125 25);
+  --accent-hover: oklch(0.825 0.1 25);
+  --on-accent: oklch(0.18 0.026 255);
+  --select: oklch(0.745 0.125 25 / 0.28);
+  --lift: oklch(0.06 0.01 265 / 0.7);
+
+  --note: oklch(0.8 0.11 155);
+  --tip: oklch(0.79 0.1 235);
+  --warn: oklch(0.83 0.11 72);
+  --danger: oklch(0.78 0.13 25);
+  --definition: oklch(0.79 0.11 285);
+}
+
+/* Step 3, the other way — the reader chose light. The ramp is already the one
+   in :root; this only stops the UA painting its own chrome dark underneath. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+/* components below set display:flex/grid, which would otherwise beat [hidden] */
+[hidden] { display: none !important; }
+
+html { scroll-padding-top: calc(var(--header-h) + 40px); }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+/* THIS RULE IS A TRAP FOR ANY LINK THAT SITS ON THE ACCENT.
+   It is (0,1,1), so it beats a class-only `color` and repaints the label in the
+   same colour as the ground under it — 1:1, an invisible label. Every component
+   below that puts a link on `--accent` therefore has to restate `--on-accent`
+   in its own hover rule; `.btn--accent:hover` already did, and `.skip-link` and
+   `.article__cat` did not until 2026-07-30. An at-rest contrast pass cannot see
+   this, which is why it survived five audits — see
+   `tools/browser/measure.mjs`, which forces the state and measures the pixels. */
+a:hover { color: var(--accent); }
+
+/* cards answer with lift and border, not a colour change */
+.carousel__item:hover,
+.carousel__item:focus-visible,
+.idea:hover,
+.idea:focus-visible { color: inherit; }
+
+img { max-width: 100%; }
+
+::selection { background: var(--select); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+main:focus { outline: none; }
+
+.shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 20;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+/* Keep the label when the pointer lands on it. A keyboard user who tabs to the
+   skip link and then reaches for the mouse gets both states at once, and the
+   global `a:hover` above would otherwise paint the text in the ground colour. */
+.skip-link:hover,
+.skip-link:focus-visible { color: var(--on-accent); }
+
+@keyframes morph {
+  0%, 100% { border-radius: 42% 68% 66% 40% / 32% 34% 68% 66%; }
+  33% { border-radius: 68% 34% 52% 50% / 52% 62% 40% 50%; }
+  66% { border-radius: 32% 62% 40% 70% / 62% 40% 62% 40%; }
+}
+
+/* Numerals and timestamps are set in the mono face — a second voice for
+   machine-recorded facts, kept at reading size and never tracked or capsed. */
+.card__meta,
+.mini-row__date,
+.post-row__date,
+.article__date,
+.article__part,
+.year__count,
+.term__count,
+.numbers dt,
+.score__value,
+.score__scale,
+.rail__series-part,
+.toc__count,
+.index-head__summary,
+.site-footer__legal,
+.pager__pos,
+.entry__date {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.site-header__inner {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+  padding: 4px 0;
+}
+
+.brand__mark {
+  display: block;
+  width: 27px;
+  height: 27px;
+  flex: none;
+  overflow: hidden;
+  animation: morph 18s ease-in-out infinite;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.brand__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand__text {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 220ms ease;
+}
+
+.brand__name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+/* The role line is the one piece of the wordmark that says what he does, so it
+   carries the accent in the header and again in the identity block below. It is
+   the only accented text in the header at rest, which is what keeps it legible
+   as a second line rather than a second link. */
+.brand__role {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-nav);
+}
+
+.site-nav a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding: 6px 0 5px;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* The nav and the theme toggle travel together at the right edge; the toggle
+   is set slightly apart from the links so it does not read as a fifth one. */
+.site-header__end {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle
+
+   Present in the markup on every page, hidden until the inline head script in
+   base.html confirms scripting is on. A control that cannot do anything is
+   worse than an absent one, and hiding it in CSS rather than with [hidden]
+   means it never flashes into view and back out again.
+
+   No border: at 1px on paper a --chip-border edge measures 1.45:1, and the
+   header does not need another box. The glyph carries the affordance and it
+   sits at --ink-nav, well clear of 4.5:1 on every ground it renders on.
+   -------------------------------------------------------------------------- */
+
+.theme-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  margin-right: -6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-nav);
+  cursor: pointer;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+:root.has-js .theme-toggle { display: inline-flex; }
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--accent);
+  background: var(--row-hover);
+}
+
+/* No `display` here: the swap rules below own it, and a shorter selector
+   setting it would lose to this one and paint both glyphs at once. */
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+/* The glyph names the destination, not the current state: a moon offers the
+   dark scheme, a sun offers the light one. It is switched in CSS rather than
+   by script so it is correct on the first frame the button is visible. */
+.theme-toggle__sun { display: none; }
+.theme-toggle__moon { display: block; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle__moon { display: none; }
+}
+
+:root[data-theme="dark"] .theme-toggle__sun { display: block; }
+:root[data-theme="dark"] .theme-toggle__moon { display: none; }
+
+.progress {
+  height: 2px;
+  background: var(--rule-soft);
+}
+
+.progress__bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Page band — breadcrumb, title, dek
+   -------------------------------------------------------------------------- */
+
+.band {
+  background: var(--paper-sunk);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.band__inner {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 32px var(--gutter);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+}
+
+.breadcrumb a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 5px 0;
+}
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb [aria-current="page"] { color: var(--ink-mid); }
+
+.band__split {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: end;
+}
+
+.page-title {
+  font-size: 47px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px;
+  max-width: 27ch;
+  text-wrap: balance;
+}
+
+.page-dek {
+  font-size: 19px;
+  line-height: 1.54;
+  color: var(--ink-mid);
+  margin: 0;
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+/* the "at a glance" ledger beside a page title */
+.facts {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--ink);
+  margin: 0;
+}
+
+.facts__row dd { margin: 0; }
+
+.facts__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.facts__key {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.facts__val {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.facts__val--text {
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons, chips, toggles
+   -------------------------------------------------------------------------- */
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid var(--accent);
+  padding: 11px 18px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.btn--accent:hover,
+.btn--accent:focus-visible {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--btn-border);
+  color: var(--ink-body);
+  padding: 10px 17px;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chips {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font: inherit;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--chip-border);
+  padding: 6px 11px;
+  transition: border-color 140ms ease;
+}
+
+.chip:hover { border-color: var(--accent); }
+
+.chip[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort__label {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.sort__btn {
+  font: inherit;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--chip-border);
+  padding: 7px 12px;
+  transition: border-color 140ms ease;
+}
+
+.sort__btn:hover { border-color: var(--accent); }
+
+.sort__btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper__btn {
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--chip-border);
+  padding: 8px 12px;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.stepper__btn:hover,
+.stepper__btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Section headings
+   -------------------------------------------------------------------------- */
+
+.section { padding: 54px 0 0; }
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.section__titles {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.section__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+
+.section__note {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Home — hero
+   -------------------------------------------------------------------------- */
+
+.index-intro { padding: 44px 0 0; }
+.index-intro .page-title { margin-bottom: 12px; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 268px;
+  gap: 46px;
+  padding: 52px 0 38px;
+  align-items: start;
+}
+
+/* The identity block — mark, name, role. Shared by the home hero and the About
+   band, which is why the About page hands its headshot off to the header brand
+   exactly as the home page does. The `hero__` prefix predates the second use;
+   the block is the same component in both places. */
+.hero__id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.hero__mark {
+  display: block;
+  width: 72px;
+  height: 72px;
+  flex: none;
+  overflow: hidden;
+  animation: morph 18s ease-in-out infinite;
+  transition: opacity 220ms ease;
+}
+
+.hero__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero__name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Only the lead item is the role. The rest of the line is other things he does,
+   and accenting all three made the whole line read as one title. */
+.hero__role {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.hero__role-lead { color: var(--accent); }
+
+.hero__title {
+  font-size: 51px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px;
+  max-width: 21ch;
+  text-wrap: balance;
+}
+
+/* The headline's <em> is authored in config. Rather than a low-contrast
+   highlight band, it keeps the headline colour and takes an accent rule. */
+.hero__title em {
+  font-style: normal;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+.hero__dek {
+  font-size: 17px;
+  line-height: 1.56;
+  color: var(--ink-mid);
+  margin: 0 0 22px;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+/* ledger beside the hero */
+.ledger {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--ink);
+}
+
+.ledger__row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.ledger__key {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.ledger__val {
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.ledger__row--numbers { gap: 6px; padding: 12px 0; }
+
+.numbers {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 5px 10px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.numbers dt { font-weight: 600; margin: 0; }
+.numbers dd { margin: 0; color: var(--ink-soft); line-height: 1.4; }
+
+.ledger__link {
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  padding: 10px 0 4px;
+  align-self: start;
+  transition: color 140ms ease;
+}
+
+.ledger__link:hover { color: var(--accent-hover); }
+
+/* --------------------------------------------------------------------------
+   Carousel — three positions, non-linear rotation
+   -------------------------------------------------------------------------- */
+
+.carousel {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  touch-action: pan-y;
+  /* the outgoing copies a rotation leaves behind are positioned against this */
+  position: relative;
+}
+
+.carousel__item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: 20px;
+  text-decoration: none;
+  transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease,
+              opacity 170ms ease;
+}
+
+.carousel__item:hover,
+.carousel__item:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -16px var(--lift);
+  border-color: var(--accent);
+}
+
+.carousel__item[data-slot="1"] {
+  grid-row: span 2;
+  gap: 11px;
+  padding: 26px;
+}
+
+.carousel__item[data-slot="1"]:hover,
+.carousel__item[data-slot="1"]:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -16px var(--lift);
+}
+
+.carousel__item[data-slot="2"] { order: 2; }
+.carousel__item[data-slot="3"] { order: 3; }
+
+/* Rotation. Placed after the slot rules so it outranks the hover transform on
+   the lead card, which shares its specificity.
+
+   A rotation is one tile gliding the full distance between two slots, one tile
+   dissolving in at a new size with a 24px nudge along the line it travelled,
+   and one dissolving out of the window over the box it used to hold. Something
+   is on every slot in every frame — the earlier version faded the whole
+   component to nothing, swapped, and faded it back, which read as a blink.
+
+   Start states are set by site.js under `prime`, painted, and released in the
+   same frame the transition is switched on. Ghosts run on their own rule so
+   that a second press cannot freeze one half-faded. */
+.carousel[data-rotating] {
+  overflow: clip;
+  overflow-clip-margin: 28px;
+}
+
+.carousel[data-rotating="prime"] .carousel__item:not(.carousel__ghost) {
+  transition: none;
+}
+
+.carousel[data-rotating="next"] .carousel__item:not(.carousel__ghost),
+.carousel[data-rotating="prev"] .carousel__item:not(.carousel__ghost) {
+  transition: transform 220ms ease, opacity 180ms ease;
+}
+
+/* Arriving tiles paint over the copies, never through them. */
+.carousel[data-rotating] .carousel__item:not(.carousel__ghost) {
+  position: relative;
+  z-index: 1;
+}
+
+.carousel__ghost {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* The ghost's dissolve, held one specificity step above the scheme cross-fade
+   at the end of this file (0,3,0 against its 0,2,0). A ghost only ever exists
+   inside a rotation, so keying it on the attribute costs nothing and is what
+   stops a theme press landing mid-rotation from replacing the transition list
+   under a half-faded copy — which would drop it in one frame, the exact blink
+   §2 of microinteractions.md was rebuilt to remove. The rules above that hold
+   the real tiles already outrank it at (0,4,0). */
+.carousel[data-rotating] .carousel__ghost {
+  transition: transform 220ms ease, opacity 180ms ease;
+}
+
+.card__meta {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.card__title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.32;
+}
+
+/* The lead tile carries a real headline, and article titles here run long
+   enough to wrap three times — so it takes reading leading, not display
+   leading, even at 29px. */
+.carousel__item[data-slot="1"] .card__title {
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -0.026em;
+  line-height: 1.3;
+}
+
+.card__dek {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.card__more {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* Only the lead card carries the summary and the read link. This rule is what
+   makes rotation possible: in a deck of more than three, any tile can be
+   promoted into slot 1, so every tile ships a summary and this hides the ones
+   not currently leading. A deck of three or fewer never rotates, and
+   partial/post_card.html leaves the markup out there rather than relying on
+   this — see its `deck` note (thoughts.md #7). */
+.carousel__item:not([data-slot="1"]) .card__dek,
+.carousel__item:not([data-slot="1"]) .card__more { display: none; }
+
+/* --------------------------------------------------------------------------
+   Home — principles
+   -------------------------------------------------------------------------- */
+
+.ideas__title {
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -0.024em;
+  line-height: 1.18;
+  margin: 0 0 10px;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.ideas__dek {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.ideas__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.idea {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: 22px 22px 20px;
+  text-decoration: none;
+  transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease;
+}
+
+.idea:hover,
+.idea:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px -14px var(--lift);
+  border-color: var(--accent);
+}
+
+.idea__title {
+  font-size: 19.5px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.3;
+  max-width: 24ch;
+}
+
+.idea__body {
+  font-size: 14.5px;
+  line-height: 1.58;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.idea__more {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Home — archive index panel
+   -------------------------------------------------------------------------- */
+
+.archive-panel {
+  margin-top: 54px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  padding: 20px 22px 22px;
+}
+
+.archive-panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.archive-panel__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  margin: 0;
+}
+
+.mini-year {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+/* The year is the only structure in a flat list of rows, so it is the one thing
+   in the panel that gets the accent. At --ink-faint it read as another piece of
+   row furniture and the splits disappeared; every year after the first also
+   takes a rule above it, so the boundary is visible without reading the date. */
+.mini-year + .mini-year {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 4px;
+}
+
+.mini-year__label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 6px 0;
+}
+
+.mini-year__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+}
+
+.mini-row-item { min-width: 0; }
+
+.mini-row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  text-decoration: none;
+  color: var(--ink-body);
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.mini-row:hover,
+.mini-row:focus-visible {
+  color: var(--accent);
+  background: var(--row-hover);
+}
+
+.mini-row__date {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+}
+
+.mini-row__title {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* The control that pulls the next page's rows into this panel. Centred and on
+   its own rule, so it reads as the end of the list rather than a row in it. */
+.archive-panel__load {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0 4px;
+  border-top: 1px solid var(--rule);
+}
+
+.archive-panel__load .btn:disabled {
+  color: var(--ink-faint);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.archive-panel__more {
+  padding-top: 10px;
+  font-size: 13px;
+}
+
+.archive-panel__more a {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--ink-body);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 140ms ease;
+}
+
+.archive-panel__more a:hover { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   Two-column body + rail
+   -------------------------------------------------------------------------- */
+
+.layout {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 36px var(--gutter) 0;
+  display: grid;
+  grid-template-columns: 1fr 244px;
+  gap: 50px;
+  align-items: start;
+}
+
+/* The rail leads in the DOM so its contents list is reachable before the body
+   on narrow screens; on wide screens grid placement puts it back on the right,
+   which keeps reading order and visual order in agreement in both layouts. */
+.layout > .article,
+.layout > .flat { grid-column: 1; grid-row: 1; }
+.layout > .rail { grid-column: 2; grid-row: 1; }
+
+.layout--archive {
+  grid-template-columns: 1fr 200px;
+  padding-top: 30px;
+}
+
+.layout--archive .flat { max-width: none; }
+
+.rail {
+  position: sticky;
+  top: var(--rail-top);
+  max-height: calc(100vh - var(--rail-top) - 24px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 26px;
+  padding-right: 4px;
+  border-left: 1px solid var(--rule);
+  min-width: 0;
+}
+
+.layout--archive .rail {
+  gap: 10px;
+  padding-left: 24px;
+}
+
+.rail__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rail__label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+/* Contents list. `article.toc` arrives as a bare nested <ul> from the TOC
+   extension, so the structure is styled rather than a class. */
+.rail-toc {
+  display: block;
+  border-left: 1px solid var(--rule);
+  margin-left: -1px;
+}
+
+.rail-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rail-toc ul ul { padding-left: 12px; }
+
+.rail-toc li { margin: 0; }
+
+.rail-toc a,
+.rail-toc__link {
+  display: block;
+  text-decoration: none;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  padding: 7px 0 7px 13px;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.rail-toc a:hover,
+.rail-toc__link:hover { color: var(--accent); }
+
+.rail-toc a[data-active="1"],
+.rail-toc__link[data-active="1"] {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+.rail-toc--years .rail-toc__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 0 7px 13px;
+}
+
+.toc__count {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+.rail__block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.rail__series-name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.rail__series-part {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.series-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.series-nav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 0;
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.series-nav__link + .series-nav__link { border-top: 1px solid var(--rule-soft); }
+
+.series-nav__link:hover { color: var(--accent); }
+
+.series-nav__dir {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.series-nav__title {
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.rail__all {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  padding: 8px 0 4px;
+}
+
+.tag-list {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding-top: 2px;
+}
+
+.tag {
+  font-size: 12.5px;
+  line-height: 1.4;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 5px 9px;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Article shell
+   -------------------------------------------------------------------------- */
+
+.article,
+.flat {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  min-width: 0;
+  max-width: 680px;
+}
+
+.article__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.article__cat {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  padding: 4px 9px;
+  text-decoration: none;
+  transition: background 150ms ease;
+}
+
+/* The chip is a link on the accent, so it answers the way `.btn--accent` does:
+   the ground darkens (lightens, in the dark scheme) and the label is restated.
+   Without the `color` line the global `a:hover` wins and the category name
+   disappears into its own chip — measured at 1:1 on every article page, both
+   schemes, before this rule existed. */
+.article__cat:hover,
+.article__cat:focus-visible {
+  background: var(--accent-hover);
+  color: var(--on-accent);
+}
+
+.article__dek {
+  font-size: 19px;
+  line-height: 1.54;
+  color: var(--ink-mid);
+  margin: 0;
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Prose — the article body as Markdown renders it
+   -------------------------------------------------------------------------- */
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.prose > * { margin: 0; }
+
+.prose p {
+  font-size: 17.5px;
+  line-height: 1.68;
+  color: var(--ink-body);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Seventeen years of posts contain bare URLs, long paths and package names.
+   Without this a single unbroken token pushes the article column wider than
+   the viewport and the whole page scrolls sideways on a phone. */
+.prose p,
+.prose li,
+.prose dd,
+.prose figcaption,
+.prose td,
+.prose th,
+.prose blockquote { overflow-wrap: break-word; }
+
+.prose a,
+.prose code { overflow-wrap: anywhere; }
+
+.prose h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.22;
+  margin: 20px 0 0;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+.prose h3 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.3;
+  margin: 12px 0 0;
+  max-width: 34ch;
+}
+
+.prose h4 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 10px 0 0;
+}
+
+.prose h2:first-child,
+.prose h3:first-child { margin-top: 0; }
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.prose a:hover { text-decoration-thickness: 2px; }
+
+.prose strong { font-weight: 600; }
+
+.prose em { font-style: italic; }
+
+/* Heading permalinks from the TOC extension: revealed on hover or focus. */
+.prose h1, .prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6 { position: relative; }
+
+.prose .headerlink {
+  opacity: 0;
+  margin-left: 8px;
+  color: var(--ink-faint);
+  text-decoration: none;
+  font-size: 0.66em;
+  font-weight: 400;
+  transition: opacity 180ms ease, color 140ms ease;
+}
+
+.prose h2:hover .headerlink,
+.prose h3:hover .headerlink,
+.prose h4:hover .headerlink,
+.prose .headerlink:focus-visible {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.prose ul,
+.prose ol {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 17.5px;
+  line-height: 1.62;
+  color: var(--ink-body);
+}
+
+.prose li { margin-bottom: 7px; }
+.prose li:last-child { margin-bottom: 0; }
+.prose li > ul,
+.prose li > ol { margin-top: 7px; }
+
+.prose blockquote {
+  margin: 0;
+  padding: 14px 20px;
+  background: var(--wash);
+  border-top: 2px solid var(--accent);
+}
+
+.prose blockquote p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+
+.prose blockquote > * + * { margin-top: 10px; }
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  padding: 2px 5px;
+  background: var(--code-bg);
+  color: var(--ink-body);
+}
+
+.prose pre,
+.prose .codehilight {
+  margin: 0;
+  background: var(--code-bg);
+  border-top: 2px solid var(--rule-strong);
+  overflow-x: auto;
+}
+
+.prose .codehilight pre {
+  border-top: 0;
+  margin: 0;
+}
+
+.prose pre {
+  padding: 16px 18px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Codehilite tokens. Two voices only: the neutral ink ramp, plus the accent
+   for literals — enough to read structure without turning code into a
+   second palette. */
+.prose .codehilight .c,
+.prose .codehilight .c1,
+.prose .codehilight .cm,
+.prose .codehilight .cp,
+.prose .codehilight .cs { color: var(--ink-muted); font-style: italic; }
+
+.prose .codehilight .k,
+.prose .codehilight .kc,
+.prose .codehilight .kd,
+.prose .codehilight .kn,
+.prose .codehilight .kr,
+.prose .codehilight .kt,
+.prose .codehilight .ow { color: var(--ink); font-weight: 600; }
+
+.prose .codehilight .s,
+.prose .codehilight .s1,
+.prose .codehilight .s2,
+.prose .codehilight .sb,
+.prose .codehilight .sd,
+.prose .codehilight .se,
+.prose .codehilight .sh,
+.prose .codehilight .si,
+.prose .codehilight .sx,
+.prose .codehilight .sr,
+.prose .codehilight .m,
+.prose .codehilight .mi,
+.prose .codehilight .mf,
+.prose .codehilight .mh,
+.prose .codehilight .mo { color: var(--accent); }
+
+.prose .codehilight .nf,
+.prose .codehilight .nc,
+.prose .codehilight .nd { color: var(--ink); }
+
+.prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  background: var(--card);
+  color: var(--ink-body);
+}
+
+.prose img,
+.prose video,
+.prose iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  border: 1px solid var(--rule);
+}
+
+.prose iframe { border: 0; }
+
+.prose figure { margin: 0; }
+.prose figure img { margin: 0 0 9px; }
+
+.prose figcaption {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+/* customblocks `::: youtube <id>` renders a responsive embed wrapper */
+.prose .youtube,
+.prose .videowrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.prose .youtube iframe,
+.prose .videowrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-body);
+}
+
+/* The scroll region, plus the only cue a reader gets that a table is cut off
+   (microinteractions.md §3). site.js writes `data-more` with the edges that
+   still have content behind them; the shadow is `inset`, which on a scroll
+   container is painted against the border box and so stays at the region's own
+   edge instead of travelling with the table.
+
+   Deliberately not disabled under reduced motion: a shadow arriving is a state
+   change reporting where the content went, not movement, and the block at the
+   end of this file already keeps shadow transitions for that reason. */
+.prose .table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  transition: box-shadow 140ms ease;
+}
+
+.prose .table-scroll[data-more="left"] {
+  box-shadow: inset 16px 0 14px -14px var(--lift);
+}
+
+.prose .table-scroll[data-more="right"] {
+  box-shadow: inset -16px 0 14px -14px var(--lift);
+}
+
+.prose .table-scroll[data-more="both"] {
+  box-shadow: inset 16px 0 14px -14px var(--lift),
+              inset -16px 0 14px -14px var(--lift);
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.prose thead th {
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 6px 0;
+}
+
+/* Callouts. Each type sets only its hue; the tint, the frame and the title
+   colour are derived from it, so a new type is still one line.
+
+   A callout has to survive being scrolled past. The page it competes with is
+   mostly code blocks — same width, same 2px top rule, same recessed ground —
+   and the first version lost that competition on every palette, for two
+   separate reasons.
+
+   The first was the mixing space, and it was a real defect rather than a
+   matter of degree. `color-mix(in oklch)` interpolates *hue along an arc*: an
+   amber at hue 72 mixed into a ground at hue 255 travels through violet, so
+   the result is a more saturated version of the ground rather than a warm
+   tint. Measured under Chalk, 8% produced a callout at r−b −20 sitting beside
+   a code block at −13 — both blue, one slightly bluer. Raising the percentage
+   did not help; at 30% it was still −13. On the shipped cream ramp the bug was
+   invisible, because --warn is hue 72 and --paper-sunk is hue 80 and there is
+   no arc to travel. `oklab` interpolates in rectangular coordinates and
+   therefore passes through neutral, which is the only way a warm hue can tint
+   a cool ground. Every callout now lands on the warm side of neutral in every
+   palette (+16 to +38) while the code ground stays cool.
+
+   The second was that the ground was --paper-sunk, the same step code sits on.
+   It is --card now, so a callout reads as a *raised, bounded* object and code
+   as a recessed band — which is also why there is a full 1px frame here where
+   code has only its top rule. The frame is 1px and the top rule stays 2px, so
+   the "no accent border wider than 2px, and never a thick left tab" rule still
+   holds; this is containment, not a tab. */
+.prose .admonition {
+  --adm: var(--ink-muted);
+  /* Dark needs more of the hue for the same effect: the dark ramp's callout
+     colours are *light* (--warn is oklch(0.83 …)), so mixing them into a dark
+     card lifts lightness fast and carries chroma slowly. The two blocks below
+     are the same pair of selectors the token table uses for the dark ramp.
+
+     22% in dark and not more, and the ceiling is contrast rather than taste.
+     The title is painted in --adm on this ground, and --danger is the darkest
+     of the dark callout hues at oklch(0.78 …), so every extra point of tint
+     lightens the ground underneath it. Measured across twelve palettes: 22%
+     leaves the danger title at 4.89:1, 26% drops it to 4.45 and fails AA. The
+     separation gained between those two is small and the failure is not. */
+  --adm-tint: 18%;
+  padding: 14px 18px;
+  background: color-mix(in oklab, var(--adm) var(--adm-tint), var(--card));
+  border: 1px solid color-mix(in oklab, var(--adm) 45%, var(--card));
+  border-top: 2px solid var(--adm);
+  color: var(--ink-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .prose .admonition { --adm-tint: 22%; }
+}
+
+:root[data-theme="dark"] .prose .admonition { --adm-tint: 22%; }
+
+.prose .admonition > * + * { margin-top: 10px; }
+
+.prose .admonition p { font-size: 16px; line-height: 1.6; margin: 0; }
+
+.prose .admonition-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--adm);
+}
+
+.prose .admonition.note,
+.prose .admonition.important { --adm: var(--note); }
+
+.prose .admonition.hint,
+.prose .admonition.tip { --adm: var(--tip); }
+
+.prose .admonition.attention,
+.prose .admonition.caution,
+.prose .admonition.warning { --adm: var(--warn); }
+
+.prose .admonition.danger,
+.prose .admonition.error { --adm: var(--danger); }
+
+.prose .admonition.definition { --adm: var(--definition); }
+
+.prose .admonition.definition .admonition-title {
+  font-size: 17px;
+  letter-spacing: -0.012em;
+}
+
+.prose .admonition.definition:target {
+  outline: 2px solid var(--adm);
+  outline-offset: 3px;
+}
+
+/* Inline defined terms link back to their definition block. */
+.prose dfn {
+  font-style: normal;
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+}
+
+.prose .dfn-ref {
+  color: inherit;
+  text-decoration: none;
+  cursor: help;
+}
+
+.prose .dfn-ref:hover dfn,
+.prose .dfn-ref:focus-visible dfn { border-bottom-style: solid; }
+
+.prose .footnote,
+.prose .footnotes {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-mid);
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+
+/* pull quote, authored by the theme rather than by Markdown */
+.pull {
+  background: var(--card);
+  border-top: 2px solid var(--accent);
+  padding: 16px 20px;
+}
+
+.pull p {
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.012em;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Review score block
+   -------------------------------------------------------------------------- */
+
+/* The badge is a square that keeps its size, not a column that stretches to
+   whatever sits beside it. Stretching tied its height to the reviewed item's
+   title: a two-line title drew a 132×150 badge, a one-line title a 132×110 one,
+   so the same 9.0 was a different size on every review. It stays at the top of
+   the row and holds --score-box; the detail column still stretches, which is
+   what keeps the facts table's bottom edge flush with the badge's on the short
+   titles that are the common case. `min-height`, not `height`, so the badge
+   still grows if the reader scales text up. */
+.score {
+  --score-box: 132px;
+  display: grid;
+  grid-template-columns: var(--score-box) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.score__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  align-self: start;
+  min-height: var(--score-box);
+  border: 1px solid var(--accent);
+  padding: 16px 10px;
+  margin: 0;
+}
+
+.score__value {
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+
+.score__scale {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+
+.score__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.score__subject {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.32;
+  max-width: 40ch;
+}
+
+.score__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: auto 0 0;
+}
+
+.score__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--card);
+  padding: 11px 13px;
+  margin: 0;
+}
+
+.score__fact dt {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.score__fact dd {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.score__strike {
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Questions — shared by the article FAQ and the About page
+   -------------------------------------------------------------------------- */
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+  margin: 0;
+}
+
+.faq__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--card);
+  padding: 16px 18px;
+  margin: 0;
+}
+
+.faq__q {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.faq__a {
+  font-size: 16px;
+  line-height: 1.62;
+  color: var(--ink-mid);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.faq__a > * + * { margin-top: 10px; }
+
+.faq__item:target { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+.faq-heading {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.22;
+  margin: 0 0 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Previous / next, author
+   -------------------------------------------------------------------------- */
+
+.post-nav {
+  display: flex;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.post-nav__card {
+  flex: 0 1 calc(50% - 7px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  padding: 16px 18px;
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.post-nav__card:hover,
+.post-nav__card:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.post-nav__card--next { text-align: right; margin-left: auto; }
+
+.post-nav__dir {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.post-nav__title {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.34;
+}
+
+.author {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 26px;
+}
+
+.author__mark {
+  display: block;
+  width: 56px;
+  height: 56px;
+  flex: none;
+  overflow: hidden;
+  animation: morph 18s ease-in-out infinite;
+}
+
+.author__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.author__body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.author__name {
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.author__name:hover { color: var(--accent); }
+
+.author__bio {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--ink-mid);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.author__link {
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  padding: 4px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Archives
+   -------------------------------------------------------------------------- */
+
+.index-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.index-head__summary {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.year {
+  display: flex;
+  flex-direction: column;
+  padding-top: 26px;
+}
+
+.year__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.year__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+
+.year__count {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.year__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-row {
+  display: grid;
+  grid-template-columns: 84px 1fr 148px;
+  gap: 18px;
+  align-items: baseline;
+  padding: 12px;
+  margin: 0 -12px;
+  text-decoration: none;
+  background: transparent;
+  transition: background 140ms ease;
+}
+
+.post-row-item { min-width: 0; }
+.post-row-item.is-alt .post-row { background: var(--zebra); }
+
+.post-row:hover,
+.post-row:focus-visible { background: var(--zebra-hover); }
+
+.post-row__date {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.post-row__title {
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.36;
+}
+
+.post-row__cat {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-cat);
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   Category / tag listings
+   -------------------------------------------------------------------------- */
+
+.entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 20px 12px;
+  margin: 0 -12px;
+  border-bottom: 1px solid var(--rule-soft);
+  transition: background 140ms ease;
+}
+
+.entry:hover { background: var(--row-hover); }
+
+.entry__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.entry__cat {
+  display: inline-block;
+  padding: 4px 0;
+  color: var(--ink-cat);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.entry__cat:hover { color: var(--accent); }
+
+.entry__title {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.3;
+  margin: 0;
+  max-width: 34ch;
+}
+
+.entry__title a { text-decoration: none; }
+
+.entry__dek {
+  font-size: 15.5px;
+  line-height: 1.58;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.entry__tags {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Categories / tags index
+   -------------------------------------------------------------------------- */
+
+.index {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 30px var(--gutter) 0;
+}
+
+.term-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 40px;
+}
+
+.term-list--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.term-item { min-width: 0; }
+
+.term {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15px 12px 13px;
+  margin: 0 -12px;
+  border-bottom: 1px solid var(--rule-soft);
+  text-decoration: none;
+  transition: background 140ms ease;
+}
+
+.term:hover,
+.term:focus-visible { background: var(--row-hover); }
+
+.term__line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.term__name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.35;
+}
+
+.term__count {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.term__bar {
+  display: block;
+  height: 2px;
+  background: var(--rule-soft);
+}
+
+.term__bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Pagination
+   -------------------------------------------------------------------------- */
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.pager__link {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  border: 1px solid var(--btn-border);
+  padding: 9px 15px;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.pager__link:hover,
+.pager__link:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pager__link--disabled {
+  color: var(--ink-faint);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.pager__pos {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 70px;
+}
+
+.site-footer__inner {
+  margin-top: 62px;
+  padding-top: 30px;
+  border-top: 3px solid var(--ink);
+}
+
+.site-footer__title {
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: -0.024em;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  max-width: 28ch;
+  text-wrap: balance;
+}
+
+.site-footer__dek {
+  font-size: 16px;
+  line-height: 1.58;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.site-footer__actions { margin-bottom: 30px; }
+
+.site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+.footer-link {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+}
+
+.footer-link dd { margin: 0; }
+
+.footer-link__k {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.footer-link__k svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: currentColor;
+}
+
+.footer-link__v {
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--ink-body);
+  text-decoration: none;
+  margin: 0;
+  padding: 5px 0;
+  transition: color 140ms ease;
+}
+
+.footer-link__v:hover { color: var(--accent); }
+
+.site-footer__legal {
+  padding-top: 24px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Wide screens
+
+   One shell, every page. The header, the title band, the body and the footer
+   all measure --shell, so moving from the home page to an essay does not move
+   the page edges — which is the whole point: a site whose frame changes width
+   depending on what you clicked reads as two sites.
+
+   That leaves the reading measure to be solved inside the article rather than
+   by narrowing the page around it. Past roughly 80 characters a line stops
+   getting easier to read and starts getting harder, so the text column keeps a
+   max-width and the contents rail sits at the shell's right edge, where the
+   header and footer end. The space between them is the gap; it grows with the
+   window, and it is the honest answer for a page that has one column of text
+   and one rail on a 1920px screen.
+
+   --shell is declared once, on :root. It used to be re-declared per page type
+   on <body> — which is inside :root, so an inherited body value beat the root
+   one at every width and every change had to be made twice. Do not reintroduce
+   that; if a page type ever needs a different width, it is worth asking why the
+   frame should move.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1180px) {
+  :root { --shell: 1120px; --gutter: 52px; }
+
+  .hero { grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; }
+
+  .layout { grid-template-columns: minmax(0, 1fr) 268px; gap: 60px; }
+  .layout--archive { grid-template-columns: minmax(0, 1fr) 216px; }
+
+  /* 700, not 680: the column the grid hands over is 688px, and a max-width
+     below that would leave dead space between the essay and the rail. */
+  .article,
+  .flat { max-width: 700px; }
+
+  .prose p,
+  .prose ul,
+  .prose ol { font-size: 18.5px; }
+}
+
+@media (min-width: 1500px) {
+  /* Past here the shell tracks the window rather than stepping at another
+     breakpoint, so a 1920px laptop and a 2560px monitor each get a page sized
+     for them instead of one sized for the breakpoint below. The subtracted
+     figure is the margin the design keeps either side; the ceiling is the width
+     past which more room stops buying anything. A scrollbar eats into that
+     margin, never into the page. */
+  :root { --shell: clamp(1280px, 100vw - 280px, 1640px); }
+
+  .hero { grid-template-columns: minmax(0, 1fr) 420px; gap: 80px; }
+
+  /* Type grows with the columns it sits in. At 51px in a 1000px column the
+     headline stopped being the largest thing on the page and started being a
+     caption for the space beside it; the section heads had the same problem at
+     a smaller scale. */
+  .hero__title { font-size: 64px; max-width: 24ch; }
+  .hero__dek { max-width: 68ch; }
+  .ideas__title { font-size: 36px; max-width: 30ch; }
+  .ideas__dek { max-width: 66ch; }
+
+  /* The rail is the last track, so it lands on the shell's right edge and lines
+     up with the end of the header and the footer. The text column takes its
+     max-width and the slack falls between the two — a gap that grows with the
+     window rather than a column that does. */
+  /* 400, not more: at the 1280px floor of this tier the text column is
+     1280 − 104 gutters − 400 rail − 80 gap = 696px, which has to stay above the
+     688px it had in the tier below. A wider rail here makes the measure shrink
+     as the window grows, which is how this went wrong the first time. */
+  .layout { grid-template-columns: minmax(0, 1fr) 400px; gap: 80px; }
+  .layout--archive { grid-template-columns: minmax(0, 1fr) 260px; }
+
+  /* No cap: the text column runs the full track, so there is no space left
+     between the essay and the rail. Andy's call, made with the trade in front of
+     him — at 1920 that is a ~1056px line, around 100 characters, past the 60–80
+     that typography convention and the detector's line-length rule both aim at.
+     The leading goes up with it, because tracking back to the start of a line
+     that long is the part that actually gets hard; 1.75 is the compensation and
+     it is the reason this reads as a deliberate wide measure rather than an
+     unstyled one. */
+  .article,
+  .flat { max-width: none; }
+
+  .prose p,
+  .prose ul,
+  .prose ol { font-size: 20px; line-height: 1.75; }
+
+  /* Four across rather than two by two: at this width a 2×2 grid hands each
+     card a 730px box to hold two lines of text in. */
+  .ideas__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .term-list--two { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* --------------------------------------------------------------------------
+   Narrow screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  :root { --gutter: 24px; }
+
+  .band__split,
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+
+  .hero { padding: 36px 0 28px; }
+
+  .hero__title { font-size: 40px; }
+
+  .page-title { font-size: 36px; }
+
+  .layout,
+  .layout--archive { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+
+  .layout > .article,
+  .layout > .flat,
+  .layout > .rail { grid-column: 1; grid-row: auto; }
+
+  .rail {
+    position: static;
+    max-height: none;
+    border-left: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-left: 0;
+    padding-bottom: 24px;
+  }
+
+  .carousel { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .carousel__item[data-slot="1"] { grid-row: auto; }
+  .carousel__item[data-slot="1"] .card__title { font-size: 24px; }
+
+  .ideas__grid,
+  .term-list--two { grid-template-columns: minmax(0, 1fr); }
+
+  /* The score badge stops sitting beside the verdict and sits above it, at the
+     same size it has everywhere else. */
+  .score { grid-template-columns: minmax(0, 1fr); }
+  .score__box { justify-self: start; width: var(--score-box); }
+  .score__facts { grid-template-columns: minmax(0, 1fr); }
+
+  .site-footer__links { grid-template-columns: repeat(2, 1fr); }
+
+  .post-nav { flex-direction: column; }
+  .post-nav__card { flex: 1 1 auto; }
+  .post-nav__card--next { text-align: left; margin-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .site-header__inner { gap: 14px; }
+  .site-nav { gap: 14px; font-size: 13px; }
+  .brand__role { display: none; }
+
+  /* Four nav links, a wordmark and the toggle do not fit in 390px of header.
+     The wordmark yields — clipped rather than display:none, so it stays in the
+     accessibility tree and the brand link keeps its name. The headshot beside
+     it carries the link visually. */
+  .brand__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .post-row,
+  .mini-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+
+  .post-row__cat { text-align: left; }
+
+  .facts__val--text { text-align: left; }
+
+  .hero__title { font-size: 32px; }
+  .page-title { font-size: 30px; }
+  .ideas__title { font-size: 25px; }
+  .site-footer__title { font-size: 24px; }
+  .prose p,
+  .prose ul,
+  .prose ol { font-size: 16.5px; }
+}
+
+/* Narrower than a modern phone default. The header row is the tightest line on
+   the site — nav plus toggle — so it buys its space back from the gutter. */
+@media (max-width: 400px) {
+  :root { --gutter: 18px; }
+
+  .site-header__inner { gap: 10px; }
+  .site-header__end { gap: 10px; }
+  .site-nav { gap: 10px; font-size: 12.5px; }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+
+   Targeted, not global: the decorative morph loop stops and long transforms
+   are cut, but the 140–220ms colour and border transitions that report state
+   are left alone — they are feedback, not decoration.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .brand__mark,
+  .hero__mark,
+  .author__mark { animation: none; border-radius: 0; }
+
+  .carousel__item,
+  .carousel__item[data-slot="1"],
+  .idea,
+  .post-nav__card {
+    transition: box-shadow 170ms ease, border-color 170ms ease;
+  }
+
+  /* The rotation is a straight swap: site.js does not animate it at all here.
+     That used to be worth arguing about, because the fade was the only thing
+     hiding the grid relaying out — the height lock does that job now, so an
+     instant swap moves nothing on the page below it. This rule only covers a
+     preference changed mid-rotation. */
+  .carousel[data-rotating] .carousel__item { transition: none; transform: none; }
+
+  .carousel__item:hover,
+  .carousel__item:focus-visible,
+  .carousel__item[data-slot="1"]:hover,
+  .carousel__item[data-slot="1"]:focus-visible,
+  .idea:hover,
+  .idea:focus-visible,
+  .post-nav__card:hover,
+  .post-nav__card:focus-visible { transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Scheme change — the cross-fade (thoughts.md #20)
+
+   **Settled 2026-07-28: this is what the site does.** Andy looked at it and
+   kept it as built — 180ms, this mechanism, the cost below accepted. The
+   alternatives are recorded here because they were measured, not because the
+   question is still open; microinteractions.md §8 argued for doing nothing and
+   lost on the evidence. Do not re-open it from the §8 text alone.
+
+   Everything this feature owns is in this block plus ~20 lines in site.js
+   (`crossfade()` in initThemeToggle). Deleting both leaves the instant swap
+   that shipped before it.
+
+   **The dial is --theme-fade, below. Set it to 0ms and the swap is instant
+   again** — site.js reads this token at click time and never adds the class
+   when it is zero, so nothing transitions and nothing is scheduled. It is a
+   custom property rather than a config key on purpose: it can be changed live
+   in devtools on :root, which is the fastest way to compare 0 / 140 / 180 /
+   220. It stays a dial now that the call is made, because it is the cheapest
+   way to answer "what would it look like without this" without a revert.
+
+   Why this fires on everything rather than on <body> alone, which is the
+   cheaper half §8 sketched: <body> alone stages the repaint. The ground —
+   the largest area on screen — would fade while every card, rule, border,
+   code block, nav and footer jumped at t=0, so the reader sees a flash and
+   then a fade rather than one change. Fading the lot is what makes it read
+   as a single event.
+
+   Scope and cost: the rule only exists while site.js holds the class, which
+   is the fade duration plus 50ms. Nothing transitions at page load, and the
+   stylesheet's resting state is unchanged.
+
+   The cost is real, it was known when this was kept, and it is the thing to
+   check first if the toggle ever feels wrong. Attaching a transition to every
+   element makes the press itself expensive: measured
+   against the instant swap on the same page, same browser, interleaved,
+   medians of 11 — +30ms on an article (206 elements), +32ms on the home page
+   (276), **+70ms on `/archives.html` (1010)**. The fade therefore opens with
+   one long frame, which on the archive is a visible hitch before the smooth
+   part starts. Those figures are headless software rendering and real
+   hardware will be some multiple faster, but the shape holds: the price is
+   paid per element and the archive is the page that has them.
+
+   Trimming the property list does not help — measured across five variants,
+   the cost tracks the universal selector, not what it animates. The list
+   below is short because the rest was provably dead weight, not because it
+   was cheaper: `fill`/`stroke` are `currentColor` on every icon in the theme
+   so `color` already carries them, and no `::before`/`::after` in this
+   stylesheet carries a token.
+
+   `box-shadow` is the one property left out that something can be mid-way
+   through. Two things use it: the lift under a card the pointer is resting on,
+   and the wide-table edge affordance. Both are two classes deep and so *tie*
+   this block at (0,2,0), losing on source order — a press landing on either
+   one snaps it instead of fading it. That is 140ms of shadow inside a 180ms
+   full-page colour fade, and it stays that way on purpose: adding `box-shadow`
+   to the list above would put it on all 1010 elements of the archive to buy
+   back a detail nobody has been able to see.
+
+   The mechanism that would avoid that cost, if the archive hitch ever becomes
+   the complaint: `document.startViewTransition` — measured on the same pages
+   at 0.0ms of blocking work regardless of element count, because it cross-fades
+   two composited snapshots instead of 1010 elements. It was considered and not
+   taken, for three reasons that have not changed: it freezes the page for the
+   duration, it would freeze a carousel rotation mid-flight rather than letting
+   it finish, and §8 named it the strongest "built to a trend" signal on the web
+   right now.
+
+   The carousel rotation deliberately outranks this rule and keeps its own
+   transition, by specificity alone: the tile rules are (0,4,0) and the ghost
+   rule is (0,3,0) against this block's (0,2,0). A rotation caught mid-flight
+   by a theme press finishes its glide and its dissolve instead of having the
+   transform list replaced under it. The ghost rule was raised to clear this
+   one — before that it sat at (0,1,0) and lost, and an outgoing copy vanished
+   in a single frame. Anything else that grows its own transform transition
+   later needs the same treatment; everything at one class deep is meant to
+   lose here, because colour is all it has to lose.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --theme-fade: 180ms;
+}
+
+/* Subtractive under reduced motion, like the rest of the motion in this file:
+   the scheme still changes, it just changes at once. Worth knowing before
+   changing it back — the argument the other way is real. A cross-fade is not
+   movement, and softening a full-viewport luminance flip is arguably kinder to
+   a light-sensitive reader than snapping it. Delete these three lines to fade
+   under reduced motion too; that is the whole change. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --theme-fade: 0ms; }
+}
+
+:root.theme-fade,
+:root.theme-fade * {
+  transition:
+    background-color var(--theme-fade) ease,
+    border-color var(--theme-fade) ease,
+    color var(--theme-fade) ease,
+    outline-color var(--theme-fade) ease;
+}
+
+/* --------------------------------------------------------------------------
+   Print
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .site-header,
+  .rail,
+  .progress,
+  .site-footer__actions,
+  .skip-link,
+  .chips,
+  .sort,
+  .stepper,
+  .archive-panel__load { display: none; }
+
+  body { background: none; font-size: 12pt; }
+  .layout { display: block; padding: 0; }
+  .article { max-width: none; }
+  .prose a { text-decoration: underline; }
+}

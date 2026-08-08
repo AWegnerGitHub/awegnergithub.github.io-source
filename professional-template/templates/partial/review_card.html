@@ -1,0 +1,48 @@
+{%- if article.score %}
+{%- set provider_key = article.provider|default('Udemy') %}
+{%- set provider = REVIEW_PROVIDERS[provider_key] if REVIEW_PROVIDERS and REVIEW_PROVIDERS[provider_key] else none %}
+{%- set provider_name = provider.name if provider else provider_key %}
+{%- set provider_url = provider.sameAs if provider and provider.sameAs else none %}
+<div class="score">
+  <p class="score__box">
+    <span class="score__value">{{ '%.1f'|format(article.score|float) }}</span>
+    <span class="score__scale">out of 10</span>
+  </p>
+  <div class="score__detail">
+    <span class="score__subject">{{ article.revieweditem }}</span>
+    <dl class="score__facts">
+      {%- if provider_name %}
+      <div class="score__fact">
+        <dt>Provider</dt>
+        <dd>
+          {%- if provider_url -%}
+          <a href="{{ provider_url }}">{{ provider_name }}</a>
+          {%- else -%}
+          {{ provider_name }}
+          {%- endif -%}
+        </dd>
+      </div>
+      {%- endif %}
+      {%- if article.workload %}
+      <div class="score__fact">
+        <dt>Workload</dt>
+        <dd>{{ article.workload|humanize_duration }}</dd>
+      </div>
+      {%- endif %}
+      {%- if article.price %}
+      <div class="score__fact">
+        <dt>Price</dt>
+        <dd>
+          {%- if article.saleprice and article.saleprice != article.price %}
+          <span>${{ '%.2f'|format(article.saleprice|float) }}</span>
+          <s class="score__strike">${{ '%.2f'|format(article.price|float) }}</s>
+          {%- else %}
+          <span>${{ '%.2f'|format(article.price|float) }}</span>
+          {%- endif %}
+        </dd>
+      </div>
+      {%- endif %}
+    </dl>
+  </div>
+</div>
+{%- endif %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'archives' %}
+{%- set nav_current = 'Archives' %}
+
+{% block title %}<title>Archives - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
+
+{% block head_jsonld %}
+{% with list_name='Archive - ' ~ SITENAME,
+        list_description='Every article published on ' ~ SITENAME ~ ', in reverse chronological order.',
+        list_order='Descending',
+        list_items=dates %}
+{% include 'partial/jsonld/itemlist.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+{% set crumbs = [
+  {'label': 'Home', 'url': SITEURL ~ '/'},
+  {'label': 'Archives'}
+] %}
+
+{% set years = {} %}
+{%- for article in dates %}
+  {%- set y = article.date.year %}
+  {%- if years.update({y: years.get(y, []) + [article]}) %}{% endif %}
+{%- endfor %}
+{%- set year_keys = years.keys()|sort(reverse=true) %}
+{%- set all_cats = dates|map(attribute='category')|map('string')|unique|sort|list %}
+
+<div class="band">
+  <div class="band__inner">
+    {% include 'partial/breadcrumb.html' %}
+    <div class="band__split">
+      <div>
+        <h1 class="page-title">Archives</h1>
+        {#- Site-specific: the sentence names this blog's own kinds of writing, so
+            it lives in config. Undefined falls back to the generic line below;
+            set it to "" to render nothing here. -#}
+        {%- set _intro = ARCHIVES_INTRO|default('Every post, grouped by year.') %}
+        {%- if _intro %}
+        <p class="page-dek">{{ _intro }}</p>
+        {%- endif %}
+      </div>
+      <dl class="facts">
+        <div class="facts__row">
+          <dt class="facts__key">Posts</dt>
+          <dd class="facts__val">{{ dates|length }}</dd>
+        </div>
+        <div class="facts__row">
+          <dt class="facts__key">Years</dt>
+          <dd class="facts__val">{{ year_keys|length }}</dd>
+        </div>
+        {%- if year_keys %}
+        <div class="facts__row">
+          <dt class="facts__key">Span</dt>
+          <dd class="facts__val facts__val--text">{{ year_keys|last }} – {{ year_keys|first }}</dd>
+        </div>
+        {%- endif %}
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="layout layout--archive" data-filter-scope="archives">
+  <aside class="rail" aria-label="Jump to year" data-contents>
+    <div class="rail__group">
+      <span class="rail__label" id="rail-years-label">Jump to year</span>
+      <nav class="rail-toc rail-toc--years" aria-labelledby="rail-years-label">
+        {%- for year in year_keys %}
+        <a class="rail-toc__link" data-toc-link="y{{ year }}" href="#y{{ year }}">
+          <span>{{ year }}</span>
+          <span class="toc__count" data-toc-count>{{ years[year]|length }}</span>
+        </a>
+        {%- endfor %}
+      </nav>
+    </div>
+  </aside>
+
+  <div class="flat">
+    <div class="index-head">
+      <span class="index-head__summary" data-filter-summary role="status">{{ dates|length }} posts across {{ year_keys|length }} years</span>
+      {%- if all_cats|length > 1 %}
+      <div class="chips" data-filter-controls hidden>
+        <button type="button" class="chip" data-filter="All" aria-pressed="true">All</button>
+        {%- for c in all_cats %}
+        <button type="button" class="chip" data-filter="{{ c }}" aria-pressed="false">{{ c }}</button>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </div>
+
+    {%- for year in year_keys %}
+    <section class="year" id="y{{ year }}" data-filter-group data-year="{{ year }}" aria-labelledby="y{{ year }}-title">
+      <div class="year__head">
+        <h2 class="year__title" id="y{{ year }}-title">{{ year }}</h2>
+        <span class="year__count" data-year-count>{{ years[year]|length }} {{ 'post' if years[year]|length == 1 else 'posts' }}</span>
+      </div>
+      <ul class="year__list">
+        {%- for article in years[year] %}
+        {% with row_alt=(loop.index0 is odd) %}{% include 'partial/archive_row.html' %}{% endwith %}
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{#-
+  Visible article FAQ.
+
+  Rendered only when the extract_faq plugin found a "## Common questions"
+  section (exposed as `article.faq`). Questions are marked up as <h3> under the
+  section's <h2>, matching the About page — so the same component is a heading
+  in both places and both are reachable by heading navigation.
+-#}
+{%- if article.faq %}
+<section class="article-faq" aria-labelledby="{{ article.faq_id }}">
+  <h2 class="faq-heading" id="{{ article.faq_id }}">{{ article.faq_heading }}</h2>
+  <div class="faq">
+    {%- for item in article.faq %}
+    <div class="faq__item" id="{{ item.slug }}">
+      <h3 class="faq__q">{{ item.question }}</h3>
+      <div class="faq__a">{{ item.answer|safe }}</div>
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}

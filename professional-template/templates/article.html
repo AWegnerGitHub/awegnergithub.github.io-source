@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{#- review.html extends this template and sets page_type first; don't overwrite it. -#}
+{%- set page_type = page_type|default('article') %}
+{%- set page_slug = article.slug %}
+{%- set track_scroll = true %}
+
+{% block title %}<title>{{ article.title|striptags|e }} - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ article.summary|striptags|e }}">
+{% if article.author %}
+<meta name="author" content="{{ article.author }}">{% endif %}
+{% endblock %}
+
+{% block head_extra %}
+{% include 'partial/og_article.html' %}
+{% endblock %}
+
+{% block head_jsonld %}
+{% include 'partial/jsonld/blogposting.html' %}
+{% include 'partial/jsonld/faq_article.html' %}
+{% include 'partial/jsonld/definedterm.html' %}
+{% endblock %}
+
+{% block content %}
+{% set crumbs = [
+{'label': 'Home', 'url': SITEURL ~ '/'},
+{'label': 'Categories', 'url': SITEURL ~ '/categories.html'},
+{'label': article.category|string, 'url': SITEURL ~ '/' ~ article.category.url}
+] %}
+
+{#- The <article> element wraps the band as well as the body, so the post's
+    <h1> is inside it. A post with no subheadings would otherwise leave the
+    element headingless. -#}
+<article>
+<div class="band">
+  <div class="band__inner">
+    {% include 'partial/breadcrumb.html' %}
+    <div class="article__meta">
+      <a class="article__cat" href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+      {%- if article.series %}
+      <span class="article__part">Part {{ article.series.index }}{% if article.series.all_previous or article.series.all_next %} of {{
+        (article.series.all_previous|length) + 1 + (article.series.all_next|length) }}{% endif %} · {{ article.series.name }}</span>
+      {%- endif %}
+      <time class="article__date" datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+      {%- if article.stats and article.stats.read_mins %}
+      <span class="article__read">{{ article.stats.read_mins }} min read</span>
+      {%- endif %}
+    </div>
+    <h1 class="page-title">{{ article.title }}</h1>
+    {%- if article.summary %}
+    <p class="article__dek">{{ article.summary|striptags }}</p>
+    {%- endif %}
+  </div>
+</div>
+
+<div class="layout">
+  {% include 'partial/sidebar.html' %}
+
+  <div class="article">
+    {% block article_lede %}{% endblock %}
+
+    <div class="prose" id="article-body">
+      {{ article.content }}
+    </div>
+
+    {% include 'partial/faq_section.html' %}
+    {% include 'partial/post_nav.html' %}
+    {% include 'partial/author_bio.html' %}
+  </div>
+</div>
+</article>
+{% endblock %}

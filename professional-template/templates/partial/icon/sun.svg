@@ -1,0 +1,11 @@
+<svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+  <circle cx="12" cy="12" r="4.7"/>
+  <rect x="11.05" y="0.8" width="1.9" height="3.7" rx="0.95"/>
+  <rect x="11.05" y="19.5" width="1.9" height="3.7" rx="0.95"/>
+  <rect x="0.8" y="11.05" width="3.7" height="1.9" rx="0.95"/>
+  <rect x="19.5" y="11.05" width="3.7" height="1.9" rx="0.95"/>
+  <rect x="11.05" y="0.8" width="1.9" height="3.7" rx="0.95" transform="rotate(45 12 12)"/>
+  <rect x="11.05" y="19.5" width="1.9" height="3.7" rx="0.95" transform="rotate(45 12 12)"/>
+  <rect x="0.8" y="11.05" width="3.7" height="1.9" rx="0.95" transform="rotate(45 12 12)"/>
+  <rect x="19.5" y="11.05" width="3.7" height="1.9" rx="0.95" transform="rotate(45 12 12)"/>
+</svg>

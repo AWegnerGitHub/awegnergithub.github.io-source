@@ -1,0 +1,20 @@
+{%- if crumbs and crumbs|length > 1 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for c in crumbs %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "item": {
+        "@id": "{{ c.url|default(SITEURL ~ '/' ~ output_file|default('')) }}",
+        "name": "{{ c.label|e }}"
+      }
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif %}

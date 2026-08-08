@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{%- set page_type = 'tags' %}
+{%- set nav_current = 'Tags' %}
+{% set tag_list = tags|sort(attribute=0) %}
+
+{% block title %}<title>Tags - {{ SITENAME_SHORT|default(SITENAME) }}</title>{% endblock %}
+
+{% block main_class %}main{% endblock %}
+
+{% block head_jsonld %}
+{%- if tag_list %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tags - {{ SITENAME }}",
+  "description": "All tags on {{ SITENAME }}.",
+  "itemListOrder": "https://schema.org/ItemListUnordered",
+  "numberOfItems": {{ tag_list|length }},
+  "itemListElement": [
+    {%- for tag, posts in tag_list %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "url": "{{ SITEURL }}/{{ tag.url }}",
+      "name": "#{{ tag|e }}"
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif %}
+{% endblock %}
+
+{% block content %}
+{% set total_posts = tag_list|map(attribute=1)|map('length')|sum %}
+{% set max_count = tag_list|map(attribute=1)|map('length')|max if tag_list else 1 %}
+{% set top = namespace(tag=none, count=0) %}
+{%- for tag, posts in tag_list %}
+  {%- if posts|length > top.count %}
+    {%- set top.count = posts|length %}
+    {%- set top.tag = tag %}
+  {%- endif %}
+{%- endfor %}
+
+{% set crumbs = [
+  {'label': 'Home', 'url': SITEURL ~ '/'},
+  {'label': 'Tags'}
+] %}
+
+<div class="band">
+  <div class="band__inner">
+    {% include 'partial/breadcrumb.html' %}
+    <div class="band__split">
+      <div>
+        <h1 class="page-title">Tags</h1>
+        {%- set _intro = TAGS_INTRO|default('Every tag, alphabetical.') %}
+        {%- if _intro %}
+        <p class="page-dek">{{ _intro }}</p>
+        {%- endif %}
+      </div>
+      <dl class="facts">
+        <div class="facts__row">
+          <dt class="facts__key">Tags</dt>
+          <dd class="facts__val">{{ tag_list|length }}</dd>
+        </div>
+        <div class="facts__row">
+          <dt class="facts__key">Total posts</dt>
+          <dd class="facts__val">{{ total_posts }}</dd>
+        </div>
+        {%- if top.tag %}
+        <div class="facts__row">
+          <dt class="facts__key">Most used</dt>
+          <dd class="facts__val facts__val--text">#{{ top.tag }}</dd>
+        </div>
+        {%- endif %}
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="index">
+  <div class="index-head">
+    <span class="index-head__summary">{{ tag_list|length }} {{ 'tag' if tag_list|length == 1 else 'tags' }} · {{ total_posts }} posts</span>
+    <div class="sort" data-sort-controls hidden>
+      <span class="sort__label" id="sort-label">Sort</span>
+      <button type="button" class="sort__btn" data-sort="alpha" aria-pressed="true" aria-describedby="sort-label">A–Z</button>
+      <button type="button" class="sort__btn" data-sort="count" aria-pressed="false" aria-describedby="sort-label">Most posts</button>
+    </div>
+  </div>
+
+  <ul class="term-list term-list--two" data-sort-list>
+    {%- for tag, posts in tag_list %}
+    {%- set pct = (posts|length / max_count * 100)|round(2) %}
+    <li class="term-item" data-name="{{ tag }}" data-count="{{ posts|length }}">
+      <a class="term" href="{{ SITEURL }}/{{ tag.url }}">
+        <span class="term__line">
+          <span class="term__name">#{{ tag }}</span>
+          <span class="term__count">{{ posts|length }} {{ 'post' if posts|length == 1 else 'posts' }}</span>
+        </span>
+        <span class="term__bar" aria-hidden="true"><span style="width: {{ pct }}%"></span></span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</div>
+{% endblock %}
