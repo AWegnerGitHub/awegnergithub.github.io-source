@@ -18,6 +18,13 @@ Placement is **share-preview only**: the card is emitted as ``og:image`` /
 ``twitter:image`` + ``BlogPosting.image`` and is *never* rendered on the article
 page (see ``partial/og.html`` and ``partial/jsonld/blogposting.html``).
 
+Typeface and palette both track the live theme: **Archivo** (the statics are
+instanced from the theme's own ``archivo.woff2`` by ``tools/build/card-fonts.py``
+-- do not hand-drop a downloaded copy) and **JetBrains Mono**, on Chalk's dark
+ramp. Before 2026-08-08 the cards were Inter on the pre-Chalk mock's colours,
+which meant every link shared to LinkedIn previewed in a typeface and a palette
+the site no longer used.
+
 Two card templates, both on an Ink ground (design mirrors ``site.css``):
 
 * **Post card**  -- category eyebrow, title (auto-fit size tier), byline, domain.
@@ -51,7 +58,12 @@ Settings (all optional; sensible defaults):
     CARD_OUTPUT_DIR     str   output subdir + URL path (default "theme/img/cards")
     CARD_CACHE_DIR      str   folder of prior cards + manifest for incremental
     CARD_VERSION        str   bump to force a full re-render (default "1")
-    CARD_FONT_DIR       str   dir with the 4 bundled TTFs (default: ./fonts)
+    CARD_FONT_DIR       str   dir with the bundled TTFs (default: ./fonts).
+                              Five are read (3 Archivo + 2 JetBrains Mono); the
+                              two Inter faces are also still there, unread, as
+                              the rollback that pairs with `pelican-template/`
+                              -- that theme is Inter, so reverting `THEME` and
+                              `CARD_VERSION` restores the old cards too.
     CARD_LOGO           str   logo PNG (default: THEME/static/img/logo-512.png)
     CARD_HEADSHOT       str   headshot PNG (default: THEME/static/img/wegner_headshot.png)
     CARD_NAME           str   byline name (default: AUTHOR_DISPLAY or AUTHOR)
@@ -129,15 +141,24 @@ def _over(fg, bg, alpha):
     return tuple(int(round(f * alpha + b * (1 - alpha))) for f, b in zip(fg, bg))
 
 
-# --- design tokens (OKLCH triples, from the locked mock) ---------------------
-T_BG = (0.205, 0.014, 265)
-T_INK = (0.96, 0.004, 85)
-T_INK_MUT = (0.75, 0.012, 260)
-T_INK_FAINT = (0.62, 0.012, 260)
-T_ACCENT = (0.66, 0.12, 24)
-T_ACCENT_INK = (0.78, 0.11, 26)
-T_AMBER = (0.77, 0.09, 82)
-T_TITLE = (0.97, 0.01, 40)
+# --- design tokens (OKLCH triples) -------------------------------------------
+# The card is a dark-ground object and always has been, so these are Chalk's
+# **dark** ramp -- the values `site.css` paints for a reader in dark mode --
+# copied from ``palettes/PALETTES.md`` rather than re-derived here.
+#
+# Before 2026-08-08 these came from the pre-Chalk mock and were a hybrid: a cool
+# ground at hue 265 under warm ink at hue 40-85. Chalk moved the site's surfaces
+# to 255 and its ink to 265, so the warm halves were the half that went stale.
+# The ground barely moved (L 0.205 either way); the ink and the accent did.
+T_BG = (0.205, 0.0104, 255)        # --paper
+T_INK = (0.905, 0.0084, 265)       # --ink-body   byline name, review values
+T_INK_MUT = (0.735, 0.012, 265)    # --ink-muted  "OUT OF 10"
+T_INK_FAINT = (0.685, 0.012, 265)  # --ink-faint  PROVIDER / WORKLOAD labels
+T_ACCENT = (0.745, 0.125, 25)      # --accent     rail, rules, dots, badges
+T_ACCENT_INK = (0.825, 0.1, 25)    # --accent-hover  accent-coloured *text*
+T_AMBER = (0.83, 0.11, 72)         # --warn       the "Worth a look" band
+T_TITLE = (0.962, 0.006, 265)      # --ink        the headline
+T_TILE = (0.995, 0.0039, 255)      # --card (light ramp) -- the logo chip
 T_WHITE = (1.0, 0.0, 89)
 
 BG = _oklch(*T_BG)
@@ -158,7 +179,8 @@ PANEL_BG = _mix_oklch(T_ACCENT, T_BG, 0.16)
 PANEL_BG_AVOID = _mix_oklch(T_WHITE, T_BG, 0.06)
 PANEL_BORDER_AVOID = _mix_oklch(T_INK, T_BG, 0.45)
 VERDICT_AVOID_BG = _mix_oklch(T_INK, T_BG, 0.40)
-VERDICT_AVOID_FG = _oklch(0.9, 0.004, 85)
+VERDICT_AVOID_FG = _oklch(*T_INK)
+TILE_WHITE = _oklch(*T_TILE)
 
 CARD_W, CARD_H = 1200, 630
 CONTENT_L, CONTENT_R = 84, 1116
@@ -166,11 +188,23 @@ CONTENT_W = CONTENT_R - CONTENT_L
 SS = 2  # supersample factor (rendered at 2x then downsampled with LANCZOS)
 
 _FONT_FILES = {
-    "inter": "Inter-Regular.ttf",
-    "inter600": "Inter-SemiBold.ttf",
+    "sans": "Archivo-Regular.ttf",
+    "sans600": "Archivo-SemiBold.ttf",
+    "display": "Archivo-Bold.ttf",
     "mono": "JetBrainsMono-Regular.ttf",
     "mono600": "JetBrainsMono-SemiBold.ttf",
 }
+
+# The headline treatment. `.page-title` -- the <h1> a post card is a preview of
+# -- is Archivo 700 at -0.03em, so "display" is what makes the card look like
+# the page it opens. "regular" reproduces the weight and tracking the Inter
+# build used, and is kept switchable because it is the one judgement call in
+# this port rather than a mechanical substitution.
+TITLE_STYLES = {
+    "display": dict(family="display", title_tr=-0.030, item_tr=-0.026),
+    "regular": dict(family="sans", title_tr=-0.022, item_tr=-0.018),
+}
+TITLE_STYLE = "display"
 
 
 class _Fonts:
@@ -263,7 +297,7 @@ def _logo_tile(path, tile, glyph, radius):
     base = Image.new("RGBA", (tile, tile), (0, 0, 0, 0))
     m = Image.new("L", (tile, tile), 0)
     ImageDraw.Draw(m).rounded_rectangle([0, 0, tile - 1, tile - 1], radius=radius, fill=255)
-    white = Image.new("RGBA", (tile, tile), (252, 251, 249, 255))
+    white = Image.new("RGBA", (tile, tile), TILE_WHITE + (255,))
     base = Image.composite(white, base, m)
     logo = Image.open(path).convert("RGBA").resize((glyph, glyph), Image.LANCZOS)
     off = (tile - glyph) // 2
@@ -356,7 +390,7 @@ def render_card(spec, S=SS):
               fill=ACCENT)
     img.paste(av, (int(84 * S), int(foot_top)), av)
 
-    f_name, f_role = F.get("inter600", 23), F.get("mono", 13)
+    f_name, f_role = F.get("sans600", 23), F.get("mono", 13)
     na, nd = f_name.getmetrics()
     ra, rd = f_role.getmetrics()
     block_h = (na + nd) + 4 * S + (ra + rd)
@@ -386,18 +420,19 @@ def render_card(spec, S=SS):
 def _draw_title(d, title, F, bottom, S):
     tiers = [(80, 1.04, 2), (60, 1.07, 3), (46, 1.12, 4)]
     max_w = (CONTENT_W - 8) * S
+    style = TITLE_STYLES[TITLE_STYLE]
     chosen = None
     for px, lh, maxl in tiers:
-        f = F.get("inter", px)
-        tr = -0.022 * px * S
+        f = F.get(style["family"], px)
+        tr = style["title_tr"] * px * S
         lines = _wrap(d, title, f, tr, max_w)
         if len(lines) <= maxl:
             chosen = (f, px, lh, tr, lines)
             break
     if chosen is None:
         px, lh, maxl = tiers[-1]
-        f = F.get("inter", px)
-        tr = -0.022 * px * S
+        f = F.get(style["family"], px)
+        tr = style["title_tr"] * px * S
         chosen = (f, px, lh, tr, _wrap(d, title, f, tr, max_w)[:maxl])
     f, px, lh, tr, lines = chosen
     line_adv = px * lh * S
@@ -414,7 +449,11 @@ def _draw_review(d, spec, F, bottom, S):
     verdict, variant = _verdict_for(score)
     is_avoid = variant == "avoid"
     sc_txt = "%g" % round(score, 1)
-    f_score, f_outof, f_verd = F.get("inter", 96), F.get("mono", 13), F.get("mono600", 13)
+    # The score numeral stays on the sans ramp rather than following
+    # `.score__value`, which is mono on the site. Mono is ~36% wider at the same
+    # size, so that swap would resize the whole panel -- a layout change, not a
+    # typeface swap, and outside what this port is for.
+    f_score, f_outof, f_verd = F.get("sans", 96), F.get("mono", 13), F.get("mono600", 13)
     sa, sd = f_score.getmetrics()
     score_h = sa + sd
     oa, od = f_outof.getmetrics()
@@ -458,7 +497,7 @@ def _draw_review(d, spec, F, bottom, S):
     left_w = left_r - left_l
     cells = [("PROVIDER", spec.get("provider")), ("WORKLOAD", _format_workload(spec.get("workload")))]
     cells = [(k, v) for k, v in cells if v]
-    f_dt, f_dd = F.get("mono", 12), F.get("inter600", 19)
+    f_dt, f_dd = F.get("mono", 12), F.get("sans600", 19)
     dt_tr = 0.15 * 12 * S
     dta, dtd = f_dt.getmetrics()
     dt_h = dta + dtd
@@ -476,14 +515,15 @@ def _draw_review(d, spec, F, bottom, S):
         cxp += wcell + 44 * S
 
     item = spec["item"]
+    style = TITLE_STYLES[TITLE_STYLE]
     item_px = 46
-    f_item = F.get("inter", item_px)
-    it_tr = -0.018 * item_px * S
+    f_item = F.get(style["family"], item_px)
+    it_tr = style["item_tr"] * item_px * S
     lines = _wrap(d, item, f_item, it_tr, left_w)
     if len(lines) > 2:
         item_px = 40
-        f_item = F.get("inter", item_px)
-        it_tr = -0.018 * item_px * S
+        f_item = F.get(style["family"], item_px)
+        it_tr = style["item_tr"] * item_px * S
         lines = _wrap(d, item, f_item, it_tr, left_w)[:2]
     ia, idsc = f_item.getmetrics()
     item_line = item_px * 1.1 * S
