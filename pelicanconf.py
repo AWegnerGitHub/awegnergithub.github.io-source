@@ -359,7 +359,7 @@ LANDING_PRINCIPLES = [
 
 # (title, note) for the "Selected writing" section — same shape as
 # LANDING_PRINCIPLES_HEAD. Drop the second element to render the title alone.
-LANDING_SELECTED_HEAD = "Selected writing"
+LANDING_SELECTED_HEAD = "(Selected writing)"
 
 # The sentence under the <h1> on each of the three index landing pages. Each
 # names the kinds of writing *this* blog publishes, so it is config rather than
