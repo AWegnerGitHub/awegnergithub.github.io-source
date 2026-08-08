@@ -1,12 +1,3 @@
-# pelicanconf.py — copied from the upstream -source repo and edited for the
-# redesign theme. Drop this into the -source repo's root (overwriting the
-# existing pelicanconf.py) and point THEME at this theme directory.
-#
-# Changes from upstream are grouped below under "REDESIGN — NEW CONFIG".
-# Nothing else in this file was removed — all upstream config is preserved so
-# plugins, feeds, static paths, AUTHORS, REVIEW_PROVIDERS, FAQ_QUESTIONS, etc.
-# continue to work unchanged.
-
 import datetime
 import os
 
@@ -14,24 +5,17 @@ AUTHOR = "Andy Wegner"
 SITENAME = "Andrew Wegner | Ponderings of an Andy"
 SITENAME_SHORT = "Andrew Wegner"
 SITEURL = "https://andrewwegner.com"
-# SITEURL = ""
 SITESUBTITLE = "Can that be automated?"
-# SITEDESCRIPTION = "Articles and reviews covering thoughts on work place leadership, technical course reviews, and other ponderings of Andy Wegner"
-SITEDESCRIPTION = "Andrew Wegner (Andy Wegner) - VP Strategic Software at Zayo, Stack Overflow moderator. Engineering leadership insights, Python tutorials, and technical articles from 15+ years building global software teams."
+SITEDESCRIPTION = "Andrew Wegner (Andy Wegner) - VP Product, Strategic Software at Zayo, Stack Overflow moderator. Engineering leadership insights, Python tutorials, and technical articles from 17+ years building global software teams."
 COPYRIGHT_YEAR = datetime.date.today().year
 COPYRIGHT_NAME = "Andrew Wegner"
 SITELOGO = "/images/wegner_headshot.png"
-
-
 PATH = "content"
 READERS = {"html": None}
-THEME = "pelican-template"
+THEME = "professional-template"
 OUTPUT_PATH = "output/"
-
 TIMEZONE = "America/Chicago"
-
 DEFAULT_LANG = "en"
-
 FEED_ALL_ATOM = "feeds/all.atom.xml"
 CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 TAG_FEED_ATOM = "feeds/tag/{slug}.atom.xml"
@@ -41,9 +25,17 @@ AUTHOR_FEED_RSS = None
 FEED_MAX_ITEMS = 20
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["series", "extract_toc", "extract_faq", "defined_terms", "neighbors", "keyboard", "extended_sitemap", "sitemap_filter", "card_images"]
-
-TOC = {"TOC_HEADERS": "^h[1-3]"}
+PLUGINS = [
+    "series",
+    "extract_toc",
+    "extract_faq",
+    "defined_terms",
+    "neighbors",
+    "keyboard",
+    "extended_sitemap",
+    "sitemap_filter",
+    "card_images",
+]
 
 MARKDOWN = {
     "extension_configs": {
@@ -93,9 +85,7 @@ def humanize_duration(value):
     return " ".join(parts) if parts else s
 
 
-JINJA_FILTERS = {
-    "humanize_duration": humanize_duration,
-}
+JINJA_FILTERS = {"humanize_duration": humanize_duration}
 
 
 PAGE_URL = "{slug}/"
@@ -120,9 +110,10 @@ STATIC_PATHS = [
     "extra/favicon-32x32.png",
     "extra/favicon-16x16.png",
     "extra/site.webmanifest",
+    "extra/android-chrome-192x192.png",
+    "extra/android-chrome-512x512.png",
     "extra/robots.txt",
     "extra/resume.pdf",
-    "pages/about.html",
 ]
 EXTRA_PATH_METADATA = {
     r"extra/CNAME": {"path": "CNAME"},
@@ -136,19 +127,13 @@ EXTRA_PATH_METADATA = {
     r"extra/favicon-32x32.png": {"path": "favicon-32x32.png"},
     r"extra/favicon-16x16.png": {"path": "favicon-16x16.png"},
     r"extra/site.webmanifest": {"path": "site.webmanifest"},
+    r"extra/android-chrome-192x192.png": {"path": "android-chrome-192x192.png"},
+    r"extra/android-chrome-512x512.png": {"path": "android-chrome-512x512.png"},
     r"extra/resume.pdf": {"path": "resume.pdf"},
-    r"pages/about.html": {"path": "about.html"},
 }
 
 DEFAULT_PAGINATION = 10
-
-# Add 404 to direct-rendered templates so Pelican emits output/404.html for
-# GitHub Pages' custom 404 support.
 DIRECT_TEMPLATES = ("index", "tags", "categories", "archives", "authors", "404")
-
-# Uncomment following line if you want document-relative URLs when developing
-# RELATIVE_URLS = True
-
 
 AUTHORS = {
     "Andy Wegner": {
@@ -162,12 +147,7 @@ AUTHORS = {
 }
 
 REVIEW_PROVIDERS = {
-    "Udemy": {
-        "type": "Organization",
-        "name": "Udemy",
-        "sameAs": "https://www.udemy.com/",
-        "itemType": "Course",
-    },
+    "Udemy": {"type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com/", "itemType": "Course"},
     "Coursera": {
         "type": "Organization",
         "name": "Coursera",
@@ -196,32 +176,19 @@ REVIEW_PROVIDERS = {
 
 EXTENDED_SITEMAP_PLUGIN = {
     "priorities": {"index": 1.0, "articles": 0.8, "pages": 0.5, "others": 0.4},
-    "changefrequencies": {
-        "index": "daily",
-        "articles": "weekly",
-        "pages": "weekly",
-        "others": "monthly",
-    },
+    "changefrequencies": {"index": "daily", "articles": "weekly", "pages": "weekly", "others": "monthly"},
 }
 
-# Removed from the generated sitemap.xml after extended_sitemap runs (see
-# plugins/sitemap_filter). 404.html is in DIRECT_TEMPLATES so Pelican writes
-# output/404.html for GitHub Pages, but the page is noindex and shouldn't
-# appear in the sitemap.
 SITEMAP_EXCLUDE = ["/404.html"]
-
 FAQ_QUESTIONS = [
     (
         "Who is Andrew (Andy) Wegner?",
         "Andy is an engineering leader with experience at companies ranging in size and industry. He's led teams at pre-seed startups and large corporations. He writes a blog on his experiences in leadership, technology, and his hobbies.",
     ),
-    (
-        "What is Andrew's current role?",
-        "Andy is currently employed at Zayo Group as Vice President Product, Strategic Software.",
-    ),
+    ("What is Andrew's current role?", "Andy is currently employed at Zayo Group as VP Product, Strategic Software."),
     (
         "What technology stack is Andrew most familiar with?",
-        "Andy is most familiar with Python, with over 15 years of hands on experience in the language and ecosystem. He's familiar with a variety of relational databases, including Postgres, MySQL, Oracle and Teradata. ",
+        "Andy is most familiar with Python, with over 17 years of hands on experience in the language and ecosystem. He's familiar with a variety of relational databases, including Postgres, MySQL, Oracle and Teradata. ",
     ),
     (
         "What industries has Andrew worked in?",
@@ -231,10 +198,7 @@ FAQ_QUESTIONS = [
         "Is Andrew Wegner a Stack Overflow Moderator?",
         "Yes. Andy was elected to as a Stack Overflow moderator in August 2017. He was appointed Moderator Pro Tempore on Hardware Recommendations in October 2015 (and stepped down in 2024), and Moderator Pro Tempore on Community Building in August 2014 (and stepped down in 2024).",
     ),
-    (
-        "Does Andrew Wegner have a GitHub Account?",
-        "Yes. Andy maintains a GitHub account: AWegnerGithub",
-    ),
+    ("Does Andrew Wegner have a GitHub Account?", "Yes. Andy maintains a GitHub account: AWegnerGithub"),
     (
         "Does Andrew do consulting work?",
         "Yes. Andy does consulting work. Previously, consulting work was done in a development capacity utilizing Python. More recently, Andy provides leadership mentoring or fractional CTO services.",
@@ -251,7 +215,6 @@ FAQ_QUESTIONS = [
 
 
 HEAP_ANALYTICS = 653100411
-BROWSER_COLOR = "#080019"
 FAVICON = "/favicon.ico"
 APPLETOUCHICON = "/apple-touch-icon.png"
 FAVICON32X32 = "/favicon-32x32.png"
@@ -273,23 +236,39 @@ AUTHOR_URL = ""
 # the intent of the redesign prototype.
 # =============================================================================
 
-# --- Display name (separate from AUTHOR, which drives feeds/metadata) -------
 # AUTHOR is kept as "Andy Wegner" for feed/metadata compatibility. The sidebar,
 # nav wordmark, and author bio use AUTHOR_DISPLAY for the on-page name.
 AUTHOR_DISPLAY = "Andrew Wegner"
-AUTHOR_GIVEN = "Andrew"
-AUTHOR_FAMILY = "Wegner"
-AUTHOR_ROLE = "VP, Strategic Software"
-AUTHOR_ROLE_LINES = [
-    "VP,",
-    "Strategic Software",
-]  # stacked on two lines in the nav wordmark and sidebar
-
-# --- Headshot & accent color ------------------------------------------------
+AUTHOR_ROLE = "VP Product, Strategic Software"
 HEADSHOT = "wegner_headshot.png"  # filename inside theme static/img/
-HEADSHOT_MORPH = True  # True = morphing blob animation; False = still circle
 
-# --- Contact / footer -------------------------------------------------------
+# Replaces BROWSER_COLOR, which was a single near-black from the old theme and
+# had to be corrected by site.js after load. partial/icon.html emits one
+# <meta name="theme-color"> per scheme, each scoped with a `media` query, so a
+# reader whose system is dark gets the dark ground on the first paint with no
+# JavaScript involved.
+#
+# Each value is that scheme's --paper, which is what the sticky header paints,
+# so the browser's bar continues the page instead of sitting against it.
+# Measured from the built page rather than converted by hand:
+#   light  oklch(0.972 0.005 80) -> #f7f5f2
+#   dark   oklch(0.205 0.008 82) -> #191713
+#
+# **This is the one place a colour is authored outside the stylesheet's :root**,
+# which the theme otherwise forbids, and it is here because these have to be in
+# the HTML before any CSS or JS runs. The cost is that they can drift from
+# --paper silently, so a behaviour test asserts the tag and the painted ground
+# still match in both schemes; run it after touching either. Both keys are
+# optional — omit for the theme's defaults (the same values), or set one to ""
+# to emit no tag for that scheme.
+# Updated 2026-07-29 with the shipped ground: Cream -> Chalk. These were
+# #f7f5f2 / #191713, which is exactly the silent drift the paragraph above
+# warns about — the keys pin a value, so changing :root in site.css alone left
+# the browser's chrome painting the old ground. `tools/browser/paper-hex.mjs`
+# prints the pair to use if --paper moves again.
+THEME_COLOR_LIGHT = "#f5f6f7"
+THEME_COLOR_DARK = "#14171c"
+
 CONTACT_EMAIL = "blog.feedback@andrewwegner.com"
 RESUME_URL = "/resume.pdf"
 RESUME_LABEL = "Download résumé (PDF)"
@@ -297,29 +276,21 @@ RESUME_LABEL = "Download résumé (PDF)"
 SOCIAL_META = [
     ("LinkedIn", "https://www.linkedin.com/in/andrew-wegner/", "in/andrew-wegner"),
     ("GitHub", "https://github.com/AWegnerGitHub/", "@AWegnerGitHub"),
-    (
-        "Stack Overflow",
-        "https://stackoverflow.com/users/189134/andy",
-        "Elected moderator",
-    ),
+    ("Stack Overflow", "https://stackoverflow.com/users/189134/andy", "Elected moderator"),
 ]
 
-FOOTER_KICKER = "GET IN TOUCH"
-FOOTER_HEADLINE = (
-    "Let me bring my experience to your business. Together we can solve the problem."
-)
+FOOTER_HEADLINE = "Let me bring my experience to your business. Together we can solve the problem."
 FOOTER_SUB = (
     "I'm selective about what I take on, but always happy to talk about "
     "engineering leadership, distributed teams, and hiring."
 )
 
-# --- Home page sections -----------------------------------------------------
 LANDING_HERO = {
     "kicker": "Engineering leader · Mentor · Architect",
     "headline": "Building the teams that <em>build the systems</em>.",
     "sub": (
         "I lead, grow and mentor engineering organizations across telecom, "
-        "logistics and SaaS. Currently VP of Strategic Software at "
+        "logistics and SaaS. Currently VP Product, Strategic Software at "
         "Zayo. I write about what I've learned running "
         "distributed teams, managing technical debt, and hiring engineers in "
         "the age of AI."
@@ -329,20 +300,14 @@ LANDING_HERO = {
     "meta": [
         ("Currently", "VP Product, Strategic Software"),
         ("Previously", "VP Software Engineering · Director Engineering"),
-        (
-            "Industries",
-            "Telecommunications, Software Development, Transportation Logistics, Manufacturing, HRIS",
-        ),
+        ("Industries", "Telecommunications, Software Development, Transportation Logistics, Manufacturing, HRIS"),
     ],
 }
 
 LANDING_METRICS = [
     ("50+", "Engineers in largest organization led"),
     ("17+", "Years shipping software end-to-end"),
-    (
-        "6",
-        "Continents where engineers I've led live (every continent except Antarctica)",
-    ),
+    ("6", "Continents where engineers I've led live (every continent except Antarctica)"),
     ("8", "Weeks to achieve SOC 2 attestation"),
 ]
 
@@ -392,6 +357,24 @@ LANDING_PRINCIPLES = [
     ),
 ]
 
+# (title, note) for the "Selected writing" section — same shape as
+# LANDING_PRINCIPLES_HEAD. Drop the second element to render the title alone.
+LANDING_SELECTED_HEAD = "Selected writing"
+
+# The sentence under the <h1> on each of the three index landing pages. Each
+# names the kinds of writing *this* blog publishes, so it is config rather than
+# theme copy; set one to "" to render no intro on that page.
+ARCHIVES_INTRO = (
+    "Every post, grouped by year — leadership essays, technical notes, " "course reviews and side projects."
+)
+CATEGORIES_INTRO = (
+    "Reviews of courses and tools, leadership essays, technical notes, and " "the occasional side project."
+)
+TAGS_INTRO = (
+    "Every tag, alphabetical. Tags cross-cut categories, so this is the "
+    "fastest way to find writing on a specific topic."
+)
+
 # =============================================================================
 # OG TITLE CARDS  (card_images plugin)
 #
@@ -405,16 +388,18 @@ LANDING_PRINCIPLES = [
 # CARD_VERSION to force every card to re-render after a design/asset change.
 # =============================================================================
 CARD_GENERATE = True
-CARD_OUTPUT_DIR = "theme/img/cards"     # output subdir + public URL path
-CARD_VERSION = "1"                       # change -> full re-render
-CARD_SUPERSAMPLE = 2                      # 2 = crisp (default); 1 = ~40% faster, smaller
-CARD_ROLE = "Engineering Leadership"     # byline role line on every card
+CARD_OUTPUT_DIR = "theme/img/cards"  # output subdir + public URL path
+CARD_VERSION = "2"  # change -> full re-render; "2" = Archivo on Chalk (2026-08-08)
+CARD_SUPERSAMPLE = 2  # 2 = crisp (default); 1 = ~40% faster, smaller
+CARD_ROLE = "Engineering Leadership"  # byline role line on every card
 # CARD_NAME / CARD_DOMAIN / CARD_LOGO / CARD_HEADSHOT / CARD_FONT_DIR all have
 # sensible defaults (AUTHOR_DISPLAY, SITEURL host, theme static images, the
 # fonts bundled with the plugin) and only need setting to override.
 
-# Incremental cache: the CI deploy step 
+# Incremental cache: the CI deploy step
 # restores the previously generated cards from the published repo into a folder
 # and points CARD_CACHE_DIR at it, so unchanged cards are copied instead of
 # re-rendered. Locally / on first run this is unset and all cards render.
 CARD_CACHE_DIR = os.environ.get("CARD_CACHE_DIR") or None
+
+PALETTE_SWITCHER = False
