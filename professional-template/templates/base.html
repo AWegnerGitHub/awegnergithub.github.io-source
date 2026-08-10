@@ -6,11 +6,12 @@
 
 {#- Runs before the first paint, which is the whole point: applying a saved
     theme from site.js would show one scheme and then the other. It writes
-    data-theme *only* when the reader has actually chosen, so a visitor who
-    never touched the toggle keeps following their system setting — and keeps
-    following it live, since the stylesheet's prefers-color-scheme block stays
-    in charge. The class is what reveals the toggle: with scripting off the
-    button would be inert, and an inert control is worse than no control. -#}
+    data-theme *only* when the reader has actually chosen; a visitor who never
+    touched the toggle gets no attribute and therefore the stylesheet's own
+    default, which is light. Light is the default with scripting off too — it
+    is :root, not a media query, so nothing here is load-bearing for it. The
+    class is what reveals the toggle: with scripting off the button would be
+    inert, and an inert control is worse than no control. -#}
 <script>
 (function () {
   var root = document.documentElement;

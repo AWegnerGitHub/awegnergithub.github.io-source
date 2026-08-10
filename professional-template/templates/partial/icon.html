@@ -17,11 +17,16 @@
 
     Each value is the scheme's --paper, which is what the sticky header paints,
     so the browser's own bar continues the page rather than sitting against it.
-    The `media` attribute is what makes this work with no JavaScript at all:
-    the browser picks the first tag whose media matches, so an OS-dark reader
-    gets the dark ground on the very first paint. This replaces BROWSER_COLOR,
-    which was a single near-black carried over from the old theme and corrected
-    by site.js a beat after load.
+
+    The light tag is first and carries no `media`, so it matches everything:
+    the browser uses the first tag whose media matches, and light is the ground
+    a first load paints whatever the operating system asks for (2026-08-09).
+    That is the whole no-JavaScript story — the dark tag below it is never
+    reached by the browser and exists so the dark ground is written down
+    somewhere site.js can read it when the reader presses the toggle. Until
+    then it is documentation. This replaces BROWSER_COLOR, which was a single
+    near-black carried over from the old theme and corrected by site.js a beat
+    after load.
 
     The defaults below are the theme's own ramp and are the values to keep in
     step with `--paper` in site.css if that ever moves — the browser resolves
@@ -34,12 +39,11 @@
 
     Set THEME_COLOR_LIGHT / THEME_COLOR_DARK to override either; set one to ""
     to emit no tag for that scheme. site.js takes over only when the reader
-    presses the toggle, because `media` answers what the *system* wants and a
-    chosen scheme is a different question. -#}
+    presses the toggle. -#}
 {%- set _theme_color_light = THEME_COLOR_LIGHT if THEME_COLOR_LIGHT is defined else '#f5f6f7' %}
 {%- set _theme_color_dark = THEME_COLOR_DARK if THEME_COLOR_DARK is defined else '#14171c' %}
 {%- if _theme_color_light %}
-<meta name="theme-color" content="{{ _theme_color_light }}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{{ _theme_color_light }}">
 {%- endif %}
 {%- if _theme_color_dark %}
 <meta name="theme-color" content="{{ _theme_color_dark }}" media="(prefers-color-scheme: dark)">

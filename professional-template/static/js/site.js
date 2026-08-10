@@ -756,9 +756,9 @@
 
      The inline script in <head> has already applied any saved choice before
      the first paint; this only wires the button and keeps the labelling
-     honest. Nothing is written to storage until the reader presses it, so a
-     first-time visitor keeps following their system setting — including when
-     that setting changes while the page is open.
+     honest. Nothing is written to storage until the reader presses it, and
+     with nothing stored the site is light — the operating system's preference
+     is not consulted here or in the stylesheet.
 
      Which scheme is *painted* is decided entirely in CSS. This function never
      sets a colour; it sets the one attribute the stylesheet keys off, and —
@@ -773,14 +773,11 @@
     if (!button) return;
 
     var root = document.documentElement;
-    var media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-    /* The chosen scheme if there is one, otherwise whatever the system asks
-       for — the same order of precedence the stylesheet applies. */
+    /* Dark only when it was chosen; light otherwise — the same rule the
+       stylesheet applies, and the reason there is no matchMedia() here. */
     function scheme() {
-      var chosen = root.getAttribute('data-theme');
-      if (chosen === 'light' || chosen === 'dark') return chosen;
-      return media && media.matches ? 'dark' : 'light';
+      return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     }
 
     /* Name the destination, matching the glyph CSS is showing. */
@@ -792,23 +789,27 @@
 
     /* Put the mobile browser's own chrome on the same ground as the page.
 
-       partial/icon.html ships one tag per scheme, each scoped with
-       `media="(prefers-color-scheme: …)"`, so with no JavaScript at all the
-       browser already picks the right one — that is the whole point of the
-       markup and this function must not undo it. It has exactly one job: the
-       `media` attribute answers what the *system* asks for, and once the reader
-       has pressed the toggle that is the wrong question. So while a choice is
-       in force both tags carry the chosen scheme's colour, and whichever one
-       the browser matches gives the same answer.
+       partial/icon.html ships two tags: the light one first and unscoped, the
+       dark one second and still carrying `media="(prefers-color-scheme:
+       dark)"`. The browser uses the first tag whose media matches, so with no
+       JavaScript at all it takes the light one — which is the default the page
+       paints. The dark tag is never reached by the browser; it is here so the
+       dark ground has somewhere to be written down.
+
+       This function's one job is the toggle. Once the reader has chosen, both
+       tags carry the chosen scheme's colour, so whichever one the browser
+       matches gives the same answer.
 
        The colours are read back off the tags rather than out of the token
        table. That keeps an oklch() string out of the meta tag — the previous
        version wrote one, which anything that cannot parse oklch ignored
        entirely — and it means this function never needs to know a colour.
        thoughts.md #20a. */
-    var themeColorTags = all('meta[name="theme-color"][media]');
+    var themeColorTags = all('meta[name="theme-color"]');
     var authoredThemeColor = {};
 
+    /* The dark tag is the one that names a scheme; anything else is the light
+       default. */
     function schemeOf(tag) {
       return /dark/.test(tag.getAttribute('media') || '') ? 'dark' : 'light';
     }
@@ -871,20 +872,10 @@
       paintBrowserChrome();
     });
 
-    /* No attribute means no choice has been made and the system is still in
-       charge. CSS follows it on its own; these two only need re-deriving.
-
-       Not cross-faded, and that is not an oversight: by the time this event
-       runs the new ramp is already the computed style, so adding the class
-       here would transition nothing — or, worse, catch the repaint halfway.
-       The fade belongs to the press, which is the one ordering we control. */
-    if (media && media.addEventListener) {
-      media.addEventListener('change', function () {
-        if (root.getAttribute('data-theme')) return;
-        relabel();
-        paintBrowserChrome();
-      });
-    }
+    /* There used to be a `prefers-color-scheme` listener here, re-deriving the
+       label and the browser chrome when the operating system flipped while the
+       page was open. It went with the media query it existed for: the system
+       setting no longer changes anything, so there is nothing to re-derive. */
 
     relabel();
     paintBrowserChrome();

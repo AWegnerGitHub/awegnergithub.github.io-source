@@ -389,7 +389,7 @@ TAGS_INTRO = (
 # =============================================================================
 CARD_GENERATE = True
 CARD_OUTPUT_DIR = "theme/img/cards"  # output subdir + public URL path
-CARD_VERSION = "2"  # change -> full re-render; "2" = Archivo on Chalk (2026-08-08)
+CARD_VERSION = "3"  # change -> full re-render; "3" = Switch from OS default to light mode default
 CARD_SUPERSAMPLE = 2  # 2 = crisp (default); 1 = ~40% faster, smaller
 CARD_ROLE = "Engineering Leadership"  # byline role line on every card
 # CARD_NAME / CARD_DOMAIN / CARD_LOGO / CARD_HEADSHOT / CARD_FONT_DIR all have
