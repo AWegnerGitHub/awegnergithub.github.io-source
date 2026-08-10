@@ -1516,9 +1516,6 @@ main:focus { outline: none; }
   text-wrap: pretty;
 }
 
-/* Seventeen years of posts contain bare URLs, long paths and package names.
-   Without this a single unbroken token pushes the article column wider than
-   the viewport and the whole page scrolls sideways on a phone. */
 .prose p,
 .prose li,
 .prose dd,
@@ -1536,7 +1533,7 @@ main:focus { outline: none; }
   letter-spacing: -0.022em;
   line-height: 1.22;
   margin: 20px 0 0;
-  max-width: 30ch;
+  max-width: 40ch;
   text-wrap: balance;
 }
 
