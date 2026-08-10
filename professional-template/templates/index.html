@@ -6,7 +6,7 @@
 {%- set latest = current_page_articles[:3] if is_first_page else [] %}
 {%- set archive_articles = current_page_articles[3:] if is_first_page else current_page_articles %}
 {#- Only page 1 renders the hero, so only page 1 has a mark to hand off. Read
-    by partial/nav.html; page.html sets it too, for About. -#}
+by partial/nav.html; page.html sets it too, for About. -#}
 {%- set brand_handoff = is_first_page and LANDING_HERO and HEADSHOT %}
 
 {%- set featured = [] %}
@@ -38,202 +38,202 @@ list_items=articles[:10] %}
 {% block content %}
 {%- if not is_first_page %}
 {#- Later pages of the paginated index have no hero, so they get their own
-    <h1>: a document whose only headings are h2 has no top level at all. -#}
-<div class="index-intro">
-  <h1 class="page-title">More writing</h1>
-  <p class="page-dek">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}, newest first. The full archive is <a href="{{ SITEURL }}/archives.html">grouped by year</a>.</p>
-</div>
-{%- endif %}
-
-{%- if is_first_page and LANDING_HERO %}
-<section class="hero" aria-labelledby="hero-title">
-  <div>
-    {% include 'partial/identity.html' %}
-    <h1 class="hero__title" id="hero-title">{{ LANDING_HERO.headline|safe }}</h1>
-    {%- if LANDING_HERO.sub %}
-    <p class="hero__dek">{{ LANDING_HERO.sub }}</p>
-    {%- endif %}
-    <div class="actions">
-      {%- if LANDING_HERO.primary_cta %}
-      {%- set primary_href = (SITEURL ~ LANDING_HERO.primary_cta.url) if LANDING_HERO.primary_cta.url.startswith('/')
-      else LANDING_HERO.primary_cta.url %}
-      <a href="{{ primary_href }}" class="btn btn--accent">{{ LANDING_HERO.primary_cta.label }}</a>
-      {%- endif %}
-      {%- if LANDING_HERO.secondary_cta %}
-      {%- set secondary_href = (SITEURL ~ LANDING_HERO.secondary_cta.url) if
-      LANDING_HERO.secondary_cta.url.startswith('/') else LANDING_HERO.secondary_cta.url %}
-      <a href="{{ secondary_href }}" class="btn btn--ghost">{{ LANDING_HERO.secondary_cta.label }}</a>
-      {%- endif %}
-    </div>
+<h1>: a document whose only headings are h2 has no top level at all. -#}
+  <div class="index-intro">
+    <h1 class="page-title">More writing</h1>
+    <p class="page-dek">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}, newest first. The full
+      archive is <a href="{{ SITEURL }}/archives.html">grouped by year</a>.</p>
   </div>
-
-  {#- The hero ledger folds together what used to be two separate blocks: the
-      hero meta rows and the four standalone metric tiles. Same strings, one
-      table. -#}
-  <div class="ledger">
-    {%- for item in LANDING_HERO.meta|default([]) %}
-    <div class="ledger__row">
-      <span class="ledger__key">{{ item[0] }}</span>
-      <span class="ledger__val">{{ item[1] }}</span>
-    </div>
-    {%- endfor %}
-    {%- if LANDING_METRICS %}
-    <div class="ledger__row ledger__row--numbers">
-      <span class="ledger__key">By the numbers</span>
-      <dl class="numbers">
-        {%- for value, label in LANDING_METRICS %}
-        <dt>{{ value }}</dt>
-        <dd>{{ label }}</dd>
-        {%- endfor %}
-      </dl>
-    </div>
-    {%- endif %}
-    {%- if RESUME_URL %}
-    {%- set resume_href = (SITEURL ~ RESUME_URL) if RESUME_URL.startswith('/') else RESUME_URL %}
-    <a class="ledger__link" href="{{ resume_href }}">{{ RESUME_LABEL|default('Download résumé (PDF)') }} →</a>
-    {%- endif %}
-  </div>
-</section>
-{%- endif %}
-
-{%- if latest %}
-<section class="section" aria-labelledby="latest-title">
-  <div class="section__head">
-    <div class="section__titles">
-      <h2 class="section__title" id="latest-title">Latest</h2>
-      <span class="section__note">The {{ latest|length }} most recent posts</span>
-    </div>
-    <div class="stepper" data-carousel-controls="latest" hidden>
-      <button type="button" class="stepper__btn" data-carousel-prev aria-label="Previous latest posts">←</button>
-      <button type="button" class="stepper__btn" data-carousel-next aria-label="Next latest posts">→</button>
-    </div>
-  </div>
-  {#- `latest` is capped at three, so this deck is the one carousel on the site
-      that cannot rotate: site.js hides its stepper and returns early. Passing
-      the length lets post_card.html leave the summary off the two tiles that
-      can never be promoted into the lead slot. -#}
-  <div class="carousel" data-carousel="latest">
-    {%- for a in latest %}
-    {% with article=a, slot=loop.index, deck=latest|length %}{% include 'partial/post_card.html' %}{% endwith %}
-    {%- endfor %}
-  </div>
-</section>
-{%- endif %}
-
-{%- if is_first_page and LANDING_PRINCIPLES %}
-<section class="section" id="principles" aria-labelledby="ideas-title">
-  <h2 class="ideas__title" id="ideas-title">{{ LANDING_PRINCIPLES_HEAD[0] if LANDING_PRINCIPLES_HEAD else 'How I run engineering organizations' }}</h2>
-  {%- if LANDING_PRINCIPLES_HEAD and LANDING_PRINCIPLES_HEAD[1] %}
-  <p class="ideas__dek">{{ LANDING_PRINCIPLES_HEAD[1] }}</p>
   {%- endif %}
-  <div class="ideas__grid">
-    {%- for principle in LANDING_PRINCIPLES %}
-    {%- set p_title = principle[1] %}
-    {%- set body = principle[2] %}
-    {%- set raw_url = principle[3] if principle|length > 3 else none %}
-    {%- set href = (SITEURL ~ raw_url) if (raw_url and raw_url.startswith('/')) else raw_url %}
-    {%- if href %}
-    <a class="idea" href="{{ href }}">
-      <span class="idea__title">{{ p_title }}</span>
-      <span class="idea__body">{{ body }}</span>
-      <span class="idea__more">Read essay →</span>
-    </a>
-    {%- else %}
-    <div class="idea">
-      <span class="idea__title">{{ p_title }}</span>
-      <span class="idea__body">{{ body }}</span>
-    </div>
-    {%- endif %}
-    {%- endfor %}
-  </div>
-</section>
-{%- endif %}
 
-{%- if is_first_page and featured %}
-{#- (title, note), the same shape as LANDING_PRINCIPLES_HEAD: the note is
-    editorial voice about what the featured set is, so it belongs beside that
-    copy in config rather than in here. A 1-tuple renders the title alone. -#}
-{%- set selected_head = LANDING_SELECTED_HEAD|default(('Selected writing', 'Essays I point people to first')) %}
-<section class="section" id="writing" aria-labelledby="selected-title">
-  <div class="section__head">
-    <div class="section__titles">
-      <h2 class="section__title" id="selected-title">{{ selected_head[0] }}</h2>
-      {%- if selected_head|length > 1 and selected_head[1] %}
-      <span class="section__note">{{ selected_head[1] }}</span>
+  {%- if is_first_page and LANDING_HERO %}
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      {% include 'partial/identity.html' %}
+      <h1 class="hero__title" id="hero-title">{{ LANDING_HERO.headline|safe }}</h1>
+      {%- if LANDING_HERO.sub %}
+      <p class="hero__dek">{{ LANDING_HERO.sub }}</p>
+      {%- endif %}
+      <div class="actions">
+        {%- if LANDING_HERO.primary_cta %}
+        {%- set primary_href = (SITEURL ~ LANDING_HERO.primary_cta.url) if LANDING_HERO.primary_cta.url.startswith('/')
+        else LANDING_HERO.primary_cta.url %}
+        <a href="{{ primary_href }}" class="btn btn--accent">{{ LANDING_HERO.primary_cta.label }}</a>
+        {%- endif %}
+        {%- if LANDING_HERO.secondary_cta %}
+        {%- set secondary_href = (SITEURL ~ LANDING_HERO.secondary_cta.url) if
+        LANDING_HERO.secondary_cta.url.startswith('/') else LANDING_HERO.secondary_cta.url %}
+        <a href="{{ secondary_href }}" class="btn btn--ghost">{{ LANDING_HERO.secondary_cta.label }}</a>
+        {%- endif %}
+      </div>
+    </div>
+
+    {#- The hero ledger folds together what used to be two separate blocks: the
+    hero meta rows and the four standalone metric tiles. Same strings, one
+    table. -#}
+    <div class="ledger">
+      {%- for item in LANDING_HERO.meta|default([]) %}
+      <div class="ledger__row">
+        <span class="ledger__key">{{ item[0] }}</span>
+        <span class="ledger__val">{{ item[1] }}</span>
+      </div>
+      {%- endfor %}
+      {%- if LANDING_METRICS %}
+      <div class="ledger__row ledger__row--numbers">
+        <span class="ledger__key">By the numbers</span>
+        <dl class="numbers">
+          {%- for value, label in LANDING_METRICS %}
+          <dt>{{ value }}</dt>
+          <dd>{{ label }}</dd>
+          {%- endfor %}
+        </dl>
+      </div>
       {%- endif %}
     </div>
-    <div class="stepper" data-carousel-controls="selected" hidden>
-      <button type="button" class="stepper__btn" data-carousel-prev aria-label="Previous selected essays">←</button>
-      <button type="button" class="stepper__btn" data-carousel-next aria-label="Next selected essays">→</button>
-    </div>
-  </div>
-  {#- The featured set is however many posts carry `featured:`, so this deck
-      does rotate once there are more than three of them — and then any tile can
-      become the lead. `deck` says so, and post_card.html keeps the summary on
-      all of them; at three or fewer it drops to the same two-tile saving as
-      Latest. -#}
-  <div class="carousel" data-carousel="selected">
-    {%- for a in featured %}
-    {% with article=a, slot=(loop.index if loop.index <= 3 else none), deck=featured|length %}{% include 'partial/post_card.html' %}{% endwith %}
-    {%- endfor %}
-  </div>
-</section>
-{%- endif %}
+  </section>
+  {%- endif %}
 
-{%- if archive_articles %}
-{%- set years = {} %}
-{%- for a in archive_articles %}
-{%- if years.update({a.date.year: years.get(a.date.year, []) + [a]}) %}{% endif %}
-{%- endfor %}
-{%- set panel_cats = archive_articles|map(attribute='category')|map('string')|unique|sort|list %}
-<section class="archive-panel" id="archive" data-filter-scope="home-archive" aria-labelledby="archive-title">
-  <div class="archive-panel__head">
-    <div class="section__titles">
-      <h2 class="archive-panel__title" id="archive-title">{% if is_first_page %}Archive index{% else %}Posts on this page{% endif %}</h2>
-      <span class="section__note" role="status">Showing <span data-filter-shown>{{ archive_articles|length }}</span> of <span data-filter-total>{{ archive_articles|length }}</span></span>
+  {%- if latest %}
+  <section class="section" aria-labelledby="latest-title">
+    <div class="section__head">
+      <div class="section__titles">
+        <h2 class="section__title" id="latest-title">Latest</h2>
+        <span class="section__note">The {{ latest|length }} most recent posts</span>
+      </div>
+      <div class="stepper" data-carousel-controls="latest" hidden>
+        <button type="button" class="stepper__btn" data-carousel-prev aria-label="Previous latest posts">←</button>
+        <button type="button" class="stepper__btn" data-carousel-next aria-label="Next latest posts">→</button>
+      </div>
     </div>
-    {%- if panel_cats|length > 1 %}
-    <div class="chips" data-filter-controls hidden>
-      <button type="button" class="chip" data-filter="All" aria-pressed="true">All</button>
-      {%- for c in panel_cats %}
-      <button type="button" class="chip" data-filter="{{ c }}" aria-pressed="false">{{ c }}</button>
+    {#- `latest` is capped at three, so this deck is the one carousel on the site
+    that cannot rotate: site.js hides its stepper and returns early. Passing
+    the length lets post_card.html leave the summary off the two tiles that
+    can never be promoted into the lead slot. -#}
+    <div class="carousel" data-carousel="latest">
+      {%- for a in latest %}
+      {% with article=a, slot=loop.index, deck=latest|length %}{% include 'partial/post_card.html' %}{% endwith %}
       {%- endfor %}
     </div>
+  </section>
+  {%- endif %}
+
+  {%- if is_first_page and LANDING_PRINCIPLES %}
+  <section class="section" id="principles" aria-labelledby="ideas-title">
+    <h2 class="ideas__title" id="ideas-title">{{ LANDING_PRINCIPLES_HEAD[0] if LANDING_PRINCIPLES_HEAD else 'How I run
+      engineering organizations' }}</h2>
+    {%- if LANDING_PRINCIPLES_HEAD and LANDING_PRINCIPLES_HEAD[1] %}
+    <p class="ideas__dek">{{ LANDING_PRINCIPLES_HEAD[1] }}</p>
     {%- endif %}
-  </div>
-
-  {%- for year in years.keys()|sort(reverse=true) %}
-  <div class="mini-year" data-filter-group data-year="{{ year }}">
-    <span class="mini-year__label">{{ year }}</span>
-    <ul class="mini-year__rows">
-      {%- for a in years[year] %}
-      {% with article=a, row_variant='mini' %}{% include 'partial/archive_row.html' %}{% endwith %}
+    <div class="ideas__grid">
+      {%- for principle in LANDING_PRINCIPLES %}
+      {%- set p_title = principle[1] %}
+      {%- set body = principle[2] %}
+      {%- set raw_url = principle[3] if principle|length > 3 else none %}
+      {%- set href = (SITEURL ~ raw_url) if (raw_url and raw_url.startswith('/')) else raw_url %}
+      {%- if href %}
+      <a class="idea" href="{{ href }}">
+        <span class="idea__title">{{ p_title }}</span>
+        <span class="idea__body">{{ body }}</span>
+        <span class="idea__more">Read essay →</span>
+      </a>
+      {%- else %}
+      <div class="idea">
+        <span class="idea__title">{{ p_title }}</span>
+        <span class="idea__body">{{ body }}</span>
+      </div>
+      {%- endif %}
       {%- endfor %}
-    </ul>
-  </div>
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if is_first_page and featured %}
+  {#- (title, note), the same shape as LANDING_PRINCIPLES_HEAD: the note is
+  editorial voice about what the featured set is, so it belongs beside that
+  copy in config rather than in here. A 1-tuple renders the title alone. -#}
+  {%- set selected_head = LANDING_SELECTED_HEAD|default(('Selected writing', 'Essays I point people to first')) %}
+  <section class="section" id="writing" aria-labelledby="selected-title">
+    <div class="section__head">
+      <div class="section__titles">
+        <h2 class="section__title" id="selected-title">{{ selected_head[0] }}</h2>
+        {%- if selected_head|length > 1 and selected_head[1] %}
+        <span class="section__note">{{ selected_head[1] }}</span>
+        {%- endif %}
+      </div>
+      <div class="stepper" data-carousel-controls="selected" hidden>
+        <button type="button" class="stepper__btn" data-carousel-prev aria-label="Previous selected essays">←</button>
+        <button type="button" class="stepper__btn" data-carousel-next aria-label="Next selected essays">→</button>
+      </div>
+    </div>
+    {#- The featured set is however many posts carry `featured:`, so this deck
+    does rotate once there are more than three of them — and then any tile can
+    become the lead. `deck` says so, and post_card.html keeps the summary on
+    all of them; at three or fewer it drops to the same two-tile saving as
+    Latest. -#}
+    <div class="carousel" data-carousel="selected">
+      {%- for a in featured %}
+      {% with article=a, slot=(loop.index if loop.index <= 3 else none), deck=featured|length %}{%
+        include 'partial/post_card.html' %}{% endwith %} {%- endfor %} </div>
+  </section>
+  {%- endif %}
+
+  {%- if archive_articles %}
+  {%- set years = {} %}
+  {%- for a in archive_articles %}
+  {%- if years.update({a.date.year: years.get(a.date.year, []) + [a]}) %}{% endif %}
   {%- endfor %}
+  {%- set panel_cats = archive_articles|map(attribute='category')|map('string')|unique|sort|list %}
+  <section class="archive-panel" id="archive" data-filter-scope="home-archive" aria-labelledby="archive-title">
+    <div class="archive-panel__head">
+      <div class="section__titles">
+        <h2 class="archive-panel__title" id="archive-title">{% if is_first_page %}Archive index{% else %}Posts on this
+          page{% endif %}</h2>
+        <span class="section__note" role="status">Showing <span data-filter-shown>{{ archive_articles|length }}</span>
+          of <span data-filter-total>{{ archive_articles|length }}</span></span>
+      </div>
+      {%- if panel_cats|length > 1 %}
+      <div class="chips" data-filter-controls hidden>
+        <button type="button" class="chip" data-filter="All" aria-pressed="true">All</button>
+        {%- for c in panel_cats %}
+        <button type="button" class="chip" data-filter="{{ c }}" aria-pressed="false">{{ c }}</button>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </div>
 
-  {%- if is_first_page and articles_page and articles_page.has_next() %}
-  {#- Progressive enhancement over the pager at the foot of the page. With
-      scripting on, this appends the next index page's rows to the panel instead
-      of navigating to index2.html, so reading further down the archive never
-      costs a page load. It ships hidden, and only page 1 renders it: a reader
-      without scripting gets the pager and is never shown a control that cannot
-      act, and someone who lands on index2.html directly keeps the pager they
-      need to get back. site.js finds the next page from <link rel="next">,
-      which base.html already emits, so there is no second copy of that URL. -#}
-  <div class="archive-panel__load" data-loadmore hidden>
-    <button type="button" class="btn btn--ghost" data-loadmore-btn>Older posts</button>
-  </div>
+    {%- for year in years.keys()|sort(reverse=true) %}
+    <div class="mini-year" data-filter-group data-year="{{ year }}">
+      <span class="mini-year__label">{{ year }}</span>
+      <ul class="mini-year__rows">
+        {%- for a in years[year] %}
+        {% with article=a, row_variant='mini' %}{% include 'partial/archive_row.html' %}{% endwith %}
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+
+    {%- if is_first_page and articles_page and articles_page.has_next() %}
+    {#- Progressive enhancement over the pager at the foot of the page. With
+    scripting on, this appends the next index page's rows to the panel instead
+    of navigating to index2.html, so reading further down the archive never
+    costs a page load. It ships hidden, and only page 1 renders it: a reader
+    without scripting gets the pager and is never shown a control that cannot
+    act, and someone who lands on index2.html directly keeps the pager they
+    need to get back. site.js finds the next page from
+    <link rel="next">,
+    which base.html already emits, so there is no second copy of that URL. -#}
+    <div class="archive-panel__load" data-loadmore hidden>
+      <button type="button" class="btn btn--ghost" data-loadmore-btn>Older posts</button>
+    </div>
+    {%- endif %}
+
+    <div class="archive-panel__more">
+      <a href="{{ SITEURL }}/archives.html">Every post, grouped by year →</a>
+    </div>
+  </section>
   {%- endif %}
 
-  <div class="archive-panel__more">
-    <a href="{{ SITEURL }}/archives.html">Every post, grouped by year →</a>
-  </div>
-</section>
-{%- endif %}
-
-{% with paginator_anchor='archive' %}
-{% include 'partial/pagination.html' %}
-{% endwith %}
-{% endblock %}
+  {% with paginator_anchor='archive' %}
+  {% include 'partial/pagination.html' %}
+  {% endwith %}
+  {% endblock %}

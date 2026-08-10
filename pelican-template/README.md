@@ -22,7 +22,7 @@ THEME = 'path/to/this/directory'
 - `FEED_ALL_ATOM` / `FEED_ALL_RSS` / `CATEGORY_FEED_ATOM` / `TAG_FEED_ATOM` - standard Pelican feed config
 - `MENUITEMS` - list of `(title, url)` tuples for the main nav. If absent the theme falls back to a built-in nav (Archives / Categories / Tags / About).
 - `CONTACT_EMAIL` - powers the top-right "Contact Me" button + footer mailto
-- `RESUME_URL`, `RESUME_LABEL` - "Download résumé (PDF)" button
+- `RESUME_URL`, `RESUME_LABEL` - "Download resume (PDF)" button
 - `SOCIAL_META` - list of `(label, url, display_text)` tuples for the footer meta block (LinkedIn / GitHub / Stack Overflow / etc.)
 - `COPYRIGHT_YEAR`
 

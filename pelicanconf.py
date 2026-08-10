@@ -271,7 +271,7 @@ THEME_COLOR_DARK = "#14171c"
 
 CONTACT_EMAIL = "blog.feedback@andrewwegner.com"
 RESUME_URL = "/resume.pdf"
-RESUME_LABEL = "Download résumé (PDF)"
+RESUME_LABEL = "Download resume (PDF)"
 
 SOCIAL_META = [
     ("LinkedIn", "https://www.linkedin.com/in/andrew-wegner/", "in/andrew-wegner"),
