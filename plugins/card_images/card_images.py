@@ -20,12 +20,14 @@ page (see ``partial/og.html`` and ``partial/jsonld/blogposting.html``).
 
 Typeface and palette both track the live theme: **Archivo** (the statics are
 instanced from the theme's own ``archivo.woff2`` by ``tools/build/card-fonts.py``
--- do not hand-drop a downloaded copy) and **JetBrains Mono**, on Chalk's dark
-ramp. Before 2026-08-08 the cards were Inter on the pre-Chalk mock's colours,
-which meant every link shared to LinkedIn previewed in a typeface and a palette
-the site no longer used.
+-- do not hand-drop a downloaded copy) and **JetBrains Mono**, on Chalk's
+**light** ramp -- the scheme the site opens in. Before 2026-08-08 the cards were
+Inter on the pre-Chalk mock's colours, which meant every link shared to LinkedIn
+previewed in a typeface and a palette the site no longer used; they were on the
+dark ramp until 2026-08-09, when light became the site's default outright and
+the preview followed it.
 
-Two card templates, both on an Ink ground (design mirrors ``site.css``):
+Two card templates, both on the paper ground (design mirrors ``site.css``):
 
 * **Post card**  -- category eyebrow, title (auto-fit size tier), byline, domain.
 * **Review card** -- adds a score panel (big numeral + "out of 10" + verdict
@@ -142,24 +144,31 @@ def _over(fg, bg, alpha):
 
 
 # --- design tokens (OKLCH triples) -------------------------------------------
-# The card is a dark-ground object and always has been, so these are Chalk's
-# **dark** ramp -- the values `site.css` paints for a reader in dark mode --
-# copied from ``palettes/PALETTES.md`` rather than re-derived here.
+# Chalk's **light** ramp -- the values `site.css` paints for a reader who has
+# not chosen dark, which since 2026-08-09 is what the site opens as for
+# everyone. Copied from ``palettes/PALETTES.md`` rather than re-derived here.
+#
+# The card was a dark-ground object from the day it was built until that date.
+# It is a share preview of a page, and a preview that is the negative of the
+# page it opens is a preview of a different site, so the ground followed the
+# default. Nothing about the layout moved with it: the ramp is the only thing
+# that changed, which is exactly why the derived colours below are written as
+# operations on the ground rather than as fixed values.
 #
 # Before 2026-08-08 these came from the pre-Chalk mock and were a hybrid: a cool
 # ground at hue 265 under warm ink at hue 40-85. Chalk moved the site's surfaces
 # to 255 and its ink to 265, so the warm halves were the half that went stale.
-# The ground barely moved (L 0.205 either way); the ink and the accent did.
-T_BG = (0.205, 0.0104, 255)        # --paper
-T_INK = (0.905, 0.0084, 265)       # --ink-body   byline name, review values
-T_INK_MUT = (0.735, 0.012, 265)    # --ink-muted  "OUT OF 10"
-T_INK_FAINT = (0.685, 0.012, 265)  # --ink-faint  PROVIDER / WORKLOAD labels
-T_ACCENT = (0.745, 0.125, 25)      # --accent     rail, rules, dots, badges
-T_ACCENT_INK = (0.825, 0.1, 25)    # --accent-hover  accent-coloured *text*
-T_AMBER = (0.83, 0.11, 72)         # --warn       the "Worth a look" band
-T_TITLE = (0.962, 0.006, 265)      # --ink        the headline
-T_TILE = (0.995, 0.0039, 255)      # --card (light ramp) -- the logo chip
-T_WHITE = (1.0, 0.0, 89)
+T_BG = (0.972, 0.002, 255)         # --paper
+T_INK = (0.26, 0.0144, 265)        # --ink-body   byline name, review values
+T_INK_MUT = (0.46, 0.0144, 265)    # --ink-muted  "OUT OF 10"
+T_INK_FAINT = (0.52, 0.0144, 265)  # --ink-faint  PROVIDER / WORKLOAD labels
+T_ACCENT = (0.52, 0.13, 25)        # --accent     rail, rules, dots, badges
+T_ACCENT_INK = (0.43, 0.13, 25)    # --accent-hover  accent-coloured *text*
+T_AMBER = (0.47, 0.12, 72)         # --warn       the "Worth a look" band
+T_TITLE = (0.19, 0.0144, 265)      # --ink        the headline
+T_TILE = (0.995, 0.0039, 255)      # --card       the logo chip
+T_LINE = (0.86, 0.0104, 255)       # --border     the score panel's outline
+T_SUNK = (0.948, 0.0117, 255)      # --paper-sunk the dimmed "Avoid" panel
 
 BG = _oklch(*T_BG)
 INK = _oklch(*T_INK)
@@ -170,13 +179,19 @@ ACCENT_INK = _oklch(*T_ACCENT_INK)
 AMBER = _oklch(*T_AMBER)
 TITLE = _oklch(*T_TITLE)
 
-LINE = _over((255, 255, 255), BG, 0.15)
+# Everything below is a *relationship* to the ground, which is what let the
+# ground move without redrawing the card. The two that were not -- a hairline
+# lifted toward white and a panel lifted toward white -- only read on a dark
+# ground, so on the light ramp they take the site's own tokens for the same two
+# jobs: `--border` for a line on paper, `--paper-sunk` for a surface a step
+# below it.
+LINE = _oklch(*T_LINE)
 ACCENT_SOFT = _over(ACCENT, BG, 0.26)
 HATCH = _over(ACCENT, BG, 0.10)
 EYE_DOT_GLOW = _over(ACCENT, BG, 0.26)
 AVATAR_GLOW = _over(ACCENT, BG, 0.22)
 PANEL_BG = _mix_oklch(T_ACCENT, T_BG, 0.16)
-PANEL_BG_AVOID = _mix_oklch(T_WHITE, T_BG, 0.06)
+PANEL_BG_AVOID = _oklch(*T_SUNK)
 PANEL_BORDER_AVOID = _mix_oklch(T_INK, T_BG, 0.45)
 VERDICT_AVOID_BG = _mix_oklch(T_INK, T_BG, 0.40)
 VERDICT_AVOID_FG = _oklch(*T_INK)
