@@ -295,18 +295,19 @@ LANDING_HERO = {
         "distributed teams, managing technical debt, and hiring engineers in "
         "the age of AI."
     ),
-    "primary_cta": {"url": "#writing", "label": "Read the latest article"},
+    "primary_cta": {"url": "#latest-title", "label": "Read the latest article"},
     "secondary_cta": {"url": "/archives.html", "label": "Browse all writing"},
     "meta": [
         ("Currently", "VP Product, Strategic Software"),
         ("Previously", "VP Software Engineering · Director Engineering"),
+        ("Stages", "Pre-seed startups through Fortune 500"),
         ("Industries", "Telecommunications, Software Development, Transportation Logistics, Manufacturing, HRIS"),
     ],
 }
 
 LANDING_METRICS = [
-    ("50+", "Engineers in largest organization led"),
-    ("17+", "Years shipping software end-to-end"),
+    ("5x", "Engineering team growth in 18 months"),
+    ("9", "Years leading engineering organizations"),
     ("6", "Continents where engineers I've led live (every continent except Antarctica)"),
     ("8", "Weeks to achieve SOC 2 attestation"),
 ]
